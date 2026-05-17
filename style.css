@@ -1,0 +1,209 @@
+/* ===== 肴柒蟹 - 全局样式 ===== */
+
+/* Tailwind 自定义颜色 */
+@layer base {
+  :root {
+    --tech-blue: #165dff;
+    --tech-blue-dark: #0e42d2;
+    --food-red: #ff4d4f;
+    --food-red-dark: #cf1322;
+    --harvest-gold: #faad14;
+    --water-green: #36cfc9;
+    --soil-brown: #8c613c;
+  }
+}
+
+/* 字体 */
+body {
+  font-family:
+    "Inter",
+    "Source Han Sans SC",
+    "Noto Sans SC",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+/* 选中文本颜色 */
+::selection {
+  background: rgba(22, 93, 255, 0.15);
+  color: #165dff;
+}
+
+/* ===== 滚动条 ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* ===== 行情跑马灯 ===== */
+.marquee {
+  animation: marqueeScroll 25s linear infinite;
+  display: inline-flex;
+}
+.marquee:hover {
+  animation-play-state: paused;
+}
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* ===== 浮动卡片动画 ===== */
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+.animate-float-delayed {
+  animation: float 4s ease-in-out 1.5s infinite;
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* ===== 滚动渐入动画 ===== */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== 模式切换按钮 (保留兼容) ===== */
+.mode-btn {
+  cursor: pointer;
+  outline: none;
+}
+
+/* ===== 功能卡片 ===== */
+.feature-card {
+  position: relative;
+  overflow: hidden;
+}
+.feature-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent 50%, rgba(22, 93, 255, 0.02));
+  pointer-events: none;
+}
+
+/* ===== 菜谱卡片 ===== */
+.recipe-card {
+  cursor: pointer;
+}
+.recipe-card:hover .aspect-\\[4\\/3\\] > span:first-child {
+  transform: scale(1.1);
+  transition: transform 0.4s ease;
+}
+
+/* ===== 回到顶部按钮 ===== */
+#backToTop.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ===== 注册按钮微动效 ===== */
+.register-btn {
+  position: relative;
+  overflow: hidden;
+}
+.register-btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.6s,
+    height 0.6s;
+}
+.register-btn:active::after {
+  width: 200px;
+  height: 200px;
+}
+
+/* ===== 导航栏滚动效果 ===== */
+#navbar.scrolled {
+  background: rgba(255, 255, 255, 0.98) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ===== 导航链接下划线动画 ===== */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, #165dff, #ff4d4f);
+  transition: width 0.3s;
+  border-radius: 1px;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+  .marquee {
+    animation-duration: 15s;
+  }
+}
+
+/* ===== 打印样式 ===== */
+@media print {
+  #navbar {
+    display: none;
+  }
+  #backToTop {
+    display: none;
+  }
+  .marquee {
+    display: none;
+  }
+}
+
+/* ===== 暗色模式支持 (prefers-color-scheme) ===== */
+/* @media (prefers-color-scheme: dark) {
+  稍后根据需求实现
+} */

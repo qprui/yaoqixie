@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>肴柒蟹 - 平台功能</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🦀%3C/text%3E%3C/svg%3E" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ==================== 顶部导航栏 ==================== -->
+  <header id="navbar" class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-20">
+        <a href="index.html" class="flex items-center space-x-2 group">
+          <span class="text-3xl">🦀</span>
+          <span class="text-2xl font-bold bg-gradient-to-r from-tech-blue to-food-red bg-clip-text text-transparent">肴柒蟹</span>
+          <span class="hidden sm:inline-block text-xs text-gray-400 ml-1">养殖烹饪综合平台</span>
+        </a>
+        <nav class="hidden lg:flex items-center space-x-8">
+          <a href="index.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">首页</a>
+          <a href="features.html" class="nav-link text-tech-blue font-medium">功能</a>
+          <a href="market.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">行情</a>
+          <a href="recipes.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">菜谱</a>
+          <a href="community.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">社区</a>
+        </nav>
+        <div class="flex items-center space-x-3">
+          <button class="hidden sm:inline-block px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors">登录</button>
+          <button class="px-4 py-2 text-sm font-medium bg-gradient-to-r from-tech-blue to-food-red text-white rounded-lg hover:shadow-lg transition-all register-btn">免费注册</button>
+          <button id="mobileMenuBtn" class="lg:hidden text-gray-600 hover:text-gray-800">
+            <i class="bi bi-list text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobileMenu" class="lg:hidden hidden border-t border-gray-100 bg-white">
+      <div class="px-4 py-4 space-y-3">
+        <a href="index.html" class="block text-gray-600 hover:text-tech-blue py-2">首页</a>
+        <a href="features.html" class="block text-tech-blue font-medium py-2">功能</a>
+        <a href="market.html" class="block text-gray-600 hover:text-tech-blue py-2">行情</a>
+        <a href="recipes.html" class="block text-gray-600 hover:text-tech-blue py-2">菜谱</a>
+        <a href="community.html" class="block text-gray-600 hover:text-tech-blue py-2">社区</a>
+      </div>
+    </div>
+    <div class="bg-gray-900 text-white text-xs sm:text-sm py-1.5 overflow-hidden">
+      <div class="marquee flex items-center whitespace-nowrap">
+        <span class="mx-4 font-semibold"><i class="bi bi-graph-up-arrow text-harvest-gold mr-1"></i>实时行情：</span>
+        <span class="mx-3">湖北潜江小龙虾 4-6钱: <span class="text-green-400 font-medium">↑ ¥18/斤</span></span>
+        <span class="mx-3">江苏兴化小龙虾 6-8钱: <span class="text-green-400 font-medium">↑ ¥25/斤</span></span>
+        <span class="mx-3">安徽合肥大闸蟹 2两母: <span class="text-yellow-400 font-medium">→ ¥45/斤</span></span>
+        <span class="mx-3">江苏阳澄湖大闸蟹 3两公: <span class="text-yellow-400 font-medium">→ ¥68/斤</span></span>
+        <span class="mx-3">广东广州澳洲龙虾: <span class="text-red-400 font-medium">↓ ¥120/斤</span></span>
+        <span class="mx-3">湖南岳阳小龙虾 7-9钱: <span class="text-green-400 font-medium">↑ ¥32/斤</span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== 页面标题 ==================== -->
+  <section class="pt-36 pb-12 md:pt-44 md:pb-16 bg-gradient-to-br from-blue-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="inline-flex items-center px-4 py-1.5 bg-tech-blue/10 text-tech-blue rounded-full text-sm font-medium mb-4">
+        <i class="bi bi-speedometer2 mr-2"></i> 平台功能
+      </div>
+      <h1 class="text-[clamp(2rem,4vw,3rem)] font-bold mb-4">平台核心功能</h1>
+      <p class="text-gray-500 max-w-2xl mx-auto">肴柒蟹覆盖螃蟹与龙虾产业链的各个环节，为养殖户、商家和消费者提供全方位服务</p>
+    </div>
+  </section>
+
+  <!-- ==================== 四大功能卡片 ==================== -->
+  <section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="feature-card bg-white rounded-xl shadow-card hover:shadow-card-hover transition-all p-6 border-t-4 border-tech-blue group" data-reveal>
+          <div class="w-14 h-14 rounded-xl bg-tech-blue/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <i class="bi bi-speedometer2 text-tech-blue text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">智能养殖管理</h3>
+          <p class="text-gray-500 mb-4 text-sm leading-relaxed">记录每日养殖数据，接入IoT设备实时监控水质，AI智能分析提供养殖建议。</p>
+          <ul class="text-sm text-gray-400 space-y-2">
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-tech-blue mr-2 text-xs"></i> 智能养殖日志</li>
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-tech-blue mr-2 text-xs"></i> 水质实时监控</li>
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-tech-blue mr-2 text-xs"></i> 病害AI识别</li>
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-tech-blue mr-2 text-xs"></i> 专家在线问诊</li>
+          </ul>
+        </div>
+        <div class="feature-card bg-white rounded-xl shadow-card hover:shadow-card-hover transition-all p-6 border-t-4 border-food-red group" data-reveal>
+          <div class="w-14 h-14 rounded-xl bg-food-red/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <i class="bi bi-cup-hot-fill text-food-red text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">专业烹饪指导</h3>
+          <p class="text-gray-500 mb-4 text-sm leading-relaxed">提供精确到克的量化菜谱，名厨视频教学，智能工具辅助您做出美味佳肴。</p>
+          <ul class="text-sm text-gray-400 space-y-2">
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-food-red mr-2 text-xs"></i> 结构化菜谱库</li>
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-food-red mr-2 text-xs"></i> 名厨视频教程</li>
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-food-red mr-2 text-xs"></i> 食材安全指南</li>
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-food-red mr-2 text-xs"></i> 智能烹饪工具</li>
+          </ul>
+        </div>
+        <div class="feature-card bg-white rounded-xl shadow-card hover:shadow-card-hover transition-all p-6 border-t-4 border-harvest-gold group" data-reveal>
+          <div class="w-14 h-14 rounded-xl bg-harvest-gold/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <i class="bi bi-arrow-left-right text-harvest-gold text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">实时市场交易</h3>
+          <p class="text-gray-500 mb-4 text-sm leading-relaxed">连接产地与餐桌，提供实时行情数据，担保交易保障买卖双方权益。</p>
+          <ul class="text-sm text-gray-400 space-y-2">
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-harvest-gold mr-2 text-xs"></i> 全国实时行情</li>
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-harvest-gold mr-2 text-xs"></i> 供需信息发布</li>
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-harvest-gold mr-2 text-xs"></i> 安全担保交易</li>
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-harvest-gold mr-2 text-xs"></i> 政策资讯速递</li>
+          </ul>
+        </div>
+        <div class="feature-card bg-white rounded-xl shadow-card hover:shadow-card-hover transition-all p-6 border-t-4 border-water-green group" data-reveal>
+          <div class="w-14 h-14 rounded-xl bg-water-green/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <i class="bi bi-people-fill text-water-green text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">行业社区交流</h3>
+          <p class="text-gray-500 mb-4 text-sm leading-relaxed">汇聚全国养殖户、厨师和美食爱好者，分享经验，交流技术，共同成长。</p>
+          <ul class="text-sm text-gray-400 space-y-2">
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-water-green mr-2 text-xs"></i> 养殖经验分享</li>
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-water-green mr-2 text-xs"></i> 烹饪作品展示</li>
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-water-green mr-2 text-xs"></i> 专家问答专区</li>
+            <li class="flex items-center"><i class="bi bi-check-circle-fill text-water-green mr-2 text-xs"></i> 达人认证体系</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 养殖端详细功能 ==================== -->
+  <section class="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center px-4 py-1.5 bg-tech-blue/10 text-tech-blue rounded-full text-sm font-medium mb-4">
+          <i class="bi bi-tree-fill mr-2"></i> 养殖端
+        </div>
+        <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4" data-reveal>智慧养殖管理系统</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto" data-reveal>为养殖户提供从苗种到上市的全流程数字化管理工具</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 bg-white rounded-2xl shadow-card p-6 lg:p-8" data-reveal>
+          <h3 class="text-xl font-bold mb-2 flex items-center">
+            <i class="bi bi-wifi text-tech-blue mr-2"></i> 环境实时监控
+          </h3>
+          <p class="text-gray-500 text-sm mb-6">接入第三方水质传感器，实时掌握塘口动态</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+            <div class="bg-gray-50 rounded-xl p-4 text-center">
+              <i class="bi bi-thermometer-half text-tech-blue text-xl"></i>
+              <p class="text-xs text-gray-400 mt-1">水温</p>
+              <p class="text-lg font-bold text-gray-800">24.5°C</p>
+              <span class="text-xs text-green-500">正常</span>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 text-center">
+              <i class="bi bi-droplet text-water-green text-xl"></i>
+              <p class="text-xs text-gray-400 mt-1">溶解氧</p>
+              <p class="text-lg font-bold text-gray-800">6.8 mg/L</p>
+              <span class="text-xs text-green-500">正常</span>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 text-center">
+              <i class="bi bi-flask text-harvest-gold text-xl"></i>
+              <p class="text-xs text-gray-400 mt-1">pH值</p>
+              <p class="text-lg font-bold text-gray-800">7.6</p>
+              <span class="text-xs text-green-500">正常</span>
+            </div>
+            <div class="bg-gray-50 rounded-xl p-4 text-center">
+              <i class="bi bi-exclamation-triangle text-food-red text-xl"></i>
+              <p class="text-xs text-gray-400 mt-1">氨氮</p>
+              <p class="text-lg font-bold text-gray-800">0.12 mg/L</p>
+              <span class="text-xs text-yellow-500">偏高</span>
+            </div>
+          </div>
+          <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 flex items-start">
+            <i class="bi bi-info-circle-fill text-harvest-gold mt-0.5 mr-3"></i>
+            <div>
+              <p class="text-sm font-medium text-yellow-800">智能建议</p>
+              <p class="text-xs text-yellow-700 mt-1">氨氮偏高，建议减少投喂量10%，增加换水频率。溶解氧低于5.0mg/L时系统将自动推送报警。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-card p-6 lg:p-8" data-reveal>
+          <h3 class="text-xl font-bold mb-2 flex items-center">
+            <i class="bi bi-journal-text text-tech-blue mr-2"></i> 养殖日志
+          </h3>
+          <p class="text-gray-500 text-sm mb-6">今日记录 (2026-05-09)</p>
+          <div class="space-y-4">
+            <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+              <span class="text-sm text-gray-600">投喂量</span>
+              <span class="text-sm font-medium text-gray-800">125 kg</span>
+            </div>
+            <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+              <span class="text-sm text-gray-600">饲料蛋白比</span>
+              <span class="text-sm font-medium text-gray-800">32%</span>
+            </div>
+            <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+              <span class="text-sm text-gray-600">死亡率</span>
+              <span class="text-sm font-medium text-green-600">0.3%</span>
+            </div>
+            <div class="flex justify-between items-center pb-3 border-b border-gray-100">
+              <span class="text-sm text-gray-600">存塘量</span>
+              <span class="text-sm font-medium text-gray-800">~8500 只</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-gray-600">蜕壳情况</span>
+              <span class="text-sm font-medium text-tech-blue">正常进行</span>
+            </div>
+          </div>
+          <button class="mt-6 w-full px-4 py-2.5 bg-tech-blue text-white rounded-xl text-sm font-medium hover:bg-tech-blue-dark transition-colors">
+            <i class="bi bi-plus-circle mr-1"></i> 记录今日数据
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 rounded-xl bg-tech-blue/10 flex items-center justify-center mr-4">
+              <i class="bi bi-shield-plus text-tech-blue text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-bold">病害图谱</h3>
+              <p class="text-xs text-gray-400">AI图文识别</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-2">
+            <div class="aspect-square rounded-lg bg-gray-100 flex items-center justify-center text-2xl cursor-pointer hover:ring-2 ring-tech-blue transition-all">🦀</div>
+            <div class="aspect-square rounded-lg bg-gray-100 flex items-center justify-center text-2xl cursor-pointer hover:ring-2 ring-tech-blue transition-all">🦞</div>
+            <div class="aspect-square rounded-lg bg-gray-100 flex items-center justify-center text-2xl cursor-pointer hover:ring-2 ring-tech-blue transition-all">🔬</div>
+          </div>
+          <p class="text-xs text-gray-400 mt-2">点击图片上传识别病害</p>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 rounded-xl bg-tech-blue/10 flex items-center justify-center mr-4">
+              <i class="bi bi-chat-dots text-tech-blue text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-bold">专家在线问诊</h3>
+              <p class="text-xs text-gray-400">图文/视频咨询</p>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <div class="flex items-center">
+              <div class="w-8 h-8 rounded-full bg-tech-blue/20 flex items-center justify-center text-sm font-bold text-tech-blue mr-3">王</div>
+              <div class="flex-1">
+                <p class="text-sm font-medium">王教授</p>
+                <p class="text-xs text-gray-400">水产养殖 · 在线</p>
+              </div>
+              <button class="px-3 py-1 text-xs bg-tech-blue text-white rounded-lg hover:bg-tech-blue-dark transition-colors">咨询</button>
+            </div>
+            <div class="flex items-center">
+              <div class="w-8 h-8 rounded-full bg-food-red/20 flex items-center justify-center text-sm font-bold text-food-red mr-3">李</div>
+              <div class="flex-1">
+                <p class="text-sm font-medium">李研究员</p>
+                <p class="text-xs text-gray-400">病害防治 · 忙碌</p>
+              </div>
+              <button class="px-3 py-1 text-xs bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed">预约</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 rounded-xl bg-tech-blue/10 flex items-center justify-center mr-4">
+              <i class="bi bi-book text-tech-blue text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-bold">标准化技术库</h3>
+              <p class="text-xs text-gray-400">分品种 · 按月指导</p>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-tech-blue/5 transition-colors">
+              <span class="text-sm">🦀 中华绒螯蟹 · 5月管理</span>
+              <i class="bi bi-download text-tech-blue"></i>
+            </div>
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-tech-blue/5 transition-colors">
+              <span class="text-sm">🦞 锦绣龙虾 · 养殖手册</span>
+              <i class="bi bi-download text-tech-blue"></i>
+            </div>
+            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-tech-blue/5 transition-colors">
+              <span class="text-sm">📊 水质管理标准指南</span>
+              <i class="bi bi-download text-tech-blue"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 烹饪端详细功能 ==================== -->
+  <section class="py-20 bg-gradient-to-b from-orange-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <div class="inline-flex items-center px-4 py-1.5 bg-food-red/10 text-food-red rounded-full text-sm font-medium mb-4">
+          <i class="bi bi-cup-hot-fill mr-2"></i> 烹饪端
+        </div>
+        <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4" data-reveal>专业烹饪美食指南</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto" data-reveal>从食材处理到烹饪技巧，让每一道蟹虾料理都成为艺术品</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 rounded-xl bg-food-red/10 flex items-center justify-center mr-4">
+              <i class="bi bi-calculator text-food-red text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-bold">食材换算器</h3>
+              <p class="text-xs text-gray-400">自动计算配料分量</p>
+            </div>
+          </div>
+          <div class="flex items-end space-x-4">
+            <div class="flex-1">
+              <label class="text-xs text-gray-500 mb-1 block">食材重量 (g)</label>
+              <input type="number" id="ingredientWeight" value="500" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-food-red" />
+            </div>
+            <div class="flex-1">
+              <label class="text-xs text-gray-500 mb-1 block">对应人数</label>
+              <input type="number" id="servingCount" value="3" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-food-red" />
+            </div>
+            <button id="calcBtn" class="px-4 py-2 bg-food-red text-white rounded-lg text-sm font-medium hover:bg-food-red-dark transition-colors">计算</button>
+          </div>
+          <div id="calcResult" class="mt-4 p-3 bg-orange-50 rounded-lg text-sm text-gray-700 hidden">
+            建议配料：食用油 45ml · 盐 8g · 生抽 15ml · 姜 20g · 蒜 25g · 辣椒 10g
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
+          <div class="flex items-center mb-4">
+            <div class="w-12 h-12 rounded-xl bg-food-red/10 flex items-center justify-center mr-4">
+              <i class="bi bi-stopwatch text-food-red text-xl"></i>
+            </div>
+            <div>
+              <h3 class="font-bold">烹饪计时器</h3>
+              <p class="text-xs text-gray-400">精准掌握烹饪时间</p>
+            </div>
+          </div>
+          <div class="text-center">
+            <div id="timerDisplay" class="text-4xl font-bold text-gray-800 mb-4 font-mono">00:00</div>
+            <div class="flex justify-center space-x-3">
+              <button id="timerStartBtn" class="px-5 py-2 bg-food-red text-white rounded-lg text-sm font-medium hover:bg-food-red-dark transition-colors">
+                <i class="bi bi-play-fill mr-1"></i> 开始
+              </button>
+              <button id="timerResetBtn" class="px-5 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors">
+                <i class="bi bi-arrow-counterclockwise mr-1"></i> 重置
+              </button>
+            </div>
+            <div class="mt-3 flex flex-wrap justify-center gap-2">
+              <button class="quick-timer px-3 py-1 text-xs bg-gray-100 rounded-full hover:bg-food-red/10 hover:text-food-red transition-colors" data-time="300">5min</button>
+              <button class="quick-timer px-3 py-1 text-xs bg-gray-100 rounded-full hover:bg-food-red/10 hover:text-food-red transition-colors" data-time="600">10min</button>
+              <button class="quick-timer px-3 py-1 text-xs bg-gray-100 rounded-full hover:bg-food-red/10 hover:text-food-red transition-colors" data-time="900">15min</button>
+              <button class="quick-timer px-3 py-1 text-xs bg-gray-100 rounded-full hover:bg-food-red/10 hover:text-food-red transition-colors" data-time="1800">30min</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 bg-food-red/5 border border-food-red/20 rounded-2xl p-6 flex items-start" data-reveal>
+        <div class="w-12 h-12 rounded-xl bg-food-red/10 flex items-center justify-center flex-shrink-0 mr-4">
+          <i class="bi bi-shield-check text-food-red text-xl"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-800 mb-2">食材安全提示</h3>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li><i class="bi bi-exclamation-circle text-food-red mr-2"></i>虾头内脏可能含有重金属，建议去除后食用</li>
+            <li><i class="bi bi-exclamation-circle text-food-red mr-2"></i>死蟹死虾会产生组胺毒素，禁止食用</li>
+            <li><i class="bi bi-exclamation-circle text-food-red mr-2"></i>烹饪前请确保食材彻底清洗干净</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 页脚 ==================== -->
+  <footer class="bg-gray-900 text-gray-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center space-x-2 mb-4"><span class="text-2xl">🦀</span><span class="text-xl font-bold text-white">肴柒蟹</span></div>
+          <p class="text-sm leading-relaxed">科技赋能养殖，美味连接生活。</p>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-4">快速链接</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="index.html" class="hover:text-white transition-colors">首页</a></li>
+            <li><a href="features.html" class="hover:text-white transition-colors">平台功能</a></li>
+            <li><a href="market.html" class="hover:text-white transition-colors">市场行情</a></li>
+            <li><a href="recipes.html" class="hover:text-white transition-colors">美食菜谱</a></li>
+            <li><a href="community.html" class="hover:text-white transition-colors">社区交流</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-4">服务支持</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="hover:text-white transition-colors">帮助中心</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">用户协议</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">隐私政策</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">意见反馈</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-white mb-4">联系我们</h4>
+          <ul class="space-y-2 text-sm">
+            <li><i class="bi bi-envelope mr-2"></i>contact@yaoqixie.com</li>
+            <li><i class="bi bi-telephone mr-2"></i>400-888-8888</li>
+            <li class="flex space-x-3 mt-3">
+              <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-tech-blue transition-colors"><i class="bi bi-wechat"></i></a>
+              <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-tech-blue transition-colors"><i class="bi bi-sina-weibo"></i></a>
+              <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-tech-blue transition-colors"><i class="bi bi-tiktok"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
+        <p>&copy; 2026 肴柒蟹 (YaoQiXie). All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button id="backToTop" class="fixed bottom-6 right-6 w-12 h-12 bg-tech-blue text-white rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:bg-tech-blue-dark z-40">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
