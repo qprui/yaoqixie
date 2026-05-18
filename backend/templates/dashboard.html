@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block title %}肴柒蟹 - 我的养殖{% endblock %}
+{% block content %}
+
+<!-- 顶部导航 -->
+<nav class="bg-white shadow-sm border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center space-x-3">
+        <a href="http://127.0.0.1:5000/dashboard" class="text-2xl font-bold bg-gradient-to-r from-tech-blue to-food-red bg-clip-text text-transparent">
+          🦀 肴柒蟹
+        </a>
+        <span class="text-xs text-gray-400 hidden sm:inline">养殖户管理中心</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span class="text-sm text-gray-600 hidden sm:inline">
+          <i class="bi bi-person-circle text-tech-blue mr-1"></i>{{ current_user.username }}
+        </span>
+        <a href="http://127.0.0.1:5000/dashboard" class="text-sm text-tech-blue font-medium hover:underline">
+          <i class="bi bi-grid-fill mr-1"></i>仪表盘
+        </a>
+        <a href="/static/index.html" class="text-sm text-gray-500 hover:text-gray-700 transition-colors">
+          <i class="bi bi-globe2 mr-1"></i>网站首页
+        </a>
+        <a href="http://127.0.0.1:5000/logout" class="px-3 py-1.5 text-sm bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 transition-colors">
+          退出
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- 欢迎 -->
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-2xl font-bold text-gray-800">
+        👋 你好，{{ current_user.real_name or current_user.username }}
+      </h1>
+      <p class="text-sm text-gray-500 mt-1">欢迎回到肴柒蟹养殖管理中心</p>
+    </div>
+    <a href="http://127.0.0.1:5000/pond/add" class="px-5 py-2.5 bg-tech-blue text-white rounded-xl text-sm font-medium hover:bg-tech-blue-dark transition-all flex items-center">
+      <i class="bi bi-plus-lg mr-1.5"></i> 添加塘口
+    </a>
+  </div>
+
+  <!-- 统计概览 -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div class="bg-white rounded-2xl shadow-card p-5 border border-gray-100">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-500">塘口数量</p>
+          <p class="text-2xl font-bold text-gray-800 mt-1">{{ stats.pond_count }}</p>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-tech-blue/10 flex items-center justify-center">
+          <i class="bi bi-water text-tech-blue text-xl"></i>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl shadow-card p-5 border border-gray-100">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-500">养殖总面积</p>
+          <p class="text-2xl font-bold text-gray-800 mt-1">{{ "%.1f"|format(stats.total_area) if stats.total_area else 0 }} <span class="text-sm font-normal text-gray-400">亩</span></p>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-water-green/10 flex items-center justify-center">
+          <i class="bi bi-bounding-box-circles text-water-green text-xl"></i>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl shadow-card p-5 border border-gray-100">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-500">用户类型</p>
+          <p class="text-2xl font-bold text-gray-800 mt-1">
+            {% if current_user.role == 'farmer' %}👨‍🌾 养殖户{% elif current_user.role == 'expert' %}🔬 专家{% else %}🍽️ 消费者{% endif %}
+          </p>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-harvest-gold/10 flex items-center justify-center">
+          <i class="bi bi-person-badge text-harvest-gold text-xl"></i>
+        </div>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl shadow-card p-5 border border-gray-100">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-gray-500">最近记录</p>
+          <p class="text-2xl font-bold text-gray-800 mt-1">
+            {% if stats.latest_log %}{{ stats.latest_log.log_date }}{% else %}暂无{% endif %}
+          </p>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-food-red/10 flex items-center justify-center">
+          <i class="bi bi-journal-text text-food-red text-xl"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 塘口列表 -->
+  <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+    <i class="bi bi-grid-3x3-gap-fill text-tech-blue mr-2"></i> 我的养殖塘口
+  </h2>
+
+  {% if ponds %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for pond in ponds %}
+        <div class="bg-white rounded-2xl shadow-card border border-gray-100 overflow-hidden hover:shadow-card-hover transition-all">
+          <div class="bg-gradient-to-r from-tech-blue to-tech-blue-dark px-6 py-4 text-white">
+            <div class="flex items-center justify-between">
+              <h3 class="font-bold text-lg">{{ pond.name }}</h3>
+              <span class="text-xs bg-white/20 px-2 py-0.5 rounded-full">{{ pond.species or '未设定' }}</span>
+            </div>
+          </div>
+          <div class="p-5">
+            <div class="grid grid-cols-2 gap-3 text-sm mb-4">
+              <div>
+                <span class="text-gray-400">面积</span>
+                <p class="font-medium text-gray-800">{{ pond.area or '-' }} 亩</p>
+              </div>
+              <div>
+                <span class="text-gray-400">水深</span>
+                <p class="font-medium text-gray-800">{{ pond.water_depth or '-' }} m</p>
+              </div>
+              <div>
+                <span class="text-gray-400">位置</span>
+                <p class="font-medium text-gray-800 truncate">{{ pond.location or '-' }}</p>
+              </div>
+              <div>
+                <span class="text-gray-400">增氧机</span>
+                <p class="font-medium text-gray-800">{{ '✅ 已配备' if pond.aeration else '❌ 未配备' }}</p>
+              </div>
+            </div>
+            <div class="flex space-x-2">
+              <a href="http://127.0.0.1:5000/pond/{{ pond.id }}" class="flex-1 text-center px-3 py-2 bg-tech-blue text-white rounded-xl text-sm font-medium hover:bg-tech-blue-dark transition-colors">
+                <i class="bi bi-eye mr-1"></i> 查看详情
+              </a>
+              <a href="http://127.0.0.1:5000/pond/{{ pond.id }}/edit" class="px-3 py-2 bg-gray-100 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-200 transition-colors">
+                <i class="bi bi-pencil"></i>
+              </a>
+              <form method="POST" action="http://127.0.0.1:5000/pond/{{ pond.id }}/delete" onsubmit="return confirm('确定删除「{{ pond.name }}」吗？所有数据将不可恢复。')" class="inline">
+                <button type="submit" class="px-3 py-2 bg-red-50 text-food-red rounded-xl text-sm font-medium hover:bg-red-100 transition-colors">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="bg-white rounded-2xl shadow-card p-12 text-center border border-gray-100">
+      <span class="text-6xl block mb-4">🏞️</span>
+      <h3 class="text-xl font-bold text-gray-800 mb-2">还没有添加塘口</h3>
+      <p class="text-gray-500 mb-6">点击下方按钮添加您的第一个养殖塘口，开始记录环境数据和养殖日志</p>
+      <a href="http://127.0.0.1:5000/pond/add" class="inline-block px-6 py-3 bg-tech-blue text-white rounded-xl font-medium hover:bg-tech-blue-dark transition-all">
+        <i class="bi bi-plus-lg mr-1.5"></i> 添加塘口
+      </a>
+    </div>
+  {% endif %}
+</main>
+
+{% endblock %}

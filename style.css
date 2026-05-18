@@ -122,6 +122,15 @@ body {
 .recipe-card {
   cursor: pointer;
 }
+
+/* ===== Toast 下载提示动画 ===== */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(100px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.animate-slide-in {
+  animation: slideIn 0.4s ease-out;
+}
 .recipe-card:hover .aspect-\\[4\\/3\\] > span:first-child {
   transform: scale(1.1);
   transition: transform 0.4s ease;
@@ -207,3 +216,68 @@ body {
 /* @media (prefers-color-scheme: dark) {
   稍后根据需求实现
 } */
+
+/* ===== 英雄区动态动画场景 ===== */
+.hero-bg-animated {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0c4a6e 0%, #1e3a5f 20%, #2d6a4f 45%, #1b4332 65%, #0c4a6e 85%, #1a2a6c 100%);
+  background-size: 400% 400%;
+  animation: heroBgShift 8s ease infinite;
+}
+@keyframes heroBgShift {
+  0% { background-position: 0% 50%; }
+  25% { background-position: 50% 0%; }
+  50% { background-position: 100% 50%; }
+  75% { background-position: 50% 100%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 气泡 */
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5), rgba(255,255,255,0.1));
+  animation: bubbleRise 4s ease-in-out infinite;
+}
+@keyframes bubbleRise {
+  0% { transform: translateY(0) scale(0.3); opacity: 0; }
+  20% { opacity: 0.7; }
+  80% { opacity: 0.5; }
+  100% { transform: translateY(-450px) scale(1.2); opacity: 0; }
+}
+
+/* 浮动生物 */
+.hero-creature {
+  position: absolute;
+  font-size: 2.5rem;
+  animation: creatureSwim 6s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  user-select: none;
+}
+.hero-crab { bottom: 20%; left: 15%; animation-duration: 5s; animation-delay: 0s; font-size: 2.8rem; }
+.hero-lobster { bottom: 35%; right: 20%; animation-duration: 7s; animation-delay: 1s; font-size: 3rem; }
+.hero-shrimp { bottom: 50%; left: 25%; animation-duration: 6s; animation-delay: 2s; font-size: 1.8rem; }
+.hero-star { bottom: 60%; right: 35%; animation-duration: 4s; animation-delay: 0.5s; font-size: 1.5rem; }
+.hero-fish { bottom: 45%; right: 15%; animation-duration: 8s; animation-delay: 1.5s; font-size: 1.6rem; }
+@keyframes creatureSwim {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-12px) rotate(-3deg); }
+  50% { transform: translateY(-20px) rotate(2deg); }
+  75% { transform: translateY(-8px) rotate(-1deg); }
+}
+
+/* 英雄区容器 */
+.hero-scene .hero-bg-animated {
+  min-height: 300px;
+}
+
+/* 响应式 */
+@media (max-width: 640px) {
+  .hero-creature { font-size: 1.8rem; }
+  .hero-crab { font-size: 2rem; }
+  .hero-lobster { font-size: 2.2rem; }
+}
+

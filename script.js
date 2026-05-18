@@ -62,10 +62,60 @@ document.addEventListener('DOMContentLoaded', () => {
   // =============================================
   // 3. 模式切换 (已移除 - 改为多页面导航)
   // =============================================
+
+  // =============================================
+  // 4. 菜谱分类筛选 (recipes.html)
+  // =============================================
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const recipeSections = document.querySelectorAll('.recipe-detail');
+
+  if (filterBtns.length > 0 && recipeSections.length > 0) {
+    // 显示所有菜谱
+    const showAllRecipes = () => {
+      recipeSections.forEach(section => {
+        section.style.display = 'block';
+      });
+    };
+
+    // 根据分类筛选
+    const filterRecipes = (category) => {
+      recipeSections.forEach(section => {
+        const cats = section.dataset.category || '';
+        if (cats.split(' ').includes(category)) {
+          section.style.display = 'block';
+        } else {
+          section.style.display = 'none';
+        }
+      });
+    };
+
+    // 更新筛选按钮状态
+    const updateFilterBtn = (activeBtn) => {
+      filterBtns.forEach(btn => {
+        btn.classList.remove('bg-tech-blue', 'text-white');
+        btn.classList.add('bg-white', 'text-gray-600', 'border', 'border-gray-200', 'hover:border-food-red', 'hover:text-food-red');
+      });
+      activeBtn.classList.remove('bg-white', 'text-gray-600', 'border', 'border-gray-200', 'hover:border-food-red', 'hover:text-food-red');
+      activeBtn.classList.add('bg-tech-blue', 'text-white');
+    };
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        updateFilterBtn(btn);
+
+        if (!filter || filter === 'all') {
+          showAllRecipes();
+        } else {
+          filterRecipes(filter);
+        }
+      });
+    });
+  }
   // 导航栏 active 状态已通过各页面 HTML 中直接设置 text-tech-blue/text-food-red/text-harvest-gold/text-water-green 实现
 
   // =============================================
-  // 4. 滚动渐入动画 (Intersection Observer)
+  // 5. 滚动渐入动画 (Intersection Observer)
   // =============================================
   const revealElements = document.querySelectorAll('[data-reveal]');
 
@@ -371,5 +421,46 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   console.log('🦀 肴柒蟹 (YaoQiXie) 已加载完成');
-  console.log('📦 多页面导航模式 | 首页 · 功能 · 行情 · 菜谱 · 社区');
+  console.log('📦 多页面导航模式 | 首页 · 养殖 · 行情 · 菜谱 · 社区');
+
+  // =============================================
+  // 12. 技术手册下载 (features.html)
+  // =============================================
+  document.querySelectorAll('.tech-download').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const docName = link.dataset.doc || '技术文档';
+
+      // 创建模拟下载提示
+      const toast = document.createElement('div');
+      toast.className = 'fixed top-24 right-4 bg-white rounded-xl shadow-2xl border border-gray-100 p-4 z-50 animate-slide-in';
+      toast.style.maxWidth = '320px';
+      toast.innerHTML = `
+        <div class="flex items-start">
+          <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center mr-3 flex-shrink-0">
+            <i class="bi bi-check-lg text-green-500 text-xl"></i>
+          </div>
+          <div>
+            <p class="font-medium text-gray-800 text-sm">《${docName}》下载成功</p>
+            <p class="text-xs text-gray-400 mt-0.5">PDF 文件已保存到下载目录</p>
+            <div class="mt-2 w-full bg-gray-200 rounded-full h-1">
+              <div class="bg-green-500 h-1 rounded-full" style="width: 100%"></div>
+            </div>
+          </div>
+          <button class="ml-3 text-gray-400 hover:text-gray-600 flex-shrink-0" onclick="this.parentElement.parentElement.remove()">
+            <i class="bi bi-x"></i>
+          </button>
+        </div>
+      `;
+      document.body.appendChild(toast);
+
+      // 自动消失
+      setTimeout(() => {
+        toast.style.transition = 'opacity 0.3s, transform 0.3s';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    });
+  });
 });

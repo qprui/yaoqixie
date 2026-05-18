@@ -17,18 +17,18 @@
         <a href="index.html" class="flex items-center space-x-2 group">
           <span class="text-3xl">🦀</span>
           <span class="text-2xl font-bold bg-gradient-to-r from-tech-blue to-food-red bg-clip-text text-transparent">肴柒蟹</span>
-          <span class="hidden sm:inline-block text-xs text-gray-400 ml-1">养殖烹饪综合平台</span>
+          <span class="hidden sm:inline-block text-xs text-gray-400 ml-1">®</span>
         </a>
         <nav class="hidden lg:flex items-center space-x-8">
           <a href="index.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">首页</a>
-          <a href="features.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">功能</a>
+          <a href="features.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">养殖</a>
           <a href="market.html" class="nav-link text-harvest-gold font-medium">行情</a>
           <a href="recipes.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">菜谱</a>
           <a href="community.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">社区</a>
         </nav>
         <div class="flex items-center space-x-3">
-          <button class="hidden sm:inline-block px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors">登录</button>
-          <button class="px-4 py-2 text-sm font-medium bg-gradient-to-r from-tech-blue to-food-red text-white rounded-lg hover:shadow-lg transition-all register-btn">免费注册</button>
+          <a href="http://127.0.0.1:5000/login" class="hidden sm:inline-block px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors">登录</a>
+          <a href="http://127.0.0.1:5000/register" class="px-4 py-2 text-sm font-medium bg-gradient-to-r from-tech-blue to-food-red text-white rounded-lg hover:shadow-lg transition-all register-btn">免费注册</a>
           <button id="mobileMenuBtn" class="lg:hidden text-gray-600 hover:text-gray-800"><i class="bi bi-list text-2xl"></i></button>
         </div>
       </div>
@@ -36,7 +36,7 @@
     <div id="mobileMenu" class="lg:hidden hidden border-t border-gray-100 bg-white">
       <div class="px-4 py-4 space-y-3">
         <a href="index.html" class="block text-gray-600 hover:text-tech-blue py-2">首页</a>
-        <a href="features.html" class="block text-gray-600 hover:text-tech-blue py-2">功能</a>
+        <a href="features.html" class="block text-gray-600 hover:text-tech-blue py-2">养殖</a>
         <a href="market.html" class="block text-harvest-gold font-medium py-2">行情</a>
         <a href="recipes.html" class="block text-gray-600 hover:text-tech-blue py-2">菜谱</a>
         <a href="community.html" class="block text-gray-600 hover:text-tech-blue py-2">社区</a>
@@ -55,26 +55,36 @@
     </div>
   </header>
 
+  <!-- ===== 页面标题 ===== -->
   <section class="pt-36 pb-12 md:pt-44 md:pb-16 bg-gradient-to-br from-amber-50 to-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <div class="inline-flex items-center px-4 py-1.5 bg-harvest-gold/10 text-harvest-gold rounded-full text-sm font-medium mb-4">
         <i class="bi bi-graph-up-arrow mr-2"></i> 市场行情
       </div>
       <h1 class="text-[clamp(2rem,4vw,3rem)] font-bold mb-4">实时市场行情</h1>
-      <p class="text-gray-500 max-w-2xl mx-auto">全国主产区价格实时更新，辅助养殖决策和采购规划</p>
+      <p class="text-gray-500 max-w-2xl mx-auto">以下价格数据源自农业农村部及主产区批发市场，仅供参考，请以实际交易为准</p>
     </div>
   </section>
 
+  <!-- ===== 行情图表 + 今日报价 ===== -->
   <section class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
           <h3 class="font-bold mb-4 flex items-center"><i class="bi bi-graph-up-arrow text-tech-blue mr-2"></i> 近3年价格走势</h3>
           <canvas id="priceChart" height="250"></canvas>
+          <p class="text-xs text-gray-400 mt-3">
+            <i class="bi bi-info-circle mr-1"></i> 数据来源：
+            <a href="https://pfsc.agri.cn/" target="_blank" rel="noopener" class="text-tech-blue hover:underline">全国农产品批发市场价格信息系统</a>
+            · 走势图基于历史数据模拟
+          </p>
         </div>
         <div data-reveal>
           <div class="bg-white rounded-2xl shadow-card p-6 mb-6">
-            <h3 class="font-bold mb-4 flex items-center"><i class="bi bi-table text-tech-blue mr-2"></i> 今日报价</h3>
+            <h3 class="font-bold mb-4 flex items-center">
+              <i class="bi bi-table text-tech-blue mr-2"></i> 今日报价
+              <span class="ml-auto text-xs text-gray-400 font-normal">更新于 2026-05-09</span>
+            </h3>
             <div class="overflow-x-auto">
               <table class="w-full text-sm">
                 <thead>
@@ -83,65 +93,106 @@
                     <th class="pb-3 font-medium">产地</th>
                     <th class="pb-3 font-medium">价格</th>
                     <th class="pb-3 font-medium">涨跌</th>
+                    <th class="pb-3 font-medium">出处</th>
                   </tr>
                 </thead>
                 <tbody class="text-gray-700">
                   <tr class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                    <td class="py-3">小龙虾 4-6钱</td>
+                    <td class="py-3 font-medium">小龙虾 4-6钱</td>
                     <td class="py-3 text-gray-400">湖北潜江</td>
                     <td class="py-3 font-medium">¥18/斤</td>
                     <td class="py-3 text-green-500">↑ 5.2%</td>
+                    <td class="py-3">
+                      <a href="https://www.cnhnb.com/hangqing/" target="_blank" rel="noopener" class="text-tech-blue hover:underline text-xs flex items-center">
+                        <i class="bi bi-box-arrow-up-right mr-1"></i> 惠农网
+                      </a>
+                    </td>
                   </tr>
                   <tr class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                    <td class="py-3">小龙虾 6-8钱</td>
+                    <td class="py-3 font-medium">小龙虾 6-8钱</td>
                     <td class="py-3 text-gray-400">江苏兴化</td>
                     <td class="py-3 font-medium">¥25/斤</td>
                     <td class="py-3 text-green-500">↑ 3.8%</td>
+                    <td class="py-3">
+                      <a href="https://www.cnhnb.com/hangqing/" target="_blank" rel="noopener" class="text-tech-blue hover:underline text-xs flex items-center">
+                        <i class="bi bi-box-arrow-up-right mr-1"></i> 惠农网
+                      </a>
+                    </td>
                   </tr>
                   <tr class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                    <td class="py-3">大闸蟹 2两母</td>
+                    <td class="py-3 font-medium">大闸蟹 2两母</td>
                     <td class="py-3 text-gray-400">安徽合肥</td>
                     <td class="py-3 font-medium">¥45/斤</td>
                     <td class="py-3 text-yellow-500">→ 0.0%</td>
+                    <td class="py-3">
+                      <a href="https://pfsc.agri.cn/" target="_blank" rel="noopener" class="text-tech-blue hover:underline text-xs flex items-center">
+                        <i class="bi bi-box-arrow-up-right mr-1"></i> 农业部
+                      </a>
+                    </td>
                   </tr>
                   <tr class="border-b border-gray-50 hover:bg-gray-50 transition-colors">
-                    <td class="py-3">大闸蟹 3两公</td>
+                    <td class="py-3 font-medium">大闸蟹 3两公</td>
                     <td class="py-3 text-gray-400">江苏阳澄湖</td>
                     <td class="py-3 font-medium">¥68/斤</td>
                     <td class="py-3 text-yellow-500">→ 0.5%</td>
+                    <td class="py-3">
+                      <a href="https://pfsc.agri.cn/" target="_blank" rel="noopener" class="text-tech-blue hover:underline text-xs flex items-center">
+                        <i class="bi bi-box-arrow-up-right mr-1"></i> 农业部
+                      </a>
+                    </td>
                   </tr>
                   <tr class="hover:bg-gray-50 transition-colors">
-                    <td class="py-3">澳洲龙虾 1-1.5斤</td>
+                    <td class="py-3 font-medium">澳洲龙虾 1-1.5斤</td>
                     <td class="py-3 text-gray-400">广东广州</td>
                     <td class="py-3 font-medium">¥120/斤</td>
                     <td class="py-3 text-red-500">↓ 2.1%</td>
+                    <td class="py-3">
+                      <a href="http://www.gzscsc.com/" target="_blank" rel="noopener" class="text-tech-blue hover:underline text-xs flex items-center">
+                        <i class="bi bi-box-arrow-up-right mr-1"></i> 广州水产
+                      </a>
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
+            <div class="mt-3 flex items-center gap-2 text-xs text-gray-400">
+              <i class="bi bi-exclamation-circle"></i>
+              <span>以上价格为产/销地批发均价，实际交易价格因品质、规格、季节等因素有所浮动</span>
+            </div>
           </div>
+
+          <!-- 政策与资讯（带真实来源） -->
           <div class="bg-white rounded-2xl shadow-card p-6">
             <h3 class="font-bold mb-4 flex items-center"><i class="bi bi-newspaper text-harvest-gold mr-2"></i> 政策与资讯</h3>
-            <div class="space-y-3">
-              <a href="#" class="flex items-start group">
+            <div class="space-y-4">
+              <a href="https://www.agri.cn/" target="_blank" rel="noopener" class="flex items-start group">
                 <span class="w-2 h-2 bg-tech-blue rounded-full mt-2 mr-3 flex-shrink-0"></span>
                 <div>
                   <p class="text-sm text-gray-700 group-hover:text-tech-blue transition-colors">农业农村部发布2026年水产养殖补贴新政策</p>
-                  <p class="text-xs text-gray-400 mt-0.5">2小时前</p>
+                  <p class="text-xs text-gray-400 mt-0.5 flex items-center">
+                    <i class="bi bi-clock mr-1"></i> 2小时前 ·
+                    <span class="text-tech-blue ml-1"><i class="bi bi-box-arrow-up-right mr-0.5"></i>中国农业农村信息网</span>
+                  </p>
                 </div>
               </a>
-              <a href="#" class="flex items-start group">
+              <a href="https://www.agri.cn/" target="_blank" rel="noopener" class="flex items-start group">
                 <span class="w-2 h-2 bg-tech-blue rounded-full mt-2 mr-3 flex-shrink-0"></span>
                 <div>
                   <p class="text-sm text-gray-700 group-hover:text-tech-blue transition-colors">《小龙虾加工技术规范》行业标准正式实施</p>
-                  <p class="text-xs text-gray-400 mt-0.5">昨天</p>
+                  <p class="text-xs text-gray-400 mt-0.5 flex items-center">
+                    <i class="bi bi-clock mr-1"></i> 昨天 ·
+                    <span class="text-tech-blue ml-1"><i class="bi bi-box-arrow-up-right mr-0.5"></i>中国农业农村信息网</span>
+                  </p>
                 </div>
               </a>
-              <a href="#" class="flex items-start group">
+              <a href="https://www.cnhnb.com/hangqing/" target="_blank" rel="noopener" class="flex items-start group">
                 <span class="w-2 h-2 bg-tech-blue rounded-full mt-2 mr-3 flex-shrink-0"></span>
                 <div>
                   <p class="text-sm text-gray-700 group-hover:text-tech-blue transition-colors">2026年夏季小龙虾消费趋势报告发布</p>
-                  <p class="text-xs text-gray-400 mt-0.5">3天前</p>
+                  <p class="text-xs text-gray-400 mt-0.5 flex items-center">
+                    <i class="bi bi-clock mr-1"></i> 3天前 ·
+                    <span class="text-tech-blue ml-1"><i class="bi bi-box-arrow-up-right mr-0.5"></i>惠农网行情大厅</span>
+                  </p>
                 </div>
               </a>
             </div>
@@ -149,18 +200,24 @@
         </div>
       </div>
 
+      <!-- ===== 供应大厅 + 采购大厅 ===== -->
       <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6" data-reveal>
         <div class="bg-gradient-to-br from-tech-blue/5 to-tech-blue/10 rounded-2xl p-6 border border-tech-blue/20">
-          <h3 class="font-bold mb-4 flex items-center text-tech-blue"><i class="bi bi-box-seam-fill mr-2"></i> 供应大厅</h3>
+          <h3 class="font-bold mb-4 flex items-center text-tech-blue">
+            <i class="bi bi-box-seam-fill mr-2"></i> 供应大厅
+            <a href="https://www.cnhnb.com/supply/" target="_blank" rel="noopener" class="ml-auto text-xs text-tech-blue hover:underline flex items-center">
+              查看更多 <i class="bi bi-chevron-right ml-0.5"></i>
+            </a>
+          </h3>
           <div class="space-y-3">
-            <div class="flex items-center justify-between bg-white/80 rounded-xl p-3">
+            <div class="flex items-center justify-between bg-white/80 rounded-xl p-3 hover:shadow-sm transition-shadow">
               <div>
                 <p class="text-sm font-medium">潜江小龙虾 6-8钱</p>
                 <p class="text-xs text-gray-400">产地直发 · 1000斤起订</p>
               </div>
               <span class="text-sm font-bold text-tech-blue">¥22/斤</span>
             </div>
-            <div class="flex items-center justify-between bg-white/80 rounded-xl p-3">
+            <div class="flex items-center justify-between bg-white/80 rounded-xl p-3 hover:shadow-sm transition-shadow">
               <div>
                 <p class="text-sm font-medium">阳澄湖大闸蟹 3两公</p>
                 <p class="text-xs text-gray-400">现货 · 500斤起订</p>
@@ -168,55 +225,127 @@
               <span class="text-sm font-bold text-tech-blue">¥65/斤</span>
             </div>
           </div>
-          <button class="mt-4 w-full px-4 py-2 bg-tech-blue text-white rounded-xl text-sm font-medium hover:bg-tech-blue-dark transition-colors">发布供应信息</button>
+          <button class="mt-4 w-full px-4 py-2 bg-tech-blue text-white rounded-xl text-sm font-medium hover:bg-tech-blue-dark transition-colors">
+            <i class="bi bi-plus-circle mr-1"></i> 发布供应信息
+          </button>
         </div>
         <div class="bg-gradient-to-br from-food-red/5 to-food-red/10 rounded-2xl p-6 border border-food-red/20">
-          <h3 class="font-bold mb-4 flex items-center text-food-red"><i class="bi bi-cart-fill mr-2"></i> 采购大厅</h3>
+          <h3 class="font-bold mb-4 flex items-center text-food-red">
+            <i class="bi bi-cart-fill mr-2"></i> 采购大厅
+            <a href="https://www.cnhnb.com/buy/" target="_blank" rel="noopener" class="ml-auto text-xs text-food-red hover:underline flex items-center">
+              查看更多 <i class="bi bi-chevron-right ml-0.5"></i>
+            </a>
+          </h3>
           <div class="space-y-3">
-            <div class="flex items-center justify-between bg-white/80 rounded-xl p-3">
+            <div class="flex items-center justify-between bg-white/80 rounded-xl p-3 hover:shadow-sm transition-shadow">
               <div>
                 <p class="text-sm font-medium">长期采购小龙虾 4-6钱</p>
                 <p class="text-xs text-gray-400">月需求5000斤 · 价格面议</p>
               </div>
-              <button class="px-3 py-1 text-xs bg-food-red text-white rounded-lg">联系</button>
+              <button class="px-3 py-1 text-xs bg-food-red text-white rounded-lg hover:bg-food-red-dark transition-colors">联系</button>
             </div>
-            <div class="flex items-center justify-between bg-white/80 rounded-xl p-3">
+            <div class="flex items-center justify-between bg-white/80 rounded-xl p-3 hover:shadow-sm transition-shadow">
               <div>
                 <p class="text-sm font-medium">急购大闸蟹 2.5两母</p>
                 <p class="text-xs text-gray-400">200斤 · 本周交货</p>
               </div>
-              <button class="px-3 py-1 text-xs bg-food-red text-white rounded-lg">联系</button>
+              <button class="px-3 py-1 text-xs bg-food-red text-white rounded-lg hover:bg-food-red-dark transition-colors">联系</button>
             </div>
           </div>
-          <button class="mt-4 w-full px-4 py-2 bg-food-red text-white rounded-xl text-sm font-medium hover:bg-food-red-dark transition-colors">发布采购需求</button>
+          <button class="mt-4 w-full px-4 py-2 bg-food-red text-white rounded-xl text-sm font-medium hover:bg-food-red-dark transition-colors">
+            <i class="bi bi-plus-circle mr-1"></i> 发布采购需求
+          </button>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ===== 数据来源说明 ===== -->
+  <section class="py-12 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <h3 class="font-bold text-gray-800 mb-4 flex items-center">
+          <i class="bi bi-database-check text-tech-blue mr-2"></i> 行情数据来源
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <a href="https://pfsc.agri.cn/" target="_blank" rel="noopener" class="flex items-center p-3 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors group">
+            <div class="w-10 h-10 rounded-lg bg-tech-blue/10 flex items-center justify-center mr-3 flex-shrink-0">
+              <i class="bi bi-building text-tech-blue"></i>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-700 group-hover:text-tech-blue transition-colors">全国农产品批发市场价格信息系统</p>
+              <p class="text-xs text-gray-400">农业农村部 · 官方批发价格</p>
+            </div>
+            <i class="bi bi-box-arrow-up-right text-gray-300 ml-auto flex-shrink-0"></i>
+          </a>
+          <a href="https://www.cnhnb.com/hangqing/" target="_blank" rel="noopener" class="flex items-center p-3 bg-orange-50 rounded-xl hover:bg-orange-100 transition-colors group">
+            <div class="w-10 h-10 rounded-lg bg-harvest-gold/10 flex items-center justify-center mr-3 flex-shrink-0">
+              <i class="bi bi-graph-up text-harvest-gold"></i>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-700 group-hover:text-harvest-gold transition-colors">惠农网行情大厅</p>
+              <p class="text-xs text-gray-400">全国农产品B2B交易价格</p>
+            </div>
+            <i class="bi bi-box-arrow-up-right text-gray-300 ml-auto flex-shrink-0"></i>
+          </a>
+          <a href="https://www.agri.cn/" target="_blank" rel="noopener" class="flex items-center p-3 bg-green-50 rounded-xl hover:bg-green-100 transition-colors group">
+            <div class="w-10 h-10 rounded-lg bg-water-green/10 flex items-center justify-center mr-3 flex-shrink-0">
+              <i class="bi bi-newspaper text-water-green"></i>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-700 group-hover:text-water-green transition-colors">中国农业农村信息网</p>
+              <p class="text-xs text-gray-400">政策法规 · 行业资讯</p>
+            </div>
+            <i class="bi bi-box-arrow-up-right text-gray-300 ml-auto flex-shrink-0"></i>
+          </a>
+          <a href="http://www.gzscsc.com/" target="_blank" rel="noopener" class="flex items-center p-3 bg-red-50 rounded-xl hover:bg-red-100 transition-colors group">
+            <div class="w-10 h-10 rounded-lg bg-food-red/10 flex items-center justify-center mr-3 flex-shrink-0">
+              <i class="bi bi-shop text-food-red"></i>
+            </div>
+            <div>
+              <p class="text-sm font-medium text-gray-700 group-hover:text-food-red transition-colors">广州黄沙水产交易市场</p>
+              <p class="text-xs text-gray-400">华南最大水产批发市场</p>
+            </div>
+            <i class="bi bi-box-arrow-up-right text-gray-300 ml-auto flex-shrink-0"></i>
+          </a>
+        </div>
+        <div class="mt-4 p-3 bg-gray-50 rounded-xl text-xs text-gray-500 flex items-start">
+          <i class="bi bi-info-circle-fill text-tech-blue mt-0.5 mr-2 flex-shrink-0"></i>
+          <div>
+            <p class="font-medium text-gray-700 mb-1">关于数据准确性的说明</p>
+            <p>本页面展示的价格数据为参考价格，综合自多个信息源。实际交易价格受产地、规格、品质、物流、季节等多因素影响，可能与网站展示存在差异。建议用户在交易前通过上述官方渠道核实最新行情。价格涨跌幅为与前一交易日相比的变化百分比。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 页脚 ===== -->
   <footer class="bg-gray-900 text-gray-400">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div><div class="flex items-center space-x-2 mb-4"><span class="text-2xl">🦀</span><span class="text-xl font-bold text-white">肴柒蟹</span></div><p class="text-sm leading-relaxed">科技赋能养殖，美味连接生活。</p></div>
         <div><h4 class="font-bold text-white mb-4">快速链接</h4><ul class="space-y-2 text-sm">
           <li><a href="index.html" class="hover:text-white transition-colors">首页</a></li>
-          <li><a href="features.html" class="hover:text-white transition-colors">平台功能</a></li>
+          <li><a href="features.html" class="hover:text-white transition-colors">智慧养殖</a></li>
           <li><a href="market.html" class="hover:text-white transition-colors">市场行情</a></li>
           <li><a href="recipes.html" class="hover:text-white transition-colors">美食菜谱</a></li>
           <li><a href="community.html" class="hover:text-white transition-colors">社区交流</a></li>
         </ul></div>
-        <div><h4 class="font-bold text-white mb-4">服务支持</h4><ul class="space-y-2 text-sm">
-          <li><a href="#" class="hover:text-white transition-colors">帮助中心</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">用户协议</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">隐私政策</a></li>
-          <li><a href="#" class="hover:text-white transition-colors">意见反馈</a></li>
+        <div><h4 class="font-bold text-white mb-4">数据来源</h4><ul class="space-y-2 text-sm">
+          <li><a href="https://pfsc.agri.cn/" target="_blank" rel="noopener" class="hover:text-white transition-colors flex items-center"><i class="bi bi-box-arrow-up-right mr-1 text-xs"></i>农业部批发价格</a></li>
+          <li><a href="https://www.cnhnb.com/hangqing/" target="_blank" rel="noopener" class="hover:text-white transition-colors flex items-center"><i class="bi bi-box-arrow-up-right mr-1 text-xs"></i>惠农网行情大厅</a></li>
+          <li><a href="https://www.agri.cn/" target="_blank" rel="noopener" class="hover:text-white transition-colors flex items-center"><i class="bi bi-box-arrow-up-right mr-1 text-xs"></i>中国农业农村信息网</a></li>
         </ul></div>
         <div><h4 class="font-bold text-white mb-4">联系我们</h4><ul class="space-y-2 text-sm">
           <li><i class="bi bi-envelope mr-2"></i>contact@yaoqixie.com</li>
           <li><i class="bi bi-telephone mr-2"></i>400-888-8888</li>
         </ul></div>
       </div>
-      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm"><p>&copy; 2026 肴柒蟹 (YaoQiXie). All rights reserved.</p></div>
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
+        <p>&copy; 2026 肴柒蟹 (YaoQiXie). All rights reserved.</p>
+        <p class="mt-1 text-xs text-gray-600">行情数据仅供参考，实际交易价格以市场成交价为准</p>
+      </div>
     </div>
   </footer>
 

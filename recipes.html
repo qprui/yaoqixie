@@ -10,24 +10,25 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- ===== 导航 ===== -->
   <header id="navbar" class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-sm shadow-sm transition-all duration-500">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 lg:h-20">
         <a href="index.html" class="flex items-center space-x-2 group">
           <span class="text-3xl">🦀</span>
           <span class="text-2xl font-bold bg-gradient-to-r from-tech-blue to-food-red bg-clip-text text-transparent">肴柒蟹</span>
-          <span class="hidden sm:inline-block text-xs text-gray-400 ml-1">养殖烹饪综合平台</span>
+          <span class="hidden sm:inline-block text-xs text-gray-400 ml-1">®</span>
         </a>
         <nav class="hidden lg:flex items-center space-x-8">
           <a href="index.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">首页</a>
-          <a href="features.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">功能</a>
+          <a href="features.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">养殖</a>
           <a href="market.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">行情</a>
           <a href="recipes.html" class="nav-link text-food-red font-medium">菜谱</a>
           <a href="community.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">社区</a>
         </nav>
         <div class="flex items-center space-x-3">
-          <button class="hidden sm:inline-block px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors">登录</button>
-          <button class="px-4 py-2 text-sm font-medium bg-gradient-to-r from-tech-blue to-food-red text-white rounded-lg hover:shadow-lg transition-all register-btn">免费注册</button>
+          <a href="http://127.0.0.1:5000/login" class="hidden sm:inline-block px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors">登录</a>
+          <a href="http://127.0.0.1:5000/register" class="px-4 py-2 text-sm font-medium bg-gradient-to-r from-tech-blue to-food-red text-white rounded-lg hover:shadow-lg transition-all register-btn">免费注册</a>
           <button id="mobileMenuBtn" class="lg:hidden text-gray-600 hover:text-gray-800"><i class="bi bi-list text-2xl"></i></button>
         </div>
       </div>
@@ -35,7 +36,7 @@
     <div id="mobileMenu" class="lg:hidden hidden border-t border-gray-100 bg-white">
       <div class="px-4 py-4 space-y-3">
         <a href="index.html" class="block text-gray-600 hover:text-tech-blue py-2">首页</a>
-        <a href="features.html" class="block text-gray-600 hover:text-tech-blue py-2">功能</a>
+        <a href="features.html" class="block text-gray-600 hover:text-tech-blue py-2">养殖</a>
         <a href="market.html" class="block text-gray-600 hover:text-tech-blue py-2">行情</a>
         <a href="recipes.html" class="block text-food-red font-medium py-2">菜谱</a>
         <a href="community.html" class="block text-gray-600 hover:text-tech-blue py-2">社区</a>
@@ -54,104 +55,947 @@
     </div>
   </header>
 
+  <!-- ===== 页面标题 ===== -->
   <section class="pt-36 pb-12 md:pt-44 md:pb-16 bg-gradient-to-br from-red-50 to-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <div class="inline-flex items-center px-4 py-1.5 bg-food-red/10 text-food-red rounded-full text-sm font-medium mb-4">
         <i class="bi bi-cup-hot-fill mr-2"></i> 美食菜谱
       </div>
       <h1 class="text-[clamp(2rem,4vw,3rem)] font-bold mb-4">专业烹饪美食指南</h1>
-      <p class="text-gray-500 max-w-2xl mx-auto">从食材处理到烹饪技巧，让每一道蟹虾料理都成为艺术品</p>
+      <p class="text-gray-500 max-w-2xl mx-auto">提供精确到克的量化配方和详细步骤，让您轻松做出蟹虾美味</p>
     </div>
   </section>
 
+  <!-- ===== 菜谱分类筛选 ===== -->
+  <section class="py-10 bg-white border-b border-gray-100 sticky top-20 lg:top-24 z-30" id="recipeFilter">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <button class="filter-btn active px-5 py-2 bg-tech-blue text-white rounded-full text-sm font-medium transition-all" data-filter="all">全部菜谱</button>
+        <button class="filter-btn px-5 py-2 bg-white text-gray-600 rounded-full text-sm font-medium border border-gray-200 hover:border-food-red hover:text-food-red transition-all" data-filter="xiaolongxia">🦞 小龙虾</button>
+        <button class="filter-btn px-5 py-2 bg-white text-gray-600 rounded-full text-sm font-medium border border-gray-200 hover:border-food-red hover:text-food-red transition-all" data-filter="dazhaxie">🦀 大闸蟹</button>
+        <button class="filter-btn px-5 py-2 bg-white text-gray-600 rounded-full text-sm font-medium border border-gray-200 hover:border-food-red hover:text-food-red transition-all" data-filter="longxia">🦐 龙虾</button>
+        <button class="filter-btn px-5 py-2 bg-white text-gray-600 rounded-full text-sm font-medium border border-gray-200 hover:border-food-red hover:text-food-red transition-all" data-filter="qingzheng">清蒸</button>
+        <button class="filter-btn px-5 py-2 bg-white text-gray-600 rounded-full text-sm font-medium border border-gray-200 hover:border-food-red hover:text-food-red transition-all" data-filter="youmen">油焖</button>
+        <button class="filter-btn px-5 py-2 bg-white text-gray-600 rounded-full text-sm font-medium border border-gray-200 hover:border-food-red hover:text-food-red transition-all" data-filter="xiangla">香辣</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 菜谱1: 潜江油焖大虾 ===== -->
+  <section class="recipe-detail py-16 bg-white" data-category="xiaolongxia youmen">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl shadow-card overflow-hidden">
+        <!-- 菜谱头部 -->
+        <div class="bg-gradient-to-br from-food-red/20 via-orange-100 to-yellow-50 p-8 lg:p-12">
+          <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="px-3 py-1 bg-food-red text-white text-xs rounded-full font-medium">🔥 热门</span>
+                <span class="px-3 py-1 bg-white/70 text-gray-600 text-xs rounded-full">油焖</span>
+                <span class="px-3 py-1 bg-white/70 text-gray-600 text-xs rounded-full">湖北</span>
+              </div>
+              <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-2">🦞 潜江油焖大虾</h2>
+              <p class="text-gray-600">湖北潜江经典做法，虾肉鲜嫩弹牙，麻辣鲜香，回味悠长</p>
+            </div>
+            <div class="flex items-center gap-6 text-sm text-gray-500">
+              <div class="text-center">
+                <p class="text-2xl font-bold text-food-red">4.9</p>
+                <p><i class="bi bi-star-fill text-harvest-gold"></i> 评分</p>
+              </div>
+              <div class="text-center">
+                <p class="text-2xl font-bold text-gray-700">1258</p>
+                <p>做过</p>
+              </div>
+              <div class="text-center">
+                <p class="text-2xl font-bold text-gray-700">45</p>
+                <p>分钟</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-8 lg:p-12">
+          <!-- 食材 -->
+          <div class="mb-10">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+              <i class="bi bi-basket2 text-food-red mr-2"></i> 食材清单
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">小龙虾</span>
+                <span class="text-sm font-bold text-food-red">1000g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">食用油</span>
+                <span class="text-sm font-bold text-food-red">200ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">生姜</span>
+                <span class="text-sm font-bold text-food-red">30g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">大蒜</span>
+                <span class="text-sm font-bold text-food-red">50g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">干辣椒</span>
+                <span class="text-sm font-bold text-food-red">20g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">花椒</span>
+                <span class="text-sm font-bold text-food-red">10g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">郫县豆瓣酱</span>
+                <span class="text-sm font-bold text-food-red">30g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">啤酒</span>
+                <span class="text-sm font-bold text-food-red">500ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">生抽</span>
+                <span class="text-sm font-bold text-food-red">15ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">老抽</span>
+                <span class="text-sm font-bold text-food-red">5ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">白糖</span>
+                <span class="text-sm font-bold text-food-red">15g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">盐</span>
+                <span class="text-sm font-bold text-food-red">5g</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 步骤 -->
+          <div>
+            <h3 class="text-xl font-bold mb-6 flex items-center">
+              <i class="bi bi-list-ol text-food-red mr-2"></i> 详细步骤
+            </h3>
+            <div class="space-y-6">
+              <div class="flex gap-4 p-4 bg-orange-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-food-red text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">清洗处理</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">小龙虾用刷子逐个刷洗干净腹部和头部，剪去虾须和小脚。在虾尾中间一节扭动抽出虾线。用剪刀在虾头斜剪一刀去除沙囊（保留虾黄）。冲洗干净后沥干水分备用。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-orange-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-food-red text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">炒香料底</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">锅烧热倒入200ml食用油，油温六成热（约180°C）时下入姜片、蒜瓣爆香。加入干辣椒段、花椒粒小火炒出红油和麻辣香味，注意不要炒焦。最后加入郫县豆瓣酱炒出红油。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-orange-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-food-red text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">爆炒龙虾</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">将处理好的小龙虾倒入锅中，大火快速翻炒至虾壳变红（约3分钟）。加入生抽15ml、老抽5ml、白糖15g继续翻炒均匀，让每只虾都裹上酱料。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-orange-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-food-red text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">焖煮入味</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">倒入整瓶啤酒（500ml），大火烧开后转中小火加盖焖煮15分钟。期间翻动2-3次确保受热均匀。啤酒不仅去腥增香，还能使虾肉更加鲜嫩。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-orange-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-food-red text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">收汁出锅</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">开盖大火收汁至汤汁浓稠，加入适量盐调味。撒上葱花和熟芝麻点缀，出锅装盘。油焖大虾最佳食用时间是出锅后趁热，可搭配黄瓜条、年糕等配菜一同享用。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 小贴士 -->
+          <div class="mt-8 p-4 bg-food-red/5 border border-food-red/20 rounded-2xl">
+            <div class="flex items-start">
+              <i class="bi bi-lightbulb text-food-red text-xl mt-0.5 mr-3"></i>
+              <div>
+                <h4 class="font-bold text-gray-800 mb-1">💡 厨师小贴士</h4>
+                <ul class="text-sm text-gray-600 space-y-1">
+                  <li>• 挑选小龙虾时选青壳虾（壳软肉多），避免黑壳老虾</li>
+                  <li>• 抽虾线时在虾尾中间一片扭断再抽出，可保持虾肉完整</li>
+                  <li>• 炒虾时油要多，油温要高，才能锁住虾肉水分</li>
+                  <li>• 喜欢辣味的朋友可以增加干辣椒用量，或者加入新鲜小米辣</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 菜谱2: 清蒸大闸蟹 ===== -->
+  <section class="recipe-detail py-16 bg-gray-50" data-category="dazhaxie qingzheng">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl shadow-card overflow-hidden">
+        <div class="bg-gradient-to-br from-blue-50 via-gray-100 to-gray-50 p-8 lg:p-12">
+          <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="px-3 py-1 bg-tech-blue text-white text-xs rounded-full font-medium">经典</span>
+                <span class="px-3 py-1 bg-white/70 text-gray-600 text-xs rounded-full">清蒸</span>
+                <span class="px-3 py-1 bg-white/70 text-gray-600 text-xs rounded-full">江浙</span>
+              </div>
+              <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-2">🦀 清蒸大闸蟹</h2>
+              <p class="text-gray-600">原汁原味的极致鲜美，蟹黄饱满，蟹肉甘甜，搭配姜醋更是一绝</p>
+            </div>
+            <div class="flex items-center gap-6 text-sm text-gray-500">
+              <div class="text-center">
+                <p class="text-2xl font-bold text-tech-blue">4.8</p>
+                <p><i class="bi bi-star-fill text-harvest-gold"></i> 评分</p>
+              </div>
+              <div class="text-center">
+                <p class="text-2xl font-bold text-gray-700">986</p>
+                <p>做过</p>
+              </div>
+              <div class="text-center">
+                <p class="text-2xl font-bold text-gray-700">30</p>
+                <p>分钟</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-8 lg:p-12">
+          <div class="mb-10">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+              <i class="bi bi-basket2 text-tech-blue mr-2"></i> 食材清单
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">大闸蟹（母）</span>
+                <span class="text-sm font-bold text-tech-blue">6只</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">生姜</span>
+                <span class="text-sm font-bold text-tech-blue">50g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">香醋</span>
+                <span class="text-sm font-bold text-tech-blue">30ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">生抽</span>
+                <span class="text-sm font-bold text-tech-blue">10ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">白糖</span>
+                <span class="text-sm font-bold text-tech-blue">5g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">黄酒</span>
+                <span class="text-sm font-bold text-tech-blue">30ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">紫苏叶（可选）</span>
+                <span class="text-sm font-bold text-tech-blue">10片</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">蟹八件工具</span>
+                <span class="text-sm font-bold text-tech-blue">1套</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold mb-6 flex items-center">
+              <i class="bi bi-list-ol text-tech-blue mr-2"></i> 详细步骤
+            </h3>
+            <div class="space-y-6">
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-tech-blue text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">大闸蟹处理</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">将活的大闸蟹放入清水中浸泡10分钟，让蟹吐净泥沙。用刷子刷洗蟹壳表面和蟹脚关节处。注意：<b>不要解捆蟹的绳子</b>，防止被夹伤。洗净后将蟹腹部朝上摆放在盘中，每只蟹上放一片姜、淋少许黄酒。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-tech-blue text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">准备蒸锅</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">蒸锅中加入足量水，放入姜片和紫苏叶（紫苏叶可去腥增香）。大火烧开至水沸腾。关键：<b>水开后再放蟹</b>，高温能瞬间锁住蟹的鲜美。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-tech-blue text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">上锅清蒸</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">将蟹腹部朝上放入蒸屉（蟹黄不易流失）。盖上锅盖，大火蒸15分钟（3两以下蒸12分钟，4两以上蒸18分钟）。蒸制中途不要开盖，防止热气散失。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-tech-blue text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">调制蘸料</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">姜切成极细的姜末（越细越好），放入小碗中。加入香醋30ml、生抽10ml、白糖5g搅拌均匀。姜醋汁是清蒸大闸蟹的灵魂蘸料，姜的辛辣和醋的酸爽能完美衬托蟹肉的鲜甜。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-tech-blue text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">出锅品鉴</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">关火后焖1分钟再开盖取出。解去绳子，蟹腹朝上装盘。搭配热黄酒或花雕酒，蘸姜醋汁食用。吃蟹顺序：先吃蟹脚和蟹钳→掀开蟹盖吃蟹黄→去掉蟹腮和蟹心→吃蟹身蟹肉。蟹心性寒，建议去除后食用。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 p-4 bg-tech-blue/5 border border-tech-blue/20 rounded-2xl">
+            <div class="flex items-start">
+              <i class="bi bi-lightbulb text-tech-blue text-xl mt-0.5 mr-3"></i>
+              <div>
+                <h4 class="font-bold text-gray-800 mb-1">💡 厨师小贴士</h4>
+                <ul class="text-sm text-gray-600 space-y-1">
+                  <li>• 选蟹技巧：选蟹壳青黑有光泽、蟹腿有力、腹部饱满上翘的活蟹</li>
+                  <li>• 九月吃母蟹（蟹黄饱满），十月吃公蟹（蟹膏肥美）</li>
+                  <li>• 蟹属寒性，搭配姜醋汁和温黄酒可中和寒性，脾胃虚寒者不宜多食</li>
+                  <li>• 死蟹绝对不能食用！死蟹会产生大量组胺毒素，引起中毒</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 菜谱3: 避风塘炒蟹 ===== -->
+  <section class="recipe-detail py-16 bg-white" data-category="dazhaxie xiangla">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl shadow-card overflow-hidden">
+        <div class="bg-gradient-to-br from-yellow-50 via-orange-50 to-red-50 p-8 lg:p-12">
+          <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="px-3 py-1 bg-harvest-gold text-white text-xs rounded-full font-medium">🔥 五月推荐</span>
+                <span class="px-3 py-1 bg-white/70 text-gray-600 text-xs rounded-full">避风塘</span>
+                <span class="px-3 py-1 bg-white/70 text-gray-600 text-xs rounded-full">粤式</span>
+              </div>
+              <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-2">🦀 避风塘炒蟹</h2>
+              <p class="text-gray-600">港式经典做法，金蒜酥脆、干香浓郁、微辣鲜香，连蟹壳都回味无穷</p>
+            </div>
+            <div class="flex items-center gap-6 text-sm text-gray-500">
+              <div class="text-center">
+                <p class="text-2xl font-bold text-harvest-gold">4.7</p>
+                <p><i class="bi bi-star-fill text-harvest-gold"></i> 评分</p>
+              </div>
+              <div class="text-center">
+                <p class="text-2xl font-bold text-gray-700">723</p>
+                <p>做过</p>
+              </div>
+              <div class="text-center">
+                <p class="text-2xl font-bold text-gray-700">40</p>
+                <p>分钟</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-8 lg:p-12">
+          <div class="mb-10">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+              <i class="bi bi-basket2 text-harvest-gold mr-2"></i> 食材清单
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">肉蟹/青蟹</span>
+                <span class="text-sm font-bold text-harvest-gold">2只（约1000g）</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">大蒜</span>
+                <span class="text-sm font-bold text-harvest-gold">100g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">面包糠</span>
+                <span class="text-sm font-bold text-harvest-gold">50g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">干辣椒</span>
+                <span class="text-sm font-bold text-harvest-gold">15g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">豆豉</span>
+                <span class="text-sm font-bold text-harvest-gold">10g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">食用油</span>
+                <span class="text-sm font-bold text-harvest-gold">适量（炸用）</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">玉米淀粉</span>
+                <span class="text-sm font-bold text-harvest-gold">30g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">盐</span>
+                <span class="text-sm font-bold text-harvest-gold">3g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">白糖</span>
+                <span class="text-sm font-bold text-harvest-gold">5g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">椒盐</span>
+                <span class="text-sm font-bold text-harvest-gold">5g</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold mb-6 flex items-center">
+              <i class="bi bi-list-ol text-harvest-gold mr-2"></i> 详细步骤
+            </h3>
+            <div class="space-y-6">
+              <div class="flex gap-4 p-4 bg-yellow-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-harvest-gold text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">处理螃蟹</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">将活蟹刷洗干净。揭开蟹盖，去除蟹腮、蟹胃和蟹心。将蟹身斩成4块，蟹钳用刀背拍裂方便入味。蟹块沥干水分，均匀裹上薄薄一层玉米淀粉。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-yellow-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-harvest-gold text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">炸金蒜</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">大蒜切成细末（越细越好），用清水冲洗一下沥干（可防止炸焦）。锅中加油烧至五成热（约150°C），放入蒜末小火慢炸至浅金黄色，捞出沥油备用。蒜油留用。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-yellow-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-harvest-gold text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">炸蟹块</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">用炸过蒜的油，大火加热至七成热（约200°C）。放入裹好淀粉的蟹块，炸至外壳金黄酥脆（约3-4分钟）。捞出控油。蟹盖也放入炸一下（约1分钟）至变色即可。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-yellow-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-harvest-gold text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">炒避风塘料</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">锅中留底油，小火炒香干辣椒段、豆豉。加入面包糠小火翻炒至微黄酥脆。加入炸好的金蒜末、盐3g、白糖5g、椒盐5g翻炒均匀。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-yellow-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-harvest-gold text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">混合出锅</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">将炸好的蟹块倒入锅中，大火快速翻炒，让避风塘料均匀裹在蟹块上。出锅装盘，将剩余的炸蒜和面包糠撒在表面。撒上葱花和小米辣圈点缀。趁热食用风味最佳，蟹壳酥脆可直接嚼食。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 p-4 bg-harvest-gold/5 border border-harvest-gold/20 rounded-2xl">
+            <div class="flex items-start">
+              <i class="bi bi-lightbulb text-harvest-gold text-xl mt-0.5 mr-3"></i>
+              <div>
+                <h4 class="font-bold text-gray-800 mb-1">💡 厨师小贴士</h4>
+                <ul class="text-sm text-gray-600 space-y-1">
+                  <li>• 炸金蒜一定要小火慢炸，大火容易炸苦</li>
+                  <li>• 面包糠用小火炒至微黄即可，避免炒焦</li>
+                  <li>• 裹淀粉时不要太多，薄薄一层即可，否则影响口感</li>
+                  <li>• 可加入年糕或薯条同炒，吸收避风塘料的香味</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 菜谱4: 长沙口味虾 ===== -->
+  <section class="recipe-detail py-16 bg-gray-50" data-category="xiaolongxia xiangla">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl shadow-card overflow-hidden">
+        <div class="bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50 p-8 lg:p-12">
+          <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="px-3 py-1 bg-food-red text-white text-xs rounded-full font-medium">🔥 人气王</span>
+                <span class="px-3 py-1 bg-white/70 text-gray-600 text-xs rounded-full">香辣</span>
+                <span class="px-3 py-1 bg-white/70 text-gray-600 text-xs rounded-full">湘菜</span>
+              </div>
+              <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-2">🦞 长沙口味虾</h2>
+              <p class="text-gray-600">湖南长沙夜市头牌，香辣浓郁、虾肉紧实，搭配紫苏和汤汁让人欲罢不能</p>
+            </div>
+            <div class="flex items-center gap-6 text-sm text-gray-500">
+              <div class="text-center">
+                <p class="text-2xl font-bold text-food-red">4.9</p>
+                <p><i class="bi bi-star-fill text-harvest-gold"></i> 评分</p>
+              </div>
+              <div class="text-center">
+                <p class="text-2xl font-bold text-gray-700">1562</p>
+                <p>做过</p>
+              </div>
+              <div class="text-center">
+                <p class="text-2xl font-bold text-gray-700">50</p>
+                <p>分钟</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-8 lg:p-12">
+          <div class="mb-10">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+              <i class="bi bi-basket2 text-food-red mr-2"></i> 食材清单
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">小龙虾</span>
+                <span class="text-sm font-bold text-food-red">1500g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">紫苏叶</span>
+                <span class="text-sm font-bold text-food-red">1把</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">小米辣</span>
+                <span class="text-sm font-bold text-food-red">30g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">生姜</span>
+                <span class="text-sm font-bold text-food-red">40g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">大蒜</span>
+                <span class="text-sm font-bold text-food-red">60g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">大葱</span>
+                <span class="text-sm font-bold text-food-red">2根</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">郫县豆瓣酱</span>
+                <span class="text-sm font-bold text-food-red">40g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">辣椒粉</span>
+                <span class="text-sm font-bold text-food-red">20g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">啤酒</span>
+                <span class="text-sm font-bold text-food-red">500ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">生抽</span>
+                <span class="text-sm font-bold text-food-red">20ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">蚝油</span>
+                <span class="text-sm font-bold text-food-red">15ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">十三香</span>
+                <span class="text-sm font-bold text-food-red">5g</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold mb-6 flex items-center">
+              <i class="bi bi-list-ol text-food-red mr-2"></i> 详细步骤
+            </h3>
+            <div class="space-y-6">
+              <div class="flex gap-4 p-4 bg-red-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-food-red text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">清洗处理</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">小龙虾用刷子逐个刷洗腹部、虾头和虾脚，换水3-4次直到水清。剪去虾须和小脚，在虾尾中间扭断抽出虾线。从虾头斜剪去除沙囊（保留虾黄）。洗净沥干备用。紫苏叶切碎，小米辣切圈，姜切片，蒜拍碎。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-red-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-food-red text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">炒底料</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">锅中加油烧热（油量比平时炒菜多一倍），下入姜片、蒜瓣、大葱段爆香。加入郫县豆瓣酱小火炒出红油。加入小米辣圈、辣椒粉继续翻炒出香辣味。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-red-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-food-red text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">爆炒龙虾</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">倒入小龙虾大火爆炒至虾壳全部变红（约5分钟），中途不断翻动。加入生抽20ml、蚝油15ml、十三香5g翻炒均匀，让每只虾都裹上酱料。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-red-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-food-red text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">焖煮入味</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">倒入整瓶啤酒（500ml），加入适量热水至刚好没过龙虾。大火烧开后转中小火，加盖焖煮20分钟。加入紫苏叶碎继续焖5分钟——紫苏是湘派口味虾的点睛之笔，特有的香气与小龙虾完美融合。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-red-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-food-red text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">收汁装盘</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">开盖大火收汁至汤汁浓稠（留一些汤汁蘸食更佳）。尝味后加适量盐和鸡精调味。出锅装盘，撒上葱花和白芝麻。长沙口味虾的精髓在于汤汁，可以用汤汁拌面或蘸馒头，味道一绝。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 p-4 bg-food-red/5 border border-food-red/20 rounded-2xl">
+            <div class="flex items-start">
+              <i class="bi bi-lightbulb text-food-red text-xl mt-0.5 mr-3"></i>
+              <div>
+                <h4 class="font-bold text-gray-800 mb-1">💡 厨师小贴士</h4>
+                <ul class="text-sm text-gray-600 space-y-1">
+                  <li>• 紫苏叶是长沙口味虾的灵魂，不可省略！去腥增香效果极佳</li>
+                  <li>• 焖煮时间一定要足够，让香料完全渗透到虾肉中</li>
+                  <li>• 留汤汁是长沙口味虾的经典吃法，搭配方便面或清水面拌食</li>
+                  <li>• 处理小龙虾时戴厚手套操作，防止被虾钳夹伤</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 菜谱5: 冰镇花雕醉龙虾 ===== -->
+  <section class="recipe-detail py-16 bg-white" data-category="xiaolongxia qingzheng">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl shadow-card overflow-hidden">
+        <div class="bg-gradient-to-br from-blue-50 via-white to-blue-50 p-8 lg:p-12">
+          <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="px-3 py-1 bg-water-green text-white text-xs rounded-full font-medium">夏季限定</span>
+                <span class="px-3 py-1 bg-white/70 text-gray-600 text-xs rounded-full">冰镇</span>
+                <span class="px-3 py-1 bg-white/70 text-gray-600 text-xs rounded-full">江浙</span>
+              </div>
+              <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-2">🦞 冰镇花雕醉龙虾</h2>
+              <p class="text-gray-600">花雕酒的醇香与小龙虾的鲜甜完美结合，冰镇后口感更加爽弹</p>
+            </div>
+            <div class="flex items-center gap-6 text-sm text-gray-500">
+              <div class="text-center">
+                <p class="text-2xl font-bold text-water-green">4.8</p>
+                <p><i class="bi bi-star-fill text-harvest-gold"></i> 评分</p>
+              </div>
+              <div class="text-center">
+                <p class="text-2xl font-bold text-gray-700">568</p>
+                <p>做过</p>
+              </div>
+              <div class="text-center">
+                <p class="text-2xl font-bold text-gray-700">280</p>
+                <p>分钟（含浸泡）</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-8 lg:p-12">
+          <div class="mb-10">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+              <i class="bi bi-basket2 text-water-green mr-2"></i> 食材清单
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">小龙虾</span>
+                <span class="text-sm font-bold text-water-green">1000g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">花雕酒（五年陈）</span>
+                <span class="text-sm font-bold text-water-green">500ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">话梅</span>
+                <span class="text-sm font-bold text-water-green">8颗</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">冰糖</span>
+                <span class="text-sm font-bold text-water-green">80g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">生姜</span>
+                <span class="text-sm font-bold text-water-green">30g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">花椒</span>
+                <span class="text-sm font-bold text-water-green">5g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">八角</span>
+                <span class="text-sm font-bold text-water-green">3颗</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">桂皮</span>
+                <span class="text-sm font-bold text-water-green">1小段</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">香叶</span>
+                <span class="text-sm font-bold text-water-green">3片</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">盐</span>
+                <span class="text-sm font-bold text-water-green">10g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">冰块</span>
+                <span class="text-sm font-bold text-water-green">大量</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold mb-6 flex items-center">
+              <i class="bi bi-list-ol text-water-green mr-2"></i> 详细步骤
+            </h3>
+            <div class="space-y-6">
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-water-green text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">熬制醉卤</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">锅中加入500ml清水，放入话梅8颗、冰糖80g、姜片、花椒5g、八角3颗、桂皮1段、香叶3片、盐10g。大火烧开后转小火煮15分钟，让香料味道充分释放。关火后倒入花雕酒500ml搅拌均匀，放凉备用。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-water-green text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">处理龙虾</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">小龙虾刷洗干净，剪去虾须和虾脚（<b>注意：不抽虾线，不去头</b>，保持虾肉完整）。锅中加水烧开，放入姜片和葱段，倒入小龙虾大火煮8分钟至虾壳变红。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-water-green text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">冰镇龙虾</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">捞出煮好的小龙虾，立即放入提前准备好的冰水中浸泡5分钟。冰水激冷能让虾肉瞬间紧致，口感更加Q弹弹牙。沥干水分备用。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-water-green text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">醉卤浸泡</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">将冰镇好的小龙虾放入大碗中，倒入完全冷却的醉卤，确保全部浸没。盖上保鲜膜，放入冰箱冷藏室浸泡至少4小时（过夜效果最佳）。期间可翻动一次，使入味均匀。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-water-green text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">摆盘享用</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">取出浸泡好的小龙虾，摆入铺有冰块的盘中。每只虾壳泛着琥珀色的光泽，花雕酒香扑鼻。可搭配芥末酱油或直接食用，冰爽鲜甜的虾肉在口中绽放，是夏季消暑的绝佳美味。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 p-4 bg-water-green/5 border border-water-green/20 rounded-2xl">
+            <div class="flex items-start">
+              <i class="bi bi-lightbulb text-water-green text-xl mt-0.5 mr-3"></i>
+              <div>
+                <h4 class="font-bold text-gray-800 mb-1">💡 厨师小贴士</h4>
+                <ul class="text-sm text-gray-600 space-y-1">
+                  <li>• 花雕酒选五年陈以上，酒香更醇厚，不建议用料酒替代</li>
+                  <li>• 醉卤放凉后才能加花雕酒，高温会挥发酒香</li>
+                  <li>• 不抽虾线是为了保持虾肉完整性，吃的时候再去线即可</li>
+                  <li>• 浸泡时间至少4小时，过夜12小时味道最佳</li>
+                  <li>• 醉卤可重复使用一次，下次使用时加新香料煮开即可</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 菜谱6: 蒜蓉蒸龙虾 ===== -->
+  <section class="recipe-detail py-16 bg-gray-50" data-category="longxia qingzheng">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl shadow-card overflow-hidden">
+        <div class="bg-gradient-to-br from-yellow-50 via-white to-yellow-50 p-8 lg:p-12">
+          <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="px-3 py-1 bg-water-green text-white text-xs rounded-full font-medium">宴客菜</span>
+                <span class="px-3 py-1 bg-white/70 text-gray-600 text-xs rounded-full">蒜蓉</span>
+                <span class="px-3 py-1 bg-white/70 text-gray-600 text-xs rounded-full">粤式</span>
+              </div>
+              <h2 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-2">🦐 金牌蒜蓉蒸龙虾</h2>
+              <p class="text-gray-600">蒜香四溢、肉质鲜甜弹牙，蒜蓉的焦香与龙虾的鲜美完美融合</p>
+            </div>
+            <div class="flex items-center gap-6 text-sm text-gray-500">
+              <div class="text-center">
+                <p class="text-2xl font-bold text-water-green">4.9</p>
+                <p><i class="bi bi-star-fill text-harvest-gold"></i> 评分</p>
+              </div>
+              <div class="text-center">
+                <p class="text-2xl font-bold text-gray-700">412</p>
+                <p>做过</p>
+              </div>
+              <div class="text-center">
+                <p class="text-2xl font-bold text-gray-700">35</p>
+                <p>分钟</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-8 lg:p-12">
+          <div class="mb-10">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+              <i class="bi bi-basket2 text-water-green mr-2"></i> 食材清单
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">波士顿龙虾/澳洲龙虾</span>
+                <span class="text-sm font-bold text-water-green">1只（约750g）</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">大蒜</span>
+                <span class="text-sm font-bold text-water-green">100g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">粉丝</span>
+                <span class="text-sm font-bold text-water-green">50g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">小葱</span>
+                <span class="text-sm font-bold text-water-green">3根</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">食用油</span>
+                <span class="text-sm font-bold text-water-green">50ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">生抽</span>
+                <span class="text-sm font-bold text-water-green">15ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">蚝油</span>
+                <span class="text-sm font-bold text-water-green">10ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">料酒</span>
+                <span class="text-sm font-bold text-water-green">10ml</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">白糖</span>
+                <span class="text-sm font-bold text-water-green">3g</span>
+              </div>
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <span class="text-sm text-gray-700">红椒</span>
+                <span class="text-sm font-bold text-water-green">少许（装饰）</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-bold mb-6 flex items-center">
+              <i class="bi bi-list-ol text-water-green mr-2"></i> 详细步骤
+            </h3>
+            <div class="space-y-6">
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-water-green text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">处理龙虾</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">龙虾冲洗干净。用筷子从龙虾尾部尿道口插入放尿。用厨房剪刀将龙虾腹部朝上，从中间对半剪开（保留虾壳完整），去除虾肠和虾鳃。用刀背轻敲龙虾大钳，方便入味和食用。淋上料酒腌制10分钟去腥。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-water-green text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">制作金银蒜</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">大蒜剁成细末，分成两份。锅中加油50ml，小火加热至五成热，放入一份蒜末慢炸至金黄色（银蒜是生蒜，金蒜是炸过的）。将金蒜和银蒜混合，加入生抽15ml、蚝油10ml、白糖3g搅拌均匀，制成金银蒜蓉酱。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-water-green text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">铺垫粉丝</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">粉丝用温水泡软（约10分钟），捞出铺在蒸盘底部。将处理好的龙虾平铺在粉丝上，虾肉面朝上。将金银蒜蓉酱均匀涂抹在龙虾肉上，让每块虾肉都沾满蒜蓉。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-water-green text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">上锅蒸制</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">蒸锅加水烧开，放入龙虾盘，大火蒸10-12分钟（750g龙虾蒸10分钟，每增加100g多蒸1分钟）。蒸制时间不宜过久，否则虾肉会老。关火后撒上葱花和红椒碎点缀。</p>
+                </div>
+              </div>
+              <div class="flex gap-4 p-4 bg-blue-50 rounded-2xl">
+                <span class="flex-shrink-0 w-8 h-8 bg-water-green text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
+                <div>
+                  <h4 class="font-bold text-gray-800 mb-1">浇热油激香</h4>
+                  <p class="text-sm text-gray-600 leading-relaxed">锅中烧热30ml食用油至冒烟（约220°C）。将热油均匀浇在蒜蓉和葱花上，"滋啦"一声激发出蒜香和葱香。底部的粉丝吸收了龙虾的鲜汁和蒜蓉的香味，是整道菜的精髓之一。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 p-4 bg-water-green/5 border border-water-green/20 rounded-2xl">
+            <div class="flex items-start">
+              <i class="bi bi-lightbulb text-water-green text-xl mt-0.5 mr-3"></i>
+              <div>
+                <h4 class="font-bold text-gray-800 mb-1">💡 厨师小贴士</h4>
+                <ul class="text-sm text-gray-600 space-y-1">
+                  <li>• 金银蒜是这道菜的灵魂——生蒜提味，炸蒜增香</li>
+                  <li>• 龙虾不要蒸太久，宁可略生不可过老</li>
+                  <li>• 浇热油是点睛之笔，不可省略</li>
+                  <li>• 粉丝一定要铺在龙虾下方，吸收汤汁后比龙虾还好吃</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 食材安全提示 ===== -->
   <section class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-wrap justify-center gap-3 mb-12" data-reveal>
-        <button class="px-5 py-2 bg-tech-blue text-white rounded-full text-sm font-medium">全部</button>
-        <button class="px-5 py-2 bg-white text-gray-600 rounded-full text-sm font-medium border border-gray-200 hover:border-food-red hover:text-food-red transition-colors">清蒸</button>
-        <button class="px-5 py-2 bg-white text-gray-600 rounded-full text-sm font-medium border border-gray-200 hover:border-food-red hover:text-food-red transition-colors">油焖</button>
-        <button class="px-5 py-2 bg-white text-gray-600 rounded-full text-sm font-medium border border-gray-200 hover:border-food-red hover:text-food-red transition-colors">刺身</button>
-        <button class="px-5 py-2 bg-white text-gray-600 rounded-full text-sm font-medium border border-gray-200 hover:border-food-red hover:text-food-red transition-colors">香辣</button>
-        <button class="px-5 py-2 bg-white text-gray-600 rounded-full text-sm font-medium border border-gray-200 hover:border-food-red hover:text-food-red transition-colors">避风塘</button>
-        <button class="px-5 py-2 bg-white text-gray-600 rounded-full text-sm font-medium border border-gray-200 hover:border-food-red hover:text-food-red transition-colors">粤式</button>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="recipe-card bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all overflow-hidden group" data-reveal>
-          <div class="aspect-[4/3] bg-gradient-to-br from-food-red/20 to-orange-200 flex items-center justify-center text-6xl relative overflow-hidden">
-            🦞
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-              <span class="text-white text-sm font-medium"><i class="bi bi-play-circle-fill mr-1"></i> 观看视频</span>
-            </div>
-            <span class="absolute top-3 left-3 px-2 py-0.5 bg-food-red text-white text-xs rounded-full font-medium">热门</span>
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-food-red/5 border-2 border-food-red/20 rounded-3xl p-8 lg:p-10">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-14 h-14 rounded-2xl bg-food-red/10 flex items-center justify-center flex-shrink-0">
+            <i class="bi bi-shield-check text-food-red text-2xl"></i>
           </div>
-          <div class="p-4">
-            <h3 class="font-bold text-gray-800 mb-1">潜江油焖大虾</h3>
-            <div class="flex items-center text-xs text-gray-400 mb-3">
-              <span>⭐ 4.9</span><span class="mx-2">·</span><span>1258人做过</span>
-            </div>
-            <div class="flex flex-wrap gap-1.5">
-              <span class="px-2 py-0.5 bg-food-red/5 text-food-red text-xs rounded">油焖</span>
-              <span class="px-2 py-0.5 bg-food-red/5 text-food-red text-xs rounded">湖北</span>
-              <span class="px-2 py-0.5 bg-gray-100 text-gray-500 text-xs rounded">45min</span>
-            </div>
+          <div>
+            <h2 class="text-2xl font-bold text-gray-800">食材安全 &amp; 注意事项</h2>
+            <p class="text-sm text-gray-500">美味重要，安全更重要</p>
           </div>
         </div>
-        <div class="recipe-card bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all overflow-hidden group" data-reveal>
-          <div class="aspect-[4/3] bg-gradient-to-br from-gray-200 to-blue-200 flex items-center justify-center text-6xl relative overflow-hidden">
-            🦀
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-              <span class="text-white text-sm font-medium"><i class="bi bi-play-circle-fill mr-1"></i> 观看视频</span>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="flex items-start p-4 bg-white rounded-2xl shadow-sm">
+            <i class="bi bi-exclamation-triangle-fill text-food-red mt-0.5 mr-3"></i>
+            <div>
+              <h4 class="font-semibold text-gray-800 text-sm">死蟹死虾禁止食用</h4>
+              <p class="text-xs text-gray-500 mt-1">死亡后会产生大量组胺毒素，即使高温烹煮也无法分解，可能导致严重中毒</p>
             </div>
           </div>
-          <div class="p-4">
-            <h3 class="font-bold text-gray-800 mb-1">清蒸大闸蟹</h3>
-            <div class="flex items-center text-xs text-gray-400 mb-3">
-              <span>⭐ 4.8</span><span class="mx-2">·</span><span>986人做过</span>
-            </div>
-            <div class="flex flex-wrap gap-1.5">
-              <span class="px-2 py-0.5 bg-food-red/5 text-food-red text-xs rounded">清蒸</span>
-              <span class="px-2 py-0.5 bg-food-red/5 text-food-red text-xs rounded">经典</span>
-              <span class="px-2 py-0.5 bg-gray-100 text-gray-500 text-xs rounded">30min</span>
+          <div class="flex items-start p-4 bg-white rounded-2xl shadow-sm">
+            <i class="bi bi-exclamation-triangle-fill text-food-red mt-0.5 mr-3"></i>
+            <div>
+              <h4 class="font-semibold text-gray-800 text-sm">虾头重金属风险</h4>
+              <p class="text-xs text-gray-500 mt-1">虾头内脏（肝胰腺）可能富集重金属和有害物质，建议去除后食用</p>
             </div>
           </div>
-        </div>
-        <div class="recipe-card bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all overflow-hidden group" data-reveal>
-          <div class="aspect-[4/3] bg-gradient-to-br from-food-red/20 to-yellow-200 flex items-center justify-center text-6xl relative overflow-hidden">
-            🦐
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-              <span class="text-white text-sm font-medium"><i class="bi bi-play-circle-fill mr-1"></i> 观看视频</span>
-            </div>
-            <span class="absolute top-3 left-3 px-2 py-0.5 bg-harvest-gold text-white text-xs rounded-full font-medium">五月推荐</span>
-          </div>
-          <div class="p-4">
-            <h3 class="font-bold text-gray-800 mb-1">避风塘炒蟹</h3>
-            <div class="flex items-center text-xs text-gray-400 mb-3">
-              <span>⭐ 4.7</span><span class="mx-2">·</span><span>723人做过</span>
-            </div>
-            <div class="flex flex-wrap gap-1.5">
-              <span class="px-2 py-0.5 bg-food-red/5 text-food-red text-xs rounded">避风塘</span>
-              <span class="px-2 py-0.5 bg-food-red/5 text-food-red text-xs rounded">粤式</span>
-              <span class="px-2 py-0.5 bg-gray-100 text-gray-500 text-xs rounded">40min</span>
+          <div class="flex items-start p-4 bg-white rounded-2xl shadow-sm">
+            <i class="bi bi-exclamation-triangle-fill text-food-red mt-0.5 mr-3"></i>
+            <div>
+              <h4 class="font-semibold text-gray-800 text-sm">蟹心性寒</h4>
+              <p class="text-xs text-gray-500 mt-1">大闸蟹的蟹心（六角形白色薄片）性质极寒，食用前请务必挑出丢弃</p>
             </div>
           </div>
-        </div>
-        <div class="recipe-card bg-white rounded-2xl shadow-card hover:shadow-card-hover transition-all overflow-hidden group" data-reveal>
-          <div class="aspect-[4/3] bg-gradient-to-br from-red-200 to-orange-200 flex items-center justify-center text-6xl relative overflow-hidden">
-            🦞
-            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-              <span class="text-white text-sm font-medium"><i class="bi bi-play-circle-fill mr-1"></i> 观看视频</span>
-            </div>
-          </div>
-          <div class="p-4">
-            <h3 class="font-bold text-gray-800 mb-1">长沙口味虾</h3>
-            <div class="flex items-center text-xs text-gray-400 mb-3">
-              <span>⭐ 4.9</span><span class="mx-2">·</span><span>1562人做过</span>
-            </div>
-            <div class="flex flex-wrap gap-1.5">
-              <span class="px-2 py-0.5 bg-food-red/5 text-food-red text-xs rounded">香辣</span>
-              <span class="px-2 py-0.5 bg-food-red/5 text-food-red text-xs rounded">湘菜</span>
-              <span class="px-2 py-0.5 bg-gray-100 text-gray-500 text-xs rounded">50min</span>
+          <div class="flex items-start p-4 bg-white rounded-2xl shadow-sm">
+            <i class="bi bi-exclamation-triangle-fill text-food-red mt-0.5 mr-3"></i>
+            <div>
+              <h4 class="font-semibold text-gray-800 text-sm">过敏体质慎食</h4>
+              <p class="text-xs text-gray-500 mt-1">蟹虾类为高致敏性食物，过敏体质人群建议谨慎食用或咨询医生</p>
             </div>
           </div>
         </div>
@@ -159,8 +1003,9 @@
     </div>
   </section>
 
+  <!-- ===== 智能烹饪工具 ===== -->
   <section class="py-16 bg-gradient-to-b from-orange-50 to-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-12">
         <div class="inline-flex items-center px-4 py-1.5 bg-food-red/10 text-food-red rounded-full text-sm font-medium mb-4">
           <i class="bi bi-tools mr-2"></i> 烹饪工具
@@ -225,30 +1070,17 @@
           </div>
         </div>
       </div>
-
-      <div class="mt-8 bg-food-red/5 border border-food-red/20 rounded-2xl p-6 flex items-start" data-reveal>
-        <div class="w-12 h-12 rounded-xl bg-food-red/10 flex items-center justify-center flex-shrink-0 mr-4">
-          <i class="bi bi-shield-check text-food-red text-xl"></i>
-        </div>
-        <div>
-          <h3 class="font-bold text-gray-800 mb-2">食材安全提示</h3>
-          <ul class="text-sm text-gray-600 space-y-1">
-            <li><i class="bi bi-exclamation-circle text-food-red mr-2"></i>虾头内脏可能含有重金属，建议去除后食用</li>
-            <li><i class="bi bi-exclamation-circle text-food-red mr-2"></i>死蟹死虾会产生组胺毒素，禁止食用</li>
-            <li><i class="bi bi-exclamation-circle text-food-red mr-2"></i>烹饪前请确保食材彻底清洗干净</li>
-          </ul>
-        </div>
-      </div>
     </div>
   </section>
 
+  <!-- ===== 页脚 ===== -->
   <footer class="bg-gray-900 text-gray-400">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <div><div class="flex items-center space-x-2 mb-4"><span class="text-2xl">🦀</span><span class="text-xl font-bold text-white">肴柒蟹</span></div><p class="text-sm leading-relaxed">科技赋能养殖，美味连接生活。</p></div>
         <div><h4 class="font-bold text-white mb-4">快速链接</h4><ul class="space-y-2 text-sm">
           <li><a href="index.html" class="hover:text-white transition-colors">首页</a></li>
-          <li><a href="features.html" class="hover:text-white transition-colors">平台功能</a></li>
+          <li><a href="features.html" class="hover:text-white transition-colors">智慧养殖</a></li>
           <li><a href="market.html" class="hover:text-white transition-colors">市场行情</a></li>
           <li><a href="recipes.html" class="hover:text-white transition-colors">美食菜谱</a></li>
           <li><a href="community.html" class="hover:text-white transition-colors">社区交流</a></li>

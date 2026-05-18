@@ -16,18 +16,18 @@
         <a href="index.html" class="flex items-center space-x-2 group">
           <span class="text-3xl">🦀</span>
           <span class="text-2xl font-bold bg-gradient-to-r from-tech-blue to-food-red bg-clip-text text-transparent">肴柒蟹</span>
-          <span class="hidden sm:inline-block text-xs text-gray-400 ml-1">养殖烹饪综合平台</span>
+          <span class="hidden sm:inline-block text-xs text-gray-400 ml-1">®</span>
         </a>
         <nav class="hidden lg:flex items-center space-x-8">
           <a href="index.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">首页</a>
-          <a href="features.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">功能</a>
+          <a href="features.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">养殖</a>
           <a href="market.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">行情</a>
           <a href="recipes.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">菜谱</a>
           <a href="community.html" class="nav-link text-water-green font-medium">社区</a>
         </nav>
         <div class="flex items-center space-x-3">
-          <button class="hidden sm:inline-block px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors">登录</button>
-          <button class="px-4 py-2 text-sm font-medium bg-gradient-to-r from-tech-blue to-food-red text-white rounded-lg hover:shadow-lg transition-all register-btn">免费注册</button>
+          <a href="http://127.0.0.1:5000/login" class="hidden sm:inline-block px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors">登录</a>
+          <a href="http://127.0.0.1:5000/register" class="px-4 py-2 text-sm font-medium bg-gradient-to-r from-tech-blue to-food-red text-white rounded-lg hover:shadow-lg transition-all register-btn">免费注册</a>
           <button id="mobileMenuBtn" class="lg:hidden text-gray-600 hover:text-gray-800"><i class="bi bi-list text-2xl"></i></button>
         </div>
       </div>
@@ -35,7 +35,7 @@
     <div id="mobileMenu" class="lg:hidden hidden border-t border-gray-100 bg-white">
       <div class="px-4 py-4 space-y-3">
         <a href="index.html" class="block text-gray-600 hover:text-tech-blue py-2">首页</a>
-        <a href="features.html" class="block text-gray-600 hover:text-tech-blue py-2">功能</a>
+        <a href="features.html" class="block text-gray-600 hover:text-tech-blue py-2">养殖</a>
         <a href="market.html" class="block text-gray-600 hover:text-tech-blue py-2">行情</a>
         <a href="recipes.html" class="block text-gray-600 hover:text-tech-blue py-2">菜谱</a>
         <a href="community.html" class="block text-water-green font-medium py-2">社区</a>
@@ -60,14 +60,17 @@
         <i class="bi bi-people-fill mr-2"></i> 社区交流
       </div>
       <h1 class="text-[clamp(2rem,4vw,3rem)] font-bold mb-4">行业社区</h1>
-      <p class="text-gray-500 max-w-2xl mx-auto">与全国的养殖达人、烹饪大师一起交流分享</p>
+      <p class="text-gray-500 max-w-2xl mx-auto">与全国的养殖达人、烹饪大师一起交流分享，发现精选好物</p>
     </div>
   </section>
 
   <section class="py-16 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- ========== 左侧：帖子列表 ========== -->
         <div class="lg:col-span-2 space-y-6">
+          <!-- 帖子1：养殖经验 -->
           <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
             <div class="flex items-center mb-4">
               <div class="w-10 h-10 rounded-full bg-tech-blue/20 flex items-center justify-center text-sm font-bold text-tech-blue mr-3">张</div>
@@ -86,6 +89,7 @@
             </div>
           </div>
 
+          <!-- 帖子2：烹饪作品 -->
           <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
             <div class="flex items-center mb-4">
               <div class="w-10 h-10 rounded-full bg-food-red/20 flex items-center justify-center text-sm font-bold text-food-red mr-3">李</div>
@@ -104,6 +108,7 @@
             </div>
           </div>
 
+          <!-- 帖子3：供求信息 -->
           <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
             <div class="flex items-center mb-4">
               <div class="w-10 h-10 rounded-full bg-harvest-gold/20 flex items-center justify-center text-sm font-bold text-harvest-gold mr-3">王</div>
@@ -122,6 +127,63 @@
             </div>
           </div>
 
+          <!-- 帖子4：问答求助 -->
+          <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
+            <div class="flex items-center mb-4">
+              <div class="w-10 h-10 rounded-full bg-water-green/20 flex items-center justify-center text-sm font-bold text-water-green mr-3">陈</div>
+              <div>
+                <p class="text-sm font-medium">新手养殖户小陈</p>
+                <p class="text-xs text-gray-400">新手上路 · 5小时前发布</p>
+              </div>
+              <span class="ml-auto px-2 py-0.5 bg-water-green/10 text-water-green text-xs rounded-full">问答求助</span>
+            </div>
+            <h4 class="font-bold text-gray-800 mb-2">小龙虾塘口水草腐烂怎么办？</h4>
+            <p class="text-sm text-gray-600 mb-3">新手求助！刚接手一个10亩虾塘，最近水草大面积腐烂，水体发黑臭味，小龙虾开始爬边上草。请问各位老师，现在应该怎么处理？需要换水吗？</p>
+            <div class="flex items-center text-xs text-gray-400 space-x-6">
+              <span><i class="bi bi-heart mr-1"></i> 18</span>
+              <span><i class="bi bi-chat mr-1"></i> 37</span>
+              <span><i class="bi bi-share mr-1"></i> 5</span>
+            </div>
+          </div>
+
+          <!-- 帖子5：行业动态 -->
+          <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
+            <div class="flex items-center mb-4">
+              <div class="w-10 h-10 rounded-full bg-tech-blue/20 flex items-center justify-center text-sm font-bold text-tech-blue mr-3">刘</div>
+              <div>
+                <p class="text-sm font-medium">刘教授</p>
+                <p class="text-xs text-gray-400">病害专家 · 1天前发布</p>
+              </div>
+              <span class="ml-auto px-2 py-0.5 bg-tech-blue/10 text-tech-blue text-xs rounded-full">行业动态</span>
+            </div>
+            <h4 class="font-bold text-gray-800 mb-2">《小龙虾加工技术规范》正式实施，行业将迎规范化发展</h4>
+            <p class="text-sm text-gray-600 mb-3">农业农村部近日发布了《小龙虾加工技术规范》行业标准，对小龙虾的原料要求、加工工艺、质量安全等做出了明确规定。新标准将于2026年6月1日起正式实施，对行业从业者提出了更高的要求。</p>
+            <div class="flex items-center text-xs text-gray-400 space-x-6">
+              <span><i class="bi bi-heart mr-1"></i> 72</span>
+              <span><i class="bi bi-chat mr-1"></i> 29</span>
+              <span><i class="bi bi-share mr-1"></i> 45</span>
+            </div>
+          </div>
+
+          <!-- 帖子6：经验分享 -->
+          <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
+            <div class="flex items-center mb-4">
+              <div class="w-10 h-10 rounded-full bg-harvest-gold/20 flex items-center justify-center text-sm font-bold text-harvest-gold mr-3">赵</div>
+              <div>
+                <p class="text-sm font-medium">赵姐的蟹塘</p>
+                <p class="text-xs text-gray-400">养殖能手 · 2天前发布</p>
+              </div>
+              <span class="ml-auto px-2 py-0.5 bg-harvest-gold/10 text-harvest-gold text-xs rounded-full">经验分享</span>
+            </div>
+            <h4 class="font-bold text-gray-800 mb-2">三年蟹塘老手的降本增效心得</h4>
+            <p class="text-sm text-gray-600 mb-3">养蟹三年踩了不少坑，总结几个实用经验：<br>① 自配饲料比买成品料每吨省800元，配方：豆粕30%+鱼粉15%+麸皮20%+玉米粉25%+预混料10%；<br>② 种草一定要种伊乐藻+轮叶黑藻混栽，覆盖率控制在60%；<br>③ 增氧机每天凌晨3-5点必须开，这时间段最缺氧。</p>
+            <div class="flex items-center text-xs text-gray-400 space-x-6">
+              <span><i class="bi bi-heart mr-1"></i> 95</span>
+              <span><i class="bi bi-chat mr-1"></i> 52</span>
+              <span><i class="bi bi-share mr-1"></i> 28</span>
+            </div>
+          </div>
+
           <div class="text-center">
             <button class="px-6 py-3 bg-tech-blue text-white rounded-xl font-medium hover:bg-tech-blue-dark transition-colors">
               <i class="bi bi-plus-circle mr-2"></i> 发布新帖
@@ -129,7 +191,9 @@
           </div>
         </div>
 
+        <!-- ========== 右侧：侧边栏 ========== -->
         <div class="space-y-6">
+          <!-- 达人榜 -->
           <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
             <h3 class="font-bold mb-4 flex items-center"><i class="bi bi-trophy-fill text-harvest-gold mr-2"></i> 达人榜</h3>
             <div class="space-y-4">
@@ -157,9 +221,18 @@
                   <p class="text-xs text-gray-400">病害专家 · 732粉丝</p>
                 </div>
               </div>
+              <div class="flex items-center">
+                <span class="w-6 text-sm font-bold text-gray-300">4</span>
+                <div class="w-8 h-8 rounded-full bg-harvest-gold/20 flex items-center justify-center text-xs font-bold text-harvest-gold ml-2 mr-3">赵</div>
+                <div class="flex-1">
+                  <p class="text-sm font-medium">赵姐的蟹塘</p>
+                  <p class="text-xs text-gray-400">养殖能手 · 568粉丝</p>
+                </div>
+              </div>
             </div>
           </div>
 
+          <!-- 注册卡片 -->
           <div class="bg-gradient-to-br from-tech-blue to-tech-blue-dark rounded-2xl p-6 text-white" data-reveal>
             <h3 class="font-bold mb-2">加入肴柒蟹社区</h3>
             <p class="text-sm text-white/80 mb-4">与数万名养殖户和美食爱好者一起交流</p>
@@ -168,6 +241,7 @@
             </button>
           </div>
 
+          <!-- 热门话题 -->
           <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
             <h3 class="font-bold mb-4 flex items-center"><i class="bi bi-tags-fill text-water-green mr-2"></i> 热门话题</h3>
             <div class="flex flex-wrap gap-2">
@@ -177,7 +251,62 @@
               <span class="px-3 py-1 bg-water-green/10 text-water-green text-xs rounded-full cursor-pointer hover:bg-water-green/20 transition-colors">#十三香做法</span>
               <span class="px-3 py-1 bg-water-green/10 text-water-green text-xs rounded-full cursor-pointer hover:bg-water-green/20 transition-colors">#病害防治</span>
               <span class="px-3 py-1 bg-water-green/10 text-water-green text-xs rounded-full cursor-pointer hover:bg-water-green/20 transition-colors">#水质管理</span>
+              <span class="px-3 py-1 bg-water-green/10 text-water-green text-xs rounded-full cursor-pointer hover:bg-water-green/20 transition-colors">#饲料配方</span>
+              <span class="px-3 py-1 bg-water-green/10 text-water-green text-xs rounded-full cursor-pointer hover:bg-water-green/20 transition-colors">#水草管理</span>
             </div>
+          </div>
+
+          <!-- ===== 好物推荐（京东推广链接） ===== -->
+          <div class="bg-white rounded-2xl shadow-card p-6 border border-harvest-gold/20" data-reveal>
+            <h3 class="font-bold mb-4 flex items-center">
+              <i class="bi bi-bag-check-fill text-food-red mr-2"></i> 精选好物推荐
+              <span class="ml-auto text-xs text-gray-400 font-normal">广告</span>
+            </h3>
+            <div class="space-y-3">
+              <a href="https://u.jd.com/H6chbsf" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-orange-50 rounded-xl hover:bg-orange-100 transition-all group">
+                <div class="w-10 h-10 rounded-lg bg-food-red/10 flex items-center justify-center mr-3 text-xl flex-shrink-0">🦞</div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-800 group-hover:text-food-red transition-colors truncate">鲜活小龙虾 4-6钱 净重3斤</p>
+                  <p class="text-xs text-gray-400">京东自营 · 产地直发</p>
+                </div>
+                <span class="text-food-red text-sm font-bold flex-shrink-0 ml-2">¥89 <i class="bi bi-box-arrow-up-right text-xs"></i></span>
+              </a>
+              <a href="https://u.jd.com/Hgjqsmp" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-orange-50 rounded-xl hover:bg-orange-100 transition-all group">
+                <div class="w-10 h-10 rounded-lg bg-tech-blue/10 flex items-center justify-center mr-3 text-xl flex-shrink-0">🦀</div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-800 group-hover:text-tech-blue transition-colors truncate">阳澄湖大闸蟹 礼盒装8只</p>
+                  <p class="text-xs text-gray-400">京东生鲜 · 顺丰冷链</p>
+                </div>
+                <span class="text-tech-blue text-sm font-bold flex-shrink-0 ml-2">¥198 <i class="bi bi-box-arrow-up-right text-xs"></i></span>
+              </a>
+              <a href="https://u.jd.com/HrjqDp3" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-orange-50 rounded-xl hover:bg-orange-100 transition-all group">
+                <div class="w-10 h-10 rounded-lg bg-water-green/10 flex items-center justify-center mr-3 text-xl flex-shrink-0">🦐</div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-800 group-hover:text-water-green transition-colors truncate">冷冻南美白虾仁 净重1kg</p>
+                  <p class="text-xs text-gray-400">京东生鲜 · 去肠去线</p>
+                </div>
+                <span class="text-water-green text-sm font-bold flex-shrink-0 ml-2">¥59 <i class="bi bi-box-arrow-up-right text-xs"></i></span>
+              </a>
+              <a href="https://u.jd.com/HOjwDwq" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-orange-50 rounded-xl hover:bg-orange-100 transition-all group">
+                <div class="w-10 h-10 rounded-lg bg-harvest-gold/10 flex items-center justify-center mr-3 text-xl flex-shrink-0">🍳</div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-800 group-hover:text-harvest-gold transition-colors truncate">韩式麦饭石不粘炒锅 32cm</p>
+                  <p class="text-xs text-gray-400">京东厨具 · 赠锅铲</p>
+                </div>
+                <span class="text-harvest-gold text-sm font-bold flex-shrink-0 ml-2">¥129 <i class="bi bi-box-arrow-up-right text-xs"></i></span>
+              </a>
+              <a href="https://u.jd.com/HGceJMf" target="_blank" rel="noopener noreferrer" class="flex items-center p-3 bg-orange-50 rounded-xl hover:bg-orange-100 transition-all group">
+                <div class="w-10 h-10 rounded-lg bg-tech-blue/10 flex items-center justify-center mr-3 text-xl flex-shrink-0">📦</div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium text-gray-800 group-hover:text-tech-blue transition-colors truncate">食品级密封保鲜盒 10件套</p>
+                  <p class="text-xs text-gray-400">京东收纳 · 冰箱专用</p>
+                </div>
+                <span class="text-tech-blue text-sm font-bold flex-shrink-0 ml-2">¥49 <i class="bi bi-box-arrow-up-right text-xs"></i></span>
+              </a>
+            </div>
+            <p class="text-xs text-gray-400 mt-3 text-center border-t border-gray-100 pt-3">
+              <i class="bi bi-info-circle mr-1"></i>通过本链接购买可享肴柒蟹专属优惠
+            </p>
           </div>
         </div>
       </div>
@@ -190,7 +319,7 @@
         <div><div class="flex items-center space-x-2 mb-4"><span class="text-2xl">🦀</span><span class="text-xl font-bold text-white">肴柒蟹</span></div><p class="text-sm leading-relaxed">科技赋能养殖，美味连接生活。</p></div>
         <div><h4 class="font-bold text-white mb-4">快速链接</h4><ul class="space-y-2 text-sm">
           <li><a href="index.html" class="hover:text-white transition-colors">首页</a></li>
-          <li><a href="features.html" class="hover:text-white transition-colors">平台功能</a></li>
+          <li><a href="features.html" class="hover:text-white transition-colors">智慧养殖</a></li>
           <li><a href="market.html" class="hover:text-white transition-colors">市场行情</a></li>
           <li><a href="recipes.html" class="hover:text-white transition-colors">美食菜谱</a></li>
           <li><a href="community.html" class="hover:text-white transition-colors">社区交流</a></li>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>肴柒蟹 - 平台功能</title>
+  <title>肴柒蟹 - 智慧养殖</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🦀%3C/text%3E%3C/svg%3E" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
@@ -18,18 +18,18 @@
         <a href="index.html" class="flex items-center space-x-2 group">
           <span class="text-3xl">🦀</span>
           <span class="text-2xl font-bold bg-gradient-to-r from-tech-blue to-food-red bg-clip-text text-transparent">肴柒蟹</span>
-          <span class="hidden sm:inline-block text-xs text-gray-400 ml-1">养殖烹饪综合平台</span>
+          <span class="hidden sm:inline-block text-xs text-gray-400 ml-1">®</span>
         </a>
         <nav class="hidden lg:flex items-center space-x-8">
           <a href="index.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">首页</a>
-          <a href="features.html" class="nav-link text-tech-blue font-medium">功能</a>
+          <a href="features.html" class="nav-link text-tech-blue font-medium">养殖</a>
           <a href="market.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">行情</a>
           <a href="recipes.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">菜谱</a>
           <a href="community.html" class="nav-link text-gray-600 hover:text-tech-blue transition-colors">社区</a>
         </nav>
         <div class="flex items-center space-x-3">
-          <button class="hidden sm:inline-block px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors">登录</button>
-          <button class="px-4 py-2 text-sm font-medium bg-gradient-to-r from-tech-blue to-food-red text-white rounded-lg hover:shadow-lg transition-all register-btn">免费注册</button>
+          <a href="http://127.0.0.1:5000/login" class="hidden sm:inline-block px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors">登录</a>
+          <a href="http://127.0.0.1:5000/register" class="px-4 py-2 text-sm font-medium bg-gradient-to-r from-tech-blue to-food-red text-white rounded-lg hover:shadow-lg transition-all register-btn">免费注册</a>
           <button id="mobileMenuBtn" class="lg:hidden text-gray-600 hover:text-gray-800">
             <i class="bi bi-list text-2xl"></i>
           </button>
@@ -39,7 +39,7 @@
     <div id="mobileMenu" class="lg:hidden hidden border-t border-gray-100 bg-white">
       <div class="px-4 py-4 space-y-3">
         <a href="index.html" class="block text-gray-600 hover:text-tech-blue py-2">首页</a>
-        <a href="features.html" class="block text-tech-blue font-medium py-2">功能</a>
+        <a href="features.html" class="block text-tech-blue font-medium py-2">养殖</a>
         <a href="market.html" class="block text-gray-600 hover:text-tech-blue py-2">行情</a>
         <a href="recipes.html" class="block text-gray-600 hover:text-tech-blue py-2">菜谱</a>
         <a href="community.html" class="block text-gray-600 hover:text-tech-blue py-2">社区</a>
@@ -62,114 +62,46 @@
   <section class="pt-36 pb-12 md:pt-44 md:pb-16 bg-gradient-to-br from-blue-50 to-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <div class="inline-flex items-center px-4 py-1.5 bg-tech-blue/10 text-tech-blue rounded-full text-sm font-medium mb-4">
-        <i class="bi bi-speedometer2 mr-2"></i> 平台功能
+        <i class="bi bi-tree-fill mr-2"></i> 智慧养殖
       </div>
-      <h1 class="text-[clamp(2rem,4vw,3rem)] font-bold mb-4">平台核心功能</h1>
-      <p class="text-gray-500 max-w-2xl mx-auto">肴柒蟹覆盖螃蟹与龙虾产业链的各个环节，为养殖户、商家和消费者提供全方位服务</p>
+      <h1 class="text-[clamp(2rem,4vw,3rem)] font-bold mb-4">智慧养殖管理系统</h1>
+      <p class="text-gray-500 max-w-2xl mx-auto">从苗种到上市，全流程数字化管理工具，让养殖更科学、更高效</p>
     </div>
   </section>
 
-  <!-- ==================== 四大功能卡片 ==================== -->
+  <!-- ==================== 环境实时监控 ==================== -->
   <section class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div class="feature-card bg-white rounded-xl shadow-card hover:shadow-card-hover transition-all p-6 border-t-4 border-tech-blue group" data-reveal>
-          <div class="w-14 h-14 rounded-xl bg-tech-blue/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-            <i class="bi bi-speedometer2 text-tech-blue text-2xl"></i>
-          </div>
-          <h3 class="text-xl font-bold mb-3">智能养殖管理</h3>
-          <p class="text-gray-500 mb-4 text-sm leading-relaxed">记录每日养殖数据，接入IoT设备实时监控水质，AI智能分析提供养殖建议。</p>
-          <ul class="text-sm text-gray-400 space-y-2">
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-tech-blue mr-2 text-xs"></i> 智能养殖日志</li>
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-tech-blue mr-2 text-xs"></i> 水质实时监控</li>
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-tech-blue mr-2 text-xs"></i> 病害AI识别</li>
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-tech-blue mr-2 text-xs"></i> 专家在线问诊</li>
-          </ul>
-        </div>
-        <div class="feature-card bg-white rounded-xl shadow-card hover:shadow-card-hover transition-all p-6 border-t-4 border-food-red group" data-reveal>
-          <div class="w-14 h-14 rounded-xl bg-food-red/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-            <i class="bi bi-cup-hot-fill text-food-red text-2xl"></i>
-          </div>
-          <h3 class="text-xl font-bold mb-3">专业烹饪指导</h3>
-          <p class="text-gray-500 mb-4 text-sm leading-relaxed">提供精确到克的量化菜谱，名厨视频教学，智能工具辅助您做出美味佳肴。</p>
-          <ul class="text-sm text-gray-400 space-y-2">
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-food-red mr-2 text-xs"></i> 结构化菜谱库</li>
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-food-red mr-2 text-xs"></i> 名厨视频教程</li>
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-food-red mr-2 text-xs"></i> 食材安全指南</li>
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-food-red mr-2 text-xs"></i> 智能烹饪工具</li>
-          </ul>
-        </div>
-        <div class="feature-card bg-white rounded-xl shadow-card hover:shadow-card-hover transition-all p-6 border-t-4 border-harvest-gold group" data-reveal>
-          <div class="w-14 h-14 rounded-xl bg-harvest-gold/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-            <i class="bi bi-arrow-left-right text-harvest-gold text-2xl"></i>
-          </div>
-          <h3 class="text-xl font-bold mb-3">实时市场交易</h3>
-          <p class="text-gray-500 mb-4 text-sm leading-relaxed">连接产地与餐桌，提供实时行情数据，担保交易保障买卖双方权益。</p>
-          <ul class="text-sm text-gray-400 space-y-2">
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-harvest-gold mr-2 text-xs"></i> 全国实时行情</li>
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-harvest-gold mr-2 text-xs"></i> 供需信息发布</li>
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-harvest-gold mr-2 text-xs"></i> 安全担保交易</li>
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-harvest-gold mr-2 text-xs"></i> 政策资讯速递</li>
-          </ul>
-        </div>
-        <div class="feature-card bg-white rounded-xl shadow-card hover:shadow-card-hover transition-all p-6 border-t-4 border-water-green group" data-reveal>
-          <div class="w-14 h-14 rounded-xl bg-water-green/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-            <i class="bi bi-people-fill text-water-green text-2xl"></i>
-          </div>
-          <h3 class="text-xl font-bold mb-3">行业社区交流</h3>
-          <p class="text-gray-500 mb-4 text-sm leading-relaxed">汇聚全国养殖户、厨师和美食爱好者，分享经验，交流技术，共同成长。</p>
-          <ul class="text-sm text-gray-400 space-y-2">
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-water-green mr-2 text-xs"></i> 养殖经验分享</li>
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-water-green mr-2 text-xs"></i> 烹饪作品展示</li>
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-water-green mr-2 text-xs"></i> 专家问答专区</li>
-            <li class="flex items-center"><i class="bi bi-check-circle-fill text-water-green mr-2 text-xs"></i> 达人认证体系</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== 养殖端详细功能 ==================== -->
-  <section class="py-20 bg-gradient-to-b from-gray-50 to-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <div class="inline-flex items-center px-4 py-1.5 bg-tech-blue/10 text-tech-blue rounded-full text-sm font-medium mb-4">
-          <i class="bi bi-tree-fill mr-2"></i> 养殖端
-        </div>
-        <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4" data-reveal>智慧养殖管理系统</h2>
-        <p class="text-gray-500 max-w-2xl mx-auto" data-reveal>为养殖户提供从苗种到上市的全流程数字化管理工具</p>
-      </div>
-
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 bg-white rounded-2xl shadow-card p-6 lg:p-8" data-reveal>
+        <div class="lg:col-span-2 bg-white rounded-2xl shadow-card p-6 lg:p-8 border border-gray-100" data-reveal>
           <h3 class="text-xl font-bold mb-2 flex items-center">
             <i class="bi bi-wifi text-tech-blue mr-2"></i> 环境实时监控
           </h3>
           <p class="text-gray-500 text-sm mb-6">接入第三方水质传感器，实时掌握塘口动态</p>
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-            <div class="bg-gray-50 rounded-xl p-4 text-center">
+            <div class="bg-gradient-to-br from-tech-blue/5 to-tech-blue/10 rounded-xl p-4 text-center border border-tech-blue/10">
               <i class="bi bi-thermometer-half text-tech-blue text-xl"></i>
               <p class="text-xs text-gray-400 mt-1">水温</p>
               <p class="text-lg font-bold text-gray-800">24.5°C</p>
-              <span class="text-xs text-green-500">正常</span>
+              <span class="text-xs text-green-500 bg-green-50 px-2 py-0.5 rounded-full">正常</span>
             </div>
-            <div class="bg-gray-50 rounded-xl p-4 text-center">
+            <div class="bg-gradient-to-br from-water-green/5 to-water-green/10 rounded-xl p-4 text-center border border-water-green/10">
               <i class="bi bi-droplet text-water-green text-xl"></i>
               <p class="text-xs text-gray-400 mt-1">溶解氧</p>
               <p class="text-lg font-bold text-gray-800">6.8 mg/L</p>
-              <span class="text-xs text-green-500">正常</span>
+              <span class="text-xs text-green-500 bg-green-50 px-2 py-0.5 rounded-full">正常</span>
             </div>
-            <div class="bg-gray-50 rounded-xl p-4 text-center">
+            <div class="bg-gradient-to-br from-harvest-gold/5 to-harvest-gold/10 rounded-xl p-4 text-center border border-harvest-gold/10">
               <i class="bi bi-flask text-harvest-gold text-xl"></i>
               <p class="text-xs text-gray-400 mt-1">pH值</p>
               <p class="text-lg font-bold text-gray-800">7.6</p>
-              <span class="text-xs text-green-500">正常</span>
+              <span class="text-xs text-green-500 bg-green-50 px-2 py-0.5 rounded-full">正常</span>
             </div>
-            <div class="bg-gray-50 rounded-xl p-4 text-center">
+            <div class="bg-gradient-to-br from-food-red/5 to-food-red/10 rounded-xl p-4 text-center border border-food-red/10">
               <i class="bi bi-exclamation-triangle text-food-red text-xl"></i>
               <p class="text-xs text-gray-400 mt-1">氨氮</p>
               <p class="text-lg font-bold text-gray-800">0.12 mg/L</p>
-              <span class="text-xs text-yellow-500">偏高</span>
+              <span class="text-xs text-yellow-500 bg-yellow-50 px-2 py-0.5 rounded-full">偏高</span>
             </div>
           </div>
           <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 flex items-start">
@@ -181,7 +113,7 @@
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl shadow-card p-6 lg:p-8" data-reveal>
+        <div class="bg-white rounded-2xl shadow-card p-6 lg:p-8 border border-gray-100" data-reveal>
           <h3 class="text-xl font-bold mb-2 flex items-center">
             <i class="bi bi-journal-text text-tech-blue mr-2"></i> 养殖日志
           </h3>
@@ -213,164 +145,415 @@
           </button>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 rounded-xl bg-tech-blue/10 flex items-center justify-center mr-4">
-              <i class="bi bi-shield-plus text-tech-blue text-xl"></i>
-            </div>
-            <div>
-              <h3 class="font-bold">病害图谱</h3>
-              <p class="text-xs text-gray-400">AI图文识别</p>
-            </div>
-          </div>
-          <div class="grid grid-cols-3 gap-2">
-            <div class="aspect-square rounded-lg bg-gray-100 flex items-center justify-center text-2xl cursor-pointer hover:ring-2 ring-tech-blue transition-all">🦀</div>
-            <div class="aspect-square rounded-lg bg-gray-100 flex items-center justify-center text-2xl cursor-pointer hover:ring-2 ring-tech-blue transition-all">🦞</div>
-            <div class="aspect-square rounded-lg bg-gray-100 flex items-center justify-center text-2xl cursor-pointer hover:ring-2 ring-tech-blue transition-all">🔬</div>
-          </div>
-          <p class="text-xs text-gray-400 mt-2">点击图片上传识别病害</p>
+  <!-- ==================== 病害防治 ==================== -->
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center px-4 py-1.5 bg-tech-blue/10 text-tech-blue rounded-full text-sm font-medium mb-4">
+          <i class="bi bi-shield-plus mr-2"></i> 病害防治
         </div>
+        <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4" data-reveal>病害图谱与防治措施</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto" data-reveal>涵盖螃蟹与龙虾最常见病害，提供症状识别、防治方案和用药建议</p>
+      </div>
 
-        <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 rounded-xl bg-tech-blue/10 flex items-center justify-center mr-4">
-              <i class="bi bi-chat-dots text-tech-blue text-xl"></i>
+      <!-- 螃蟹病害 -->
+      <div class="mb-10">
+        <h3 class="text-xl font-bold mb-6 flex items-center" data-reveal>
+          <span class="text-3xl mr-2">🦀</span> 螃蟹常见病害及防治
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="bg-white rounded-2xl shadow-card p-5 border-l-4 border-tech-blue" data-reveal>
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-bold text-lg">黑鳃病</h4>
+                <p class="text-xs text-gray-400">细菌性疾病 · 高温期高发</p>
+              </div>
+              <span class="px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded-full font-medium">🔴 高发</span>
             </div>
-            <div>
-              <h3 class="font-bold">专家在线问诊</h3>
-              <p class="text-xs text-gray-400">图文/视频咨询</p>
+            <div class="space-y-2 text-sm">
+              <p><span class="font-medium text-gray-700">症状：</span>鳃部变黑或深褐色，附肢有黑色斑点，行动迟缓，食欲减退，严重时窒息死亡。</p>
+              <p><span class="font-medium text-gray-700">病因：</span>水质恶化（氨氮过高）、池底有机质分解产生的硫化氢导致鳃组织坏死。</p>
+              <p><span class="font-medium text-gray-700">防治：</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 定期换水</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 底质改良</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded">✅ 生石灰消毒</span>
+              </p>
+              <p><span class="font-medium text-gray-700">用药：</span>二氧化氯 0.3mg/L 全池泼洒，连续2天；饵料中添加氟苯尼考 0.1% 投喂5-7天。</p>
             </div>
           </div>
-          <div class="space-y-3">
-            <div class="flex items-center">
-              <div class="w-8 h-8 rounded-full bg-tech-blue/20 flex items-center justify-center text-sm font-bold text-tech-blue mr-3">王</div>
-              <div class="flex-1">
-                <p class="text-sm font-medium">王教授</p>
-                <p class="text-xs text-gray-400">水产养殖 · 在线</p>
+          <div class="bg-white rounded-2xl shadow-card p-5 border-l-4 border-tech-blue" data-reveal>
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-bold text-lg">水瘪子病</h4>
+                <p class="text-xs text-gray-400">综合性疾病 · 养殖中后期</p>
               </div>
-              <button class="px-3 py-1 text-xs bg-tech-blue text-white rounded-lg hover:bg-tech-blue-dark transition-colors">咨询</button>
+              <span class="px-2 py-0.5 bg-yellow-100 text-yellow-600 text-xs rounded-full font-medium">🟡 常见</span>
             </div>
-            <div class="flex items-center">
-              <div class="w-8 h-8 rounded-full bg-food-red/20 flex items-center justify-center text-sm font-bold text-food-red mr-3">李</div>
-              <div class="flex-1">
-                <p class="text-sm font-medium">李研究员</p>
-                <p class="text-xs text-gray-400">病害防治 · 忙碌</p>
+            <div class="space-y-2 text-sm">
+              <p><span class="font-medium text-gray-700">症状：</span>甲壳变软，体色发暗，附肢无力，肝胰腺萎缩呈白色或淡黄色，肌肉水分含量高，煮熟后无膏无黄。</p>
+              <p><span class="font-medium text-gray-700">病因：</span>苗种质量差、营养不良（缺乏必需脂肪酸和维生素）、水质长期不良。</p>
+              <p><span class="font-medium text-gray-700">防治：</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 优质苗种</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 均衡营养</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded">✅ 稳定水质</span>
+              </p>
+              <p><span class="font-medium text-gray-700">用药：</span>饲料中添加复合维生素C 0.2% + 免疫多糖 0.15% + 保肝护胆制剂，连喂10-15天。</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl shadow-card p-5 border-l-4 border-tech-blue" data-reveal>
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-bold text-lg">烂肢病</h4>
+                <p class="text-xs text-gray-400">细菌感染 · 机械损伤继发</p>
               </div>
-              <button class="px-3 py-1 text-xs bg-gray-200 text-gray-500 rounded-lg cursor-not-allowed">预约</button>
+              <span class="px-2 py-0.5 bg-yellow-100 text-yellow-600 text-xs rounded-full font-medium">🟡 常见</span>
+            </div>
+            <div class="space-y-2 text-sm">
+              <p><span class="font-medium text-gray-700">症状：</span>附肢或步足出现溃疡、红肿，组织腐烂，严重时附肢脱落。病蟹活动能力下降。</p>
+              <p><span class="font-medium text-gray-700">病因：</span>捕捞或运输过程中机械损伤后感染嗜水气单胞菌等致病菌。高密度养殖时互相残食导致。</p>
+              <p><span class="font-medium text-gray-700">防治：</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 控制密度</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 减少惊扰</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded">✅ 水体消毒</span>
+              </p>
+              <p><span class="font-medium text-gray-700">用药：</span>聚维酮碘 1mg/L 全池泼洒消毒；饵料中拌入恩诺沙星 0.05% 连喂5天。</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl shadow-card p-5 border-l-4 border-tech-blue" data-reveal>
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-bold text-lg">颤抖病（抖抖病）</h4>
+                <p class="text-xs text-gray-400">病毒性疾病 · 危害严重</p>
+              </div>
+              <span class="px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded-full font-medium">🔴 高发</span>
+            </div>
+            <div class="space-y-2 text-sm">
+              <p><span class="font-medium text-gray-700">症状：</span>附肢间歇性颤抖（尤其是步足），不能正常爬行，身体翻转后不能自行翻回。病程后期拒食、死亡。</p>
+              <p><span class="font-medium text-gray-700">病因：</span>由一种呼肠孤样病毒感染引起，水温 25-30°C 时易爆发，传播迅速，死亡率可达 70%。</p>
+              <p><span class="font-medium text-gray-700">防治：</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 严格检疫</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 隔离病蟹</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded">✅ 水体消毒</span>
+              </p>
+              <p><span class="font-medium text-gray-700">用药：</span>尚无特效药。发现病蟹立即隔离深埋。全池泼洒碘制剂消毒，饲料中添加抗病毒中药制剂（板蓝根+黄芪）增强免疫力。</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl shadow-card p-5 border-l-4 border-tech-blue" data-reveal>
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-bold text-lg">蟹奴病</h4>
+                <p class="text-xs text-gray-400">寄生虫病 · 影响商品价值</p>
+              </div>
+              <span class="px-2 py-0.5 bg-yellow-100 text-yellow-600 text-xs rounded-full font-medium">🟡 常见</span>
+            </div>
+            <div class="space-y-2 text-sm">
+              <p><span class="font-medium text-gray-700">症状：</span>蟹腹部可见淡黄色或乳白色囊状物（蟹奴虫体），蟹体生长受阻，不脱壳或脱壳困难，性腺发育受抑制。</p>
+              <p><span class="font-medium text-gray-700">病因：</span>蟹奴幼虫寄生在蟹体，吸收蟹体营养。高盐度水域和有机质丰富的池塘更容易发生。</p>
+              <p><span class="font-medium text-gray-700">防治：</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 清塘消毒</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 淡水浸泡</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded">✅ 轮作养殖</span>
+              </p>
+              <p><span class="font-medium text-gray-700">用药：</span>硫酸铜 0.7mg/L 全池泼洒（注意缺氧风险）。已严重感染的病蟹应直接剔除销毁。</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl shadow-card p-5 border-l-4 border-tech-blue" data-reveal>
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-bold text-lg">脱壳不遂</h4>
+                <p class="text-xs text-gray-400">生理性疾病 · 管理不当</p>
+              </div>
+              <span class="px-2 py-0.5 bg-yellow-100 text-yellow-600 text-xs rounded-full font-medium">🟡 常见</span>
+            </div>
+            <div class="space-y-2 text-sm">
+              <p><span class="font-medium text-gray-700">症状：</span>背甲与腹甲之间出现裂缝但无法完成脱壳，或脱壳后长时间不能硬化。病蟹常因此死亡或被同类残食。</p>
+              <p><span class="font-medium text-gray-700">病因：</span>缺钙、水体硬度不足、营养不良、应激反应、水温剧烈变化（温差超过 5°C）。</p>
+              <p><span class="font-medium text-gray-700">防治：</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 补充钙磷</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 稳定水温</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded">✅ 水草遮盖</span>
+              </p>
+              <p><span class="font-medium text-gray-700">用药：</span>全池泼洒葡萄糖酸钙 2-3mg/L；饲料中添加磷酸二氢钙 1% + 蜕壳素 0.05%，脱壳高峰期连喂7天。</p>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 rounded-xl bg-tech-blue/10 flex items-center justify-center mr-4">
-              <i class="bi bi-book text-tech-blue text-xl"></i>
+      <!-- 小龙虾病害 -->
+      <div class="mb-10">
+        <h3 class="text-xl font-bold mb-6 flex items-center" data-reveal>
+          <span class="text-3xl mr-2">🦞</span> 小龙虾常见病害及防治
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div class="bg-white rounded-2xl shadow-card p-5 border-l-4 border-food-red" data-reveal>
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-bold text-lg">五月瘟（白斑综合征）</h4>
+                <p class="text-xs text-gray-400">病毒性疾病 · 5月高发</p>
+              </div>
+              <span class="px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded-full font-medium">🔴 高发</span>
             </div>
-            <div>
-              <h3 class="font-bold">标准化技术库</h3>
-              <p class="text-xs text-gray-400">分品种 · 按月指导</p>
+            <div class="space-y-2 text-sm">
+              <p><span class="font-medium text-gray-700">症状：</span>头胸甲上可见白色斑点，虾体发红，附肢无力，停止摄食，在水面缓慢游动后沉底死亡。死亡前有"爬边"现象。</p>
+              <p><span class="font-medium text-gray-700">病因：</span>白斑综合征病毒（WSSV）感染。水温 20-28°C 时爆发，遇应激（缺氧、温差大）加速死亡。</p>
+              <p><span class="font-medium text-gray-700">防治：</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 控制密度</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 稳定水温</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded">✅ 增氧解毒</span>
+              </p>
+              <p><span class="font-medium text-gray-700">用药：</span>聚维酮碘 0.5mg/L + 维生素C 全池泼洒。饲料中添加免疫增强剂（β-葡聚糖 0.1%）和保肝中药。病虾隔离销毁。</p>
             </div>
           </div>
-          <div class="space-y-2">
-            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-tech-blue/5 transition-colors">
-              <span class="text-sm">🦀 中华绒螯蟹 · 5月管理</span>
-              <i class="bi bi-download text-tech-blue"></i>
+          <div class="bg-white rounded-2xl shadow-card p-5 border-l-4 border-food-red" data-reveal>
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-bold text-lg">烂尾病</h4>
+                <p class="text-xs text-gray-400">细菌性疾病 · 高温期</p>
+              </div>
+              <span class="px-2 py-0.5 bg-yellow-100 text-yellow-600 text-xs rounded-full font-medium">🟡 常见</span>
             </div>
-            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-tech-blue/5 transition-colors">
-              <span class="text-sm">🦞 锦绣龙虾 · 养殖手册</span>
-              <i class="bi bi-download text-tech-blue"></i>
+            <div class="space-y-2 text-sm">
+              <p><span class="font-medium text-gray-700">症状：</span>尾部肌肉呈灰白色或红色，尾扇出现溃疡、坏死，严重时尾扇全部烂掉，露出尾节。</p>
+              <p><span class="font-medium text-gray-700">病因：</span>嗜水气单胞菌、弧菌等感染。水质恶化、密度过高、机械损伤后易发。夏季高温（>30°C）时危害加重。</p>
+              <p><span class="font-medium text-gray-700">防治：</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 控制密度</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 定期改底</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded">✅ 温和消毒</span>
+              </p>
+              <p><span class="font-medium text-gray-700">用药：</span>二氧化氯 0.2mg/L 全池泼洒，隔天再用一次。饲料中添加多西环素 0.05% 连喂5-7天。</p>
             </div>
-            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-tech-blue/5 transition-colors">
-              <span class="text-sm">📊 水质管理标准指南</span>
-              <i class="bi bi-download text-tech-blue"></i>
+          </div>
+          <div class="bg-white rounded-2xl shadow-card p-5 border-l-4 border-food-red" data-reveal>
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-bold text-lg">肠炎病</h4>
+                <p class="text-xs text-gray-400">细菌/原生动物 · 常见病</p>
+              </div>
+              <span class="px-2 py-0.5 bg-yellow-100 text-yellow-600 text-xs rounded-full font-medium">🟡 常见</span>
             </div>
+            <div class="space-y-2 text-sm">
+              <p><span class="font-medium text-gray-700">症状：</span>肠道红肿，无食物或充满黄色液体，肛门有白色丝状物拖出。病虾食欲不振，体表无光泽。</p>
+              <p><span class="font-medium text-gray-700">病因：</span>饵料变质或不洁、水质恶化后感染气单胞菌或肠袋虫。投喂过量、残饵腐败也会诱发。</p>
+              <p><span class="font-medium text-gray-700">防治：</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 新鲜饵料</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 控制投喂</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded">✅ 改底调水</span>
+              </p>
+              <p><span class="font-medium text-gray-700">用药：</span>大蒜素 0.2g/kg 饵料拌入投喂，或氟苯尼考 0.05% 连喂3-5天。同时用EM菌调节水质。</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl shadow-card p-5 border-l-4 border-food-red" data-reveal>
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-bold text-lg">纤毛虫病</h4>
+                <p class="text-xs text-gray-400">寄生虫病 · 影响商品价值</p>
+              </div>
+              <span class="px-2 py-0.5 bg-yellow-100 text-yellow-600 text-xs rounded-full font-medium">🟡 常见</span>
+            </div>
+            <div class="space-y-2 text-sm">
+              <p><span class="font-medium text-gray-700">症状：</span>体表、附肢、鳃部附着大量纤毛虫（钟形虫、聚缩虫等），外观像覆了一层灰白色绒毛。虾行动迟缓，鳃部变黑，呼吸困难。</p>
+              <p><span class="font-medium text-gray-700">病因：</span>水体富营养化、有机质含量高、换水不足。高密度养殖池更容易爆发。</p>
+              <p><span class="font-medium text-gray-700">防治：</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 定期换水</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 降低密度</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded">✅ 茶粕杀灭</span>
+              </p>
+              <p><span class="font-medium text-gray-700">用药：</span>硫酸锌 0.3mg/L 全池泼洒，或茶粕 15-20ppm（先泡24小时）全池泼洒。重症隔3天复用一次。</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl shadow-card p-5 border-l-4 border-food-red" data-reveal>
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-bold text-lg">软壳病</h4>
+                <p class="text-xs text-gray-400">营养性疾病 · 管理问题</p>
+              </div>
+              <span class="px-2 py-0.5 bg-yellow-100 text-yellow-600 text-xs rounded-full font-medium">🟡 常见</span>
+            </div>
+            <div class="space-y-2 text-sm">
+              <p><span class="font-medium text-gray-700">症状：</span>甲壳薄软如纸，体色暗淡，虾体生长缓慢，脱壳后长时间不能硬化。易被同类攻击致死。</p>
+              <p><span class="font-medium text-gray-700">病因：</span>水体钙磷含量不足、饵料中钙磷比例失调（理想比 1.5:1）、维生素D缺乏。pH偏低也影响钙吸收。</p>
+              <p><span class="font-medium text-gray-700">防治：</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 补充钙质</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 调节pH</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded">✅ 营养均衡</span>
+              </p>
+              <p><span class="font-medium text-gray-700">用药：</span>生石灰 10-15kg/亩 全池泼洒（提高水硬度和pH）。饲料中添加磷酸二氢钙 1.5% + 鱼肝油 0.5%。</p>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl shadow-card p-5 border-l-4 border-food-red" data-reveal>
+            <div class="flex items-start justify-between mb-3">
+              <div>
+                <h4 class="font-bold text-lg">缺氧浮头</h4>
+                <p class="text-xs text-gray-400">环境应激 · 紧急情况</p>
+              </div>
+              <span class="px-2 py-0.5 bg-red-100 text-red-600 text-xs rounded-full font-medium">🔴 高发</span>
+            </div>
+            <div class="space-y-2 text-sm">
+              <p><span class="font-medium text-gray-700">表现：</span>小龙虾大量爬边、上草，甚至爬上岸。虾体颜色变浅，附肢无力。持续缺氧将导致大面积死亡。</p>
+              <p><span class="font-medium text-gray-700">病因：</span>连续阴雨天、水草过度繁殖夜间耗氧、有机质分解耗氧、放养密度过大、水温骤升。</p>
+              <p><span class="font-medium text-gray-700">防治：</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 配备增氧机</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded mr-1">✅ 控制水草</span>
+                <span class="inline-block px-2 py-0.5 bg-green-50 text-green-600 text-xs rounded">✅ 定期改底</span>
+              </p>
+              <p><span class="font-medium text-gray-700">急救：</span>立即开增氧机或泼洒增氧剂（过碳酸钠 0.5-1kg/亩）。换入新水（1/3）。紧急情况下可泼洒双氧水 2-3ml/m³。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 禁用药清单 -->
+      <div class="bg-red-50 border border-red-200 rounded-2xl p-6" data-reveal>
+        <div class="flex items-start">
+          <div class="w-12 h-12 rounded-xl bg-red-100 flex items-center justify-center mr-4 flex-shrink-0">
+            <i class="bi bi-exclamation-triangle-fill text-red-500 text-xl"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-800 mb-3">🚫 国家禁用渔药清单（水产养殖禁用）</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-sm text-gray-600">
+              <span class="flex items-center"><i class="bi bi-x-circle-fill text-red-400 mr-2 text-xs"></i>氯霉素</span>
+              <span class="flex items-center"><i class="bi bi-x-circle-fill text-red-400 mr-2 text-xs"></i>硝基呋喃类（呋喃唑酮）</span>
+              <span class="flex items-center"><i class="bi bi-x-circle-fill text-red-400 mr-2 text-xs"></i>孔雀石绿</span>
+              <span class="flex items-center"><i class="bi bi-x-circle-fill text-red-400 mr-2 text-xs"></i>五氯酚钠</span>
+              <span class="flex items-center"><i class="bi bi-x-circle-fill text-red-400 mr-2 text-xs"></i>甲基睾丸酮</span>
+              <span class="flex items-center"><i class="bi bi-x-circle-fill text-red-400 mr-2 text-xs"></i>己烯雌酚</span>
+              <span class="flex items-center"><i class="bi bi-x-circle-fill text-red-400 mr-2 text-xs"></i>林丹（六六六）</span>
+              <span class="flex items-center"><i class="bi bi-x-circle-fill text-red-400 mr-2 text-xs"></i>毒杀芬</span>
+              <span class="flex items-center"><i class="bi bi-x-circle-fill text-red-400 mr-2 text-xs"></i>呋喃西林</span>
+              <span class="flex items-center"><i class="bi bi-x-circle-fill text-red-400 mr-2 text-xs"></i>盐酸左旋咪唑</span>
+              <span class="flex items-center"><i class="bi bi-x-circle-fill text-red-400 mr-2 text-xs"></i>地虫硫磷</span>
+              <span class="flex items-center"><i class="bi bi-x-circle-fill text-red-400 mr-2 text-xs"></i>双甲脒</span>
+            </div>
+            <p class="text-xs text-gray-400 mt-3"><i class="bi bi-info-circle mr-1"></i>以上为部分禁用渔药，完整清单请参阅农业农村部《水产养殖用药明白纸》。使用违禁药物将面临处罚并危害食品安全。</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ==================== 烹饪端详细功能 ==================== -->
-  <section class="py-20 bg-gradient-to-b from-orange-50 to-white">
+  <!-- ==================== 养殖品种百科 ==================== -->
+  <section class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <div class="inline-flex items-center px-4 py-1.5 bg-food-red/10 text-food-red rounded-full text-sm font-medium mb-4">
-          <i class="bi bi-cup-hot-fill mr-2"></i> 烹饪端
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center px-4 py-1.5 bg-tech-blue/10 text-tech-blue rounded-full text-sm font-medium mb-4">
+          <i class="bi bi-book mr-2"></i> 标准化技术库
         </div>
-        <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4" data-reveal>专业烹饪美食指南</h2>
-        <p class="text-gray-500 max-w-2xl mx-auto" data-reveal>从食材处理到烹饪技巧，让每一道蟹虾料理都成为艺术品</p>
+        <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold mb-4" data-reveal>养殖品种 &amp; 技术百科</h2>
+        <p class="text-gray-500 max-w-2xl mx-auto" data-reveal>分品种、按月指导的标准化养殖技术手册，支持下载到本地</p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 rounded-xl bg-food-red/10 flex items-center justify-center mr-4">
-              <i class="bi bi-calculator text-food-red text-xl"></i>
-            </div>
-            <div>
-              <h3 class="font-bold">食材换算器</h3>
-              <p class="text-xs text-gray-400">自动计算配料分量</p>
-            </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <!-- 品种卡片 -->
+        <div class="bg-white rounded-2xl shadow-card overflow-hidden border border-gray-100" data-reveal>
+          <div class="aspect-[16/10] bg-gradient-to-br from-tech-blue/20 to-gray-200 flex items-center justify-center text-6xl">
+            🦀
           </div>
-          <div class="flex items-end space-x-4">
-            <div class="flex-1">
-              <label class="text-xs text-gray-500 mb-1 block">食材重量 (g)</label>
-              <input type="number" id="ingredientWeight" value="500" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-food-red" />
+          <div class="p-6">
+            <h3 class="font-bold text-lg mb-2">中华绒螯蟹（大闸蟹）</h3>
+            <p class="text-sm text-gray-500 mb-4">中国最著名的淡水蟹，以阳澄湖、太湖、洪泽湖等产区最为知名。</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-2 py-1 bg-tech-blue/10 text-tech-blue text-xs rounded">养殖周期：18个月</span>
+              <span class="px-2 py-1 bg-green-100 text-green-600 text-xs rounded">最佳上市：9-11月</span>
             </div>
-            <div class="flex-1">
-              <label class="text-xs text-gray-500 mb-1 block">对应人数</label>
-              <input type="number" id="servingCount" value="3" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-food-red" />
+            <div class="space-y-2 border-t border-gray-100 pt-4">
+              <a href="#" class="tech-download flex items-center justify-between p-2.5 bg-gray-50 rounded-lg hover:bg-tech-blue/5 transition-colors text-sm" data-doc="螃蟹5月管理">
+                <span><i class="bi bi-filetype-pdf text-food-red mr-2"></i>5月养殖管理要点</span>
+                <i class="bi bi-download text-tech-blue"></i>
+              </a>
+              <a href="#" class="tech-download flex items-center justify-between p-2.5 bg-gray-50 rounded-lg hover:bg-tech-blue/5 transition-colors text-sm" data-doc="螃蟹水质管理">
+                <span><i class="bi bi-filetype-pdf text-food-red mr-2"></i>全程水质管理标准</span>
+                <i class="bi bi-download text-tech-blue"></i>
+              </a>
+              <a href="#" class="tech-download flex items-center justify-between p-2.5 bg-gray-50 rounded-lg hover:bg-tech-blue/5 transition-colors text-sm" data-doc="螃蟹病害防治">
+                <span><i class="bi bi-filetype-pdf text-food-red mr-2"></i>病害防治手册（完整版）</span>
+                <i class="bi bi-download text-tech-blue"></i>
+              </a>
             </div>
-            <button id="calcBtn" class="px-4 py-2 bg-food-red text-white rounded-lg text-sm font-medium hover:bg-food-red-dark transition-colors">计算</button>
-          </div>
-          <div id="calcResult" class="mt-4 p-3 bg-orange-50 rounded-lg text-sm text-gray-700 hidden">
-            建议配料：食用油 45ml · 盐 8g · 生抽 15ml · 姜 20g · 蒜 25g · 辣椒 10g
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl shadow-card p-6" data-reveal>
-          <div class="flex items-center mb-4">
-            <div class="w-12 h-12 rounded-xl bg-food-red/10 flex items-center justify-center mr-4">
-              <i class="bi bi-stopwatch text-food-red text-xl"></i>
+        <div class="bg-white rounded-2xl shadow-card overflow-hidden border border-gray-100" data-reveal>
+          <div class="aspect-[16/10] bg-gradient-to-br from-food-red/20 to-orange-100 flex items-center justify-center text-6xl">
+            🦞
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-lg mb-2">克氏原螯虾（小龙虾）</h3>
+            <p class="text-sm text-gray-500 mb-4">国内消费量最大的淡水虾，湖北、江苏、湖南为主要产区。</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-2 py-1 bg-food-red/10 text-food-red text-xs rounded">养殖周期：3-4个月</span>
+              <span class="px-2 py-1 bg-green-100 text-green-600 text-xs rounded">最佳上市：5-8月</span>
             </div>
-            <div>
-              <h3 class="font-bold">烹饪计时器</h3>
-              <p class="text-xs text-gray-400">精准掌握烹饪时间</p>
+            <div class="space-y-2 border-t border-gray-100 pt-4">
+              <a href="#" class="tech-download flex items-center justify-between p-2.5 bg-gray-50 rounded-lg hover:bg-tech-blue/5 transition-colors text-sm" data-doc="小龙虾5月管理">
+                <span><i class="bi bi-filetype-pdf text-food-red mr-2"></i>5月养殖管理要点</span>
+                <i class="bi bi-download text-tech-blue"></i>
+              </a>
+              <a href="#" class="tech-download flex items-center justify-between p-2.5 bg-gray-50 rounded-lg hover:bg-tech-blue/5 transition-colors text-sm" data-doc="小龙虾五月瘟防治">
+                <span><i class="bi bi-filetype-pdf text-food-red mr-2"></i>"五月瘟"防控专案</span>
+                <i class="bi bi-download text-tech-blue"></i>
+              </a>
+              <a href="#" class="tech-download flex items-center justify-between p-2.5 bg-gray-50 rounded-lg hover:bg-tech-blue/5 transition-colors text-sm" data-doc="小龙虾饲料配方">
+                <span><i class="bi bi-filetype-pdf text-food-red mr-2"></i>饲料配方与投喂方案</span>
+                <i class="bi bi-download text-tech-blue"></i>
+              </a>
             </div>
           </div>
-          <div class="text-center">
-            <div id="timerDisplay" class="text-4xl font-bold text-gray-800 mb-4 font-mono">00:00</div>
-            <div class="flex justify-center space-x-3">
-              <button id="timerStartBtn" class="px-5 py-2 bg-food-red text-white rounded-lg text-sm font-medium hover:bg-food-red-dark transition-colors">
-                <i class="bi bi-play-fill mr-1"></i> 开始
-              </button>
-              <button id="timerResetBtn" class="px-5 py-2 bg-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors">
-                <i class="bi bi-arrow-counterclockwise mr-1"></i> 重置
-              </button>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-card overflow-hidden border border-gray-100" data-reveal>
+          <div class="aspect-[16/10] bg-gradient-to-br from-harvest-gold/20 to-yellow-100 flex items-center justify-center text-6xl">
+            🦐
+          </div>
+          <div class="p-6">
+            <h3 class="font-bold text-lg mb-2">锦绣龙虾 / 波纹龙虾</h3>
+            <p class="text-sm text-gray-500 mb-4">高档海产龙虾，肉质鲜美，市场需求旺盛，价格稳定。</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="px-2 py-1 bg-harvest-gold/10 text-harvest-gold text-xs rounded">养殖周期：24个月</span>
+              <span class="px-2 py-1 bg-green-100 text-green-600 text-xs rounded">全年上市</span>
             </div>
-            <div class="mt-3 flex flex-wrap justify-center gap-2">
-              <button class="quick-timer px-3 py-1 text-xs bg-gray-100 rounded-full hover:bg-food-red/10 hover:text-food-red transition-colors" data-time="300">5min</button>
-              <button class="quick-timer px-3 py-1 text-xs bg-gray-100 rounded-full hover:bg-food-red/10 hover:text-food-red transition-colors" data-time="600">10min</button>
-              <button class="quick-timer px-3 py-1 text-xs bg-gray-100 rounded-full hover:bg-food-red/10 hover:text-food-red transition-colors" data-time="900">15min</button>
-              <button class="quick-timer px-3 py-1 text-xs bg-gray-100 rounded-full hover:bg-food-red/10 hover:text-food-red transition-colors" data-time="1800">30min</button>
+            <div class="space-y-2 border-t border-gray-100 pt-4">
+              <a href="#" class="tech-download flex items-center justify-between p-2.5 bg-gray-50 rounded-lg hover:bg-tech-blue/5 transition-colors text-sm" data-doc="锦绣龙虾养殖手册">
+                <span><i class="bi bi-filetype-pdf text-food-red mr-2"></i>锦绣龙虾养殖手册</span>
+                <i class="bi bi-download text-tech-blue"></i>
+              </a>
+              <a href="#" class="tech-download flex items-center justify-between p-2.5 bg-gray-50 rounded-lg hover:bg-tech-blue/5 transition-colors text-sm" data-doc="波纹龙虾养殖">
+                <span><i class="bi bi-filetype-pdf text-food-red mr-2"></i>波纹龙虾养殖指南</span>
+                <i class="bi bi-download text-tech-blue"></i>
+              </a>
+              <a href="#" class="tech-download flex items-center justify-between p-2.5 bg-gray-50 rounded-lg hover:bg-tech-blue/5 transition-colors text-sm" data-doc="龙虾水质管理">
+                <span><i class="bi bi-filetype-pdf text-food-red mr-2"></i>海水养殖水质管理</span>
+                <i class="bi bi-download text-tech-blue"></i>
+              </a>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="mt-8 bg-food-red/5 border border-food-red/20 rounded-2xl p-6 flex items-start" data-reveal>
-        <div class="w-12 h-12 rounded-xl bg-food-red/10 flex items-center justify-center flex-shrink-0 mr-4">
-          <i class="bi bi-shield-check text-food-red text-xl"></i>
-        </div>
-        <div>
-          <h3 class="font-bold text-gray-800 mb-2">食材安全提示</h3>
-          <ul class="text-sm text-gray-600 space-y-1">
-            <li><i class="bi bi-exclamation-circle text-food-red mr-2"></i>虾头内脏可能含有重金属，建议去除后食用</li>
-            <li><i class="bi bi-exclamation-circle text-food-red mr-2"></i>死蟹死虾会产生组胺毒素，禁止食用</li>
-            <li><i class="bi bi-exclamation-circle text-food-red mr-2"></i>烹饪前请确保食材彻底清洗干净</li>
-          </ul>
+      <!-- 通用技术文档 -->
+      <div class="bg-gradient-to-br from-tech-blue/5 to-tech-blue/10 rounded-2xl p-6 lg:p-8 border border-tech-blue/20" data-reveal>
+        <h3 class="text-lg font-bold mb-4 flex items-center">
+          <i class="bi bi-files text-tech-blue mr-2"></i> 通用技术文档
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <a href="#" class="tech-download flex items-center justify-between p-3 bg-white/80 rounded-xl hover:bg-white hover:shadow-sm transition-all text-sm" data-doc="饲料配比">
+            <span><i class="bi bi-file-earmark-text text-tech-blue mr-2"></i> 饲料配比全攻略</span>
+            <i class="bi bi-download text-tech-blue"></i>
+          </a>
+          <a href="#" class="tech-download flex items-center justify-between p-3 bg-white/80 rounded-xl hover:bg-white hover:shadow-sm transition-all text-sm" data-doc="水质管理">
+            <span><i class="bi bi-file-earmark-text text-tech-blue mr-2"></i> 水质管理标准指南</span>
+            <i class="bi bi-download text-tech-blue"></i>
+          </a>
+          <a href="#" class="tech-download flex items-center justify-between p-3 bg-white/80 rounded-xl hover:bg-white hover:shadow-sm transition-all text-sm" data-doc="蜕壳期管理">
+            <span><i class="bi bi-file-earmark-text text-tech-blue mr-2"></i> 五月蜕壳期管理要点</span>
+            <i class="bi bi-download text-tech-blue"></i>
+          </a>
+          <a href="#" class="tech-download flex items-center justify-between p-3 bg-white/80 rounded-xl hover:bg-white hover:shadow-sm transition-all text-sm" data-doc="苗种选购">
+            <span><i class="bi bi-file-earmark-text text-tech-blue mr-2"></i> 优质苗种选购标准</span>
+            <i class="bi bi-download text-tech-blue"></i>
+          </a>
         </div>
       </div>
     </div>
@@ -388,7 +571,7 @@
           <h4 class="font-bold text-white mb-4">快速链接</h4>
           <ul class="space-y-2 text-sm">
             <li><a href="index.html" class="hover:text-white transition-colors">首页</a></li>
-            <li><a href="features.html" class="hover:text-white transition-colors">平台功能</a></li>
+            <li><a href="features.html" class="hover:text-white transition-colors">智慧养殖</a></li>
             <li><a href="market.html" class="hover:text-white transition-colors">市场行情</a></li>
             <li><a href="recipes.html" class="hover:text-white transition-colors">美食菜谱</a></li>
             <li><a href="community.html" class="hover:text-white transition-colors">社区交流</a></li>
