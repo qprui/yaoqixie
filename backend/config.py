@@ -1,40 +1,39 @@
 """
-数据库配置文件
-- 开发环境使用 SQLite（零配置）
-- 生产环境切换到 MySQL，修改 SQLALCHEMY_DATABASE_URI 即可
+数据库配置
+- 开发环境使用 SQLite
+- 生产环境通过环境变量 DATABASE_URL 切换到 MySQL
 """
-
 import os
+from datetime import timedelta
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY', 'yaoqixie-secret-key-2026-change-in-production')
+    SECRET_KEY = os.environ.get('SECRET_KEY', 'yaoqixie-prod-secret-key-change-me')
+
+    # JWT 配置
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY', 'yaoqixie-jwt-secret-change-me')
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=7)  # 7天有效
 
     # =============================================
     # 数据库配置
     # =============================================
-    # --- 开发环境 (SQLite) ---
+    # 优先读取环境变量（生产环境MySQL），否则使用SQLite（开发环境）
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         'DATABASE_URL',
         f'sqlite:///{os.path.join(BASE_DIR, "yaoqixie.db")}'
     )
-
-    # --- 生产环境 (MySQL) ---
-    # 取消下面注释并注释上面一行即可切换到 MySQL
-    # SQLALCHEMY_DATABASE_URI = os.environ.get(
-    #     'DATABASE_URL',
-    #     'mysql+pymysql://username:password@localhost:3306/yaoqixie?charset=utf8mb4'
-    # )
+    # MySQL 生产配置示例（通过环境变量设置）:
+    # mysql+pymysql://yaoqixie:password@182.92.240.192:3306/yaoqixie?charset=utf8mb4
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
 
-    # 文件上传
-    MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB
+    # CORS 允许的前端域名
+    CORS_ORIGINS = os.environ.get(
+        'CORS_ORIGINS',
+        'http://localhost:5500,http://127.0.0.1:5500,https://yaoqixie.github.io'
+    )
 
-    # Session
-    SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SECURE = False  # 生产环境应设为 True
-    REMEMBER_COOKIE_DURATION = 60 * 60 * 24 * 7  # 7天
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB

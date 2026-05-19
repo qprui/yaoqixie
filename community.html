@@ -26,8 +26,17 @@
           <a href="community.html" class="nav-link text-water-green font-medium">社区</a>
         </nav>
         <div class="flex items-center space-x-3">
-          <a href="http://127.0.0.1:5000/login" class="hidden sm:inline-block px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors">登录</a>
-          <a href="http://127.0.0.1:5000/register" class="px-4 py-2 text-sm font-medium bg-gradient-to-r from-tech-blue to-food-red text-white rounded-lg hover:shadow-lg transition-all register-btn">免费注册</a>
+          <a id="loginLink" href="login.html" class="hidden sm:inline-block px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 transition-colors">登录</a>
+          <a id="registerBtn" href="register.html" class="px-4 py-2 text-sm font-medium bg-gradient-to-r from-tech-blue to-food-red text-white rounded-lg hover:shadow-lg transition-all register-btn">免费注册</a>
+          <div id="userInfo" class="hidden flex items-center space-x-2">
+            <a href="dashboard.html" class="flex items-center space-x-1 px-3 py-1.5 bg-tech-blue/10 text-tech-blue rounded-lg text-sm font-medium hover:bg-tech-blue/20 transition-colors">
+              <i class="bi bi-person-circle"></i>
+              <span id="userName">用户</span>
+            </a>
+            <button onclick="Auth.logout()" class="px-2 py-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors">
+              <i class="bi bi-box-arrow-right"></i>
+            </button>
+          </div>
           <button id="mobileMenuBtn" class="lg:hidden text-gray-600 hover:text-gray-800"><i class="bi bi-list text-2xl"></i></button>
         </div>
       </div>

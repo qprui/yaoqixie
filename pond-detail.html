@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>肴柒蟹 - 塘口</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🦀%3C/text%3E%3C/svg%3E" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-gray-50">
+  <script src="script.js"></script>
+  <script>
+    if (!Auth.requireAuth()) {}
+  </script>
+
+  <!-- 顶部导航 -->
+  <nav class="bg-white shadow-sm border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center space-x-3">
+          <a href="dashboard.html" class="text-sm text-gray-500 hover:text-tech-blue transition-colors">
+            <i class="bi bi-arrow-left mr-1"></i> 返回仪表盘
+          </a>
+          <span class="text-gray-300">|</span>
+          <span class="font-bold text-gray-800" id="pondName">塘口名称</span>
+        </div>
+        <div class="flex items-center space-x-3">
+          <span class="text-sm text-gray-500" id="navUsername">用户</span>
+          <button onclick="Auth.logout()" class="text-sm text-gray-400 hover:text-gray-600">退出</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div id="loading" class="text-center py-20">
+      <i class="bi bi-arrow-repeat text-4xl text-tech-blue animate-spin"></i>
+      <p class="text-gray-500 mt-4">加载中...</p>
+    </div>
+    <div id="pondContent" class="hidden">
+      <!-- 塘口信息条 -->
+      <div class="bg-gradient-to-r from-tech-blue to-tech-blue-dark rounded-2xl p-6 text-white mb-8">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h1 class="text-2xl font-bold" id="infoName">塘口名称</h1>
+            <p class="text-white/80 text-sm mt-1"><span id="infoLocation">位置未设定</span> · <span id="infoSpecies">品种未设定</span></p>
+          </div>
+          <div class="flex items-center space-x-6 text-sm">
+            <div class="text-center">
+              <p class="text-2xl font-bold"><span id="infoArea">-</span></p>
+              <p class="text-white/70 text-xs">面积(亩)</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl font-bold"><span id="infoDepth">-</span></p>
+              <p class="text-white/70 text-xs">水深(m)</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl font-bold"><span id="infoDensity">-</span></p>
+              <p class="text-white/70 text-xs">密度(只/亩)</p>
+            </div>
+            <div class="text-center">
+              <p class="text-2xl font-bold"><span id="infoAeration">❌</span></p>
+              <p class="text-white/70 text-xs">增氧机</p>
+            </div>
+            <a id="editPondBtn" href="#" class="px-4 py-2 bg-white/20 rounded-xl hover:bg-white/30 transition-colors text-sm">
+              <i class="bi bi-pencil mr-1"></i> 编辑
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- 左侧：环境监控 -->
+        <div class="lg:col-span-2 space-y-8">
+          <div class="bg-white rounded-2xl shadow-card p-6 border border-gray-100">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg font-bold flex items-center">
+                <i class="bi bi-wifi text-tech-blue mr-2"></i> 环境实时监控
+              </h2>
+              <span class="text-xs text-gray-400" id="latestEnvTime">暂无数据</span>
+            </div>
+
+            <div id="envDataGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+              <!-- 由 JS 动态渲染 -->
+            </div>
+
+            <div id="envEmpty" class="text-center py-8 text-gray-400 hidden">
+              <i class="bi bi-cloud-slash text-4xl block mb-3"></i>
+              <p class="text-sm">暂无环境数据，请通过下方表单手动记录</p>
+            </div>
+
+            <!-- 手动录入 -->
+            <div class="mt-6 pt-6 border-t border-gray-100">
+              <h3 class="font-medium text-gray-700 mb-3 flex items-center">
+                <i class="bi bi-plus-circle text-tech-blue mr-2"></i> 手动记录环境数据
+              </h3>
+              <form id="envForm" class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                <div>
+                  <label class="text-xs text-gray-500 mb-0.5 block">水温(°C)</label>
+                  <input type="number" name="temperature" step="0.1" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue" placeholder="24.5">
+                </div>
+                <div>
+                  <label class="text-xs text-gray-500 mb-0.5 block">溶解氧(mg/L)</label>
+                  <input type="number" name="dissolved_oxygen" step="0.1" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue" placeholder="6.8">
+                </div>
+                <div>
+                  <label class="text-xs text-gray-500 mb-0.5 block">pH值</label>
+                  <input type="number" name="ph_value" step="0.1" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue" placeholder="7.6">
+                </div>
+                <div>
+                  <label class="text-xs text-gray-500 mb-0.5 block">氨氮(mg/L)</label>
+                  <input type="number" name="ammonia" step="0.01" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue" placeholder="0.12">
+                </div>
+                <div class="flex items-end">
+                  <button type="submit" class="w-full px-3 py-2 bg-tech-blue text-white rounded-lg text-sm font-medium hover:bg-tech-blue-dark transition-colors">
+                    记录
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- 环境趋势 -->
+          <div id="chartSection" class="bg-white rounded-2xl shadow-card p-6 border border-gray-100 hidden">
+            <h2 class="text-lg font-bold mb-4 flex items-center">
+              <i class="bi bi-graph-up text-tech-blue mr-2"></i> 环境趋势
+            </h2>
+            <canvas id="envTrendChart" height="200"></canvas>
+          </div>
+        </div>
+
+        <!-- 右侧：养殖日志 -->
+        <div class="space-y-6">
+          <div class="bg-white rounded-2xl shadow-card p-6 border border-gray-100">
+            <h2 class="text-lg font-bold mb-4 flex items-center">
+              <i class="bi bi-journal-text text-tech-blue mr-2"></i> 养殖日志
+              <span class="ml-auto text-xs text-gray-400">共 <span id="logCount">0</span> 条</span>
+            </h2>
+
+            <form id="logForm" class="mb-6 p-4 bg-gray-50 rounded-xl">
+              <h3 class="text-sm font-medium text-gray-700 mb-3 flex items-center">
+                <i class="bi bi-plus-circle-dotted text-tech-blue mr-1.5"></i> 记录今日数据
+              </h3>
+              <div class="space-y-3">
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="text-xs text-gray-500">投喂量(kg)</label>
+                    <input type="number" name="feeding_amount" step="0.1" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue" placeholder="125">
+                  </div>
+                  <div>
+                    <label class="text-xs text-gray-500">蛋白比(%)</label>
+                    <input type="number" name="feed_protein" step="0.1" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue" placeholder="32">
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="text-xs text-gray-500">死亡率(%)</label>
+                    <input type="number" name="mortality" step="0.1" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue" placeholder="0.3">
+                  </div>
+                  <div>
+                    <label class="text-xs text-gray-500">存塘量(只)</label>
+                    <input type="number" name="stock_count" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue" placeholder="8500">
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="text-xs text-gray-500">水温(°C)</label>
+                    <input type="number" name="water_temperature" step="0.1" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue" placeholder="24.5">
+                  </div>
+                  <div>
+                    <label class="text-xs text-gray-500">蜕壳情况</label>
+                    <select name="molting_status" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue">
+                      <option value="">-- 选择 --</option>
+                      <option value="正常">正常</option>
+                      <option value="高峰期">高峰期</option>
+                      <option value="推迟">推迟</option>
+                      <option value="异常">异常</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="text-xs text-gray-500">天气</label>
+                    <select name="weather" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue">
+                      <option value="">-- 选择 --</option>
+                      <option value="晴">☀️ 晴</option>
+                      <option value="多云">⛅ 多云</option>
+                      <option value="阴">☁️ 阴</option>
+                      <option value="小雨">🌦️ 小雨</option>
+                      <option value="中雨">🌧️ 中雨</option>
+                      <option value="大雨">🌧️ 大雨</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="text-xs text-gray-500">用药记录</label>
+                    <input type="text" name="medication" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue" placeholder="选填">
+                  </div>
+                </div>
+                <div>
+                  <label class="text-xs text-gray-500">备注</label>
+                  <textarea name="notes" rows="2" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue" placeholder="补充说明..."></textarea>
+                </div>
+                <button type="submit" class="w-full px-4 py-2 bg-tech-blue text-white rounded-lg text-sm font-medium hover:bg-tech-blue-dark transition-colors">
+                  <i class="bi bi-save mr-1"></i> 保存日志
+                </button>
+              </div>
+            </form>
+
+            <div id="logList" class="space-y-3 max-h-[500px] overflow-y-auto"></div>
+            <div id="logEmpty" class="text-center py-6 text-gray-400 text-sm hidden">
+              <i class="bi bi-journal-text block text-3xl mb-2"></i>
+              暂无养殖日志记录
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const pondId = new URLSearchParams(window.location.search).get('id');
+    if (!pondId) window.location.href = 'dashboard.html';
+
+    let envChart = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const result = await Api.getPond(pondId);
+      if (!result.success) {
+        window.location.href = 'dashboard.html';
+        return;
+      }
+
+      document.getElementById('loading').classList.add('hidden');
+      document.getElementById('pondContent').classList.remove('hidden');
+
+      const { pond, latest_env, env_history, logs } = result;
+
+      // 基本信息
+      document.getElementById('pondName').textContent = pond.name;
+      document.getElementById('navUsername').textContent = Auth.getUser()?.username || '用户';
+      document.getElementById('infoName').textContent = pond.name;
+      document.getElementById('infoLocation').textContent = pond.location || '位置未设定';
+      document.getElementById('infoSpecies').textContent = pond.species || '品种未设定';
+      document.getElementById('infoArea').textContent = pond.area || '-';
+      document.getElementById('infoDepth').textContent = pond.water_depth || '-';
+      document.getElementById('infoDensity').textContent = pond.stock_density || '-';
+      document.getElementById('infoAeration').textContent = pond.aeration ? '✅' : '❌';
+      document.getElementById('editPondBtn').href = 'pond-form.html?id=' + pond.id;
+
+      // 环境数据
+      if (latest_env) {
+        document.getElementById('latestEnvTime').textContent = '最新：' + new Date(latest_env.recorded_at).toLocaleString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' });
+        document.getElementById('envDataGrid').innerHTML = renderEnvCards(latest_env);
+        document.getElementById('envEmpty').classList.add('hidden');
+      } else {
+        document.getElementById('envDataGrid').innerHTML = '';
+        document.getElementById('envEmpty').classList.remove('hidden');
+      }
+
+      // 环境趋势图表
+      if (env_history && env_history.length > 1) {
+        document.getElementById('chartSection').classList.remove('hidden');
+        renderChart(env_history);
+      }
+
+      // 日志
+      document.getElementById('logCount').textContent = logs.length;
+      if (logs && logs.length > 0) {
+        document.getElementById('logList').innerHTML = logs.map(renderLogItem).join('');
+        document.getElementById('logEmpty').classList.add('hidden');
+      } else {
+        document.getElementById('logEmpty').classList.remove('hidden');
+      }
+
+      // 环境表单提交
+      document.getElementById('envForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = {};
+        formData.forEach((v, k) => { if (v) data[k] = v; });
+        const res = await Api.addEnvData(pondId, data);
+        if (res.success) {
+          window.location.reload();
+        } else {
+          alert(res.message || '记录失败');
+        }
+      });
+
+      // 日志表单提交
+      document.getElementById('logForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = {};
+        formData.forEach((v, k) => { if (v) data[k] = v; });
+        const res = await Api.addFarmingLog(pondId, data);
+        if (res.success) {
+          window.location.reload();
+        } else {
+          alert(res.message || '记录失败');
+        }
+      });
+    });
+
+    function renderEnvCards(env) {
+      const tempOk = env.temperature && env.temperature >= 20 && env.temperature <= 30;
+      const doOk = env.dissolved_oxygen && env.dissolved_oxygen >= 5;
+      const phOk = env.ph_value && env.ph_value >= 7.0 && env.ph_value <= 8.5;
+      const nhOk = env.ammonia && env.ammonia <= 0.2;
+
+      return `
+        <div class="bg-gradient-to-br from-tech-blue/5 to-tech-blue/10 rounded-xl p-4 text-center border border-tech-blue/10">
+          <i class="bi bi-thermometer-half text-tech-blue text-xl"></i>
+          <p class="text-xs text-gray-500 mt-1">水温</p>
+          <p class="text-xl font-bold text-gray-800">${env.temperature || '-'}°C</p>
+          <span class="text-xs ${tempOk ? 'text-green-500 bg-green-50' : 'text-yellow-500 bg-yellow-50'} px-2 py-0.5 rounded-full">${env.temperature ? (tempOk ? '正常' : '注意') : '-'}</span>
+        </div>
+        <div class="bg-gradient-to-br from-water-green/5 to-water-green/10 rounded-xl p-4 text-center border border-water-green/10">
+          <i class="bi bi-droplet text-water-green text-xl"></i>
+          <p class="text-xs text-gray-500 mt-1">溶解氧</p>
+          <p class="text-xl font-bold text-gray-800">${env.dissolved_oxygen || '-'}</p>
+          <span class="text-xs ${doOk ? 'text-green-500 bg-green-50' : 'text-red-500 bg-red-50'} px-2 py-0.5 rounded-full">${env.dissolved_oxygen ? (doOk ? '正常' : '偏低') : '-'} mg/L</span>
+        </div>
+        <div class="bg-gradient-to-br from-harvest-gold/5 to-harvest-gold/10 rounded-xl p-4 text-center border border-harvest-gold/10">
+          <i class="bi bi-flask text-harvest-gold text-xl"></i>
+          <p class="text-xs text-gray-500 mt-1">pH值</p>
+          <p class="text-xl font-bold text-gray-800">${env.ph_value || '-'}</p>
+          <span class="text-xs ${phOk ? 'text-green-500 bg-green-50' : 'text-yellow-500 bg-yellow-50'} px-2 py-0.5 rounded-full">${env.ph_value ? (phOk ? '正常' : '注意') : '-'}</span>
+        </div>
+        <div class="bg-gradient-to-br from-food-red/5 to-food-red/10 rounded-xl p-4 text-center border border-food-red/10">
+          <i class="bi bi-exclamation-triangle text-food-red text-xl"></i>
+          <p class="text-xs text-gray-500 mt-1">氨氮</p>
+          <p class="text-xl font-bold text-gray-800">${env.ammonia || '-'}</p>
+          <span class="text-xs ${nhOk ? 'text-green-500 bg-green-50' : 'text-yellow-500 bg-yellow-50'} px-2 py-0.5 rounded-full">${env.ammonia ? (nhOk ? '正常' : '偏高') : '-'} mg/L</span>
+        </div>
+      `;
+    }
+
+    function renderChart(envHistory) {
+      const ctx = document.getElementById('envTrendChart')?.getContext('2d');
+      if (!ctx || typeof Chart === 'undefined') return;
+
+      const labels = envHistory.map(d => new Date(d.recorded_at).toLocaleDateString('zh-CN', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }));
+
+      envChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            { label: '水温(°C)', data: envHistory.map(d => d.temperature), borderColor: '#FF4D4F', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3, borderWidth: 2 },
+            { label: '溶解氧(mg/L)', data: envHistory.map(d => d.dissolved_oxygen), borderColor: '#36CFC9', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3, borderWidth: 2 },
+            { label: 'pH值', data: envHistory.map(d => d.ph_value), borderColor: '#165DFF', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3, borderWidth: 2, borderDash: [5, 5] },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 12, font: { size: 11 } } } },
+          scales: { x: { grid: { display: false }, ticks: { font: { size: 10 } } }, y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 10 } } } },
+        },
+      });
+    }
+
+    function renderLogItem(log) {
+      return `
+        <div class="p-3 bg-gray-50 rounded-xl text-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-medium text-gray-800">${log.log_date}</span>
+            <span class="text-xs text-gray-400">${log.weather || ''}${log.molting_status ? ' · ' + log.molting_status : ''}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-gray-600">
+            ${log.feeding_amount ? '<span>投喂：' + log.feeding_amount + 'kg</span>' : ''}
+            ${log.feed_protein ? '<span>蛋白：' + log.feed_protein + '%</span>' : ''}
+            ${log.mortality ? '<span>死亡：' + log.mortality + '%</span>' : ''}
+            ${log.stock_count ? '<span>存塘：' + log.stock_count + '只</span>' : ''}
+            ${log.water_temperature ? '<span>水温：' + log.water_temperature + '°C</span>' : ''}
+            ${log.medication ? '<span>用药：' + log.medication + '</span>' : ''}
+          </div>
+          ${log.notes ? '<p class="text-xs text-gray-500 mt-1 border-t border-gray-200 pt-1">' + log.notes + '</p>' : ''}
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

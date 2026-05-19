@@ -5,10 +5,8 @@
 - EnvData: 环境监测数据
 - FarmingLog: 养殖日志
 """
-
 from datetime import datetime, timezone
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
@@ -17,7 +15,7 @@ db = SQLAlchemy()
 # =============================================
 # 用户模型
 # =============================================
-class User(UserMixin, db.Model):
+class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -30,6 +28,7 @@ class User(UserMixin, db.Model):
     real_name = db.Column(db.String(50), nullable=True)
     farm_address = db.Column(db.String(200), nullable=True)
     avatar_url = db.Column(db.String(256), nullable=True)
+    last_login = db.Column(db.DateTime, nullable=True)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     is_active = db.Column(db.Boolean, default=True)
 
@@ -41,6 +40,21 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'phone': self.phone,
+            'role': self.role,
+            'real_name': self.real_name,
+            'farm_address': self.farm_address,
+            'avatar_url': self.avatar_url,
+            'last_login': self.last_login.isoformat() if self.last_login else None,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'is_active': self.is_active,
+        }
 
     def __repr__(self):
         return f'<User {self.username} ({self.role})>'
@@ -67,6 +81,21 @@ class Pond(db.Model):
     # 关联
     env_data = db.relationship('EnvData', backref='pond', lazy='dynamic', cascade='all, delete-orphan')
     farming_logs = db.relationship('FarmingLog', backref='pond', lazy='dynamic', cascade='all, delete-orphan')
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'name': self.name,
+            'location': self.location,
+            'area': self.area,
+            'species': self.species,
+            'stock_density': self.stock_density,
+            'water_depth': self.water_depth,
+            'aeration': self.aeration,
+            'notes': self.notes,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+        }
 
     def __repr__(self):
         return f'<Pond {self.name}>'

@@ -1,84 +1,83 @@
 """
-肴柒蟹 - Flask 主应用
-注册 / 登录 / 养殖户塘口监控 / 养殖日志管理
+肴柒蟹 - REST API 服务
+前后端分离，使用 JWT 认证
 """
-
 import os
 import sys
-from datetime import datetime, date, timezone
+from datetime import datetime, timezone, timedelta
 
-from flask import (
-    Flask, render_template, request, redirect, url_for,
-    flash, jsonify, abort
-)
-from flask_login import (
-    LoginManager, login_user, logout_user, login_required, current_user
+from flask import Flask, request, jsonify, abort
+from flask_cors import CORS
+from flask_jwt_extended import (
+    JWTManager, create_access_token, jwt_required, get_jwt_identity,
+    get_jwt, set_access_cookies, unset_jwt_cookies
 )
 from werkzeug.security import generate_password_hash
 
-# 添加项目根目录到路径
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-
 from config import Config
 from models import db, User, Pond, EnvData, FarmingLog
 
-app = Flask(__name__)
-app.config.from_object(Config)
 
-# 静态文件路径指向上级目录（共享 style.css / script.js）
-app.static_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
-app.static_url_path = '/static'
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
 
-# 初始化扩展
-db.init_app(app)
-login_manager = LoginManager(app)
-login_manager.login_view = 'login'
-login_manager.login_message = '请先登录后再访问'
-login_manager.login_message_category = 'warning'
+    # 初始化扩展
+    db.init_app(app)
+    jwt = JWTManager(app)
 
+    # CORS - 允许前端跨域请求
+    origins = [o.strip() for o in app.config['CORS_ORIGINS'].split(',')]
+    CORS(app, origins=origins, supports_credentials=True,
+         allow_headers=['Content-Type', 'Authorization'],
+         methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
 
-# =============================================
-# 用户加载回调
-# =============================================
-@login_manager.user_loader
-def load_user(user_id):
-    return db.session.get(User, int(user_id))
+    # 创建表
+    with app.app_context():
+        db.create_all()
 
+    # =============================================
+    # 辅助函数
+    # =============================================
+    def get_current_user():
+        """获取当前 JWT 身份对应的用户"""
+        user_id = get_jwt_identity()
+        if not user_id:
+            return None
+        return db.session.get(User, user_id)
 
-# =============================================
-# 创建数据库表
-# =============================================
-with app.app_context():
-    db.create_all()
+    def pond_belongs_to_user(pond_id, user_id):
+        """检查塘口是否属于当前用户"""
+        pond = db.session.get(Pond, pond_id)
+        if not pond or pond.user_id != user_id:
+            return None
+        return pond
 
+    # =============================================
+    # 健康检查
+    # =============================================
+    @app.route('/api/health')
+    def health_check():
+        return jsonify({'status': 'ok', 'service': 'yaoqixie-api'})
 
-# =============================================
-# 首页 - 后端仪表盘重定向
-# =============================================
-@app.route('/')
-def index():
-    if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
-    return redirect(url_for('login'))
+    # =============================================
+    # 注册
+    # =============================================
+    @app.route('/api/auth/register', methods=['POST'])
+    def register():
+        data = request.get_json()
+        if not data:
+            return jsonify({'success': False, 'message': '请提供注册信息'}), 400
 
-
-# =============================================
-# 注册
-# =============================================
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
-
-    if request.method == 'POST':
-        username = request.form.get('username', '').strip()
-        email = request.form.get('email', '').strip()
-        phone = request.form.get('phone', '').strip()
-        password = request.form.get('password', '')
-        password_confirm = request.form.get('password_confirm', '')
-        role = request.form.get('role', 'farmer')
-        real_name = request.form.get('real_name', '').strip()
-        farm_address = request.form.get('farm_address', '').strip()
+        username = data.get('username', '').strip()
+        email = data.get('email', '').strip()
+        phone = data.get('phone', '').strip()
+        password = data.get('password', '')
+        password_confirm = data.get('password_confirm', '')
+        role = data.get('role', 'farmer')
+        real_name = data.get('real_name', '').strip()
+        farm_address = data.get('farm_address', '').strip()
 
         # 验证
         errors = []
@@ -92,8 +91,8 @@ def register():
             errors.append('密码至少6个字符')
         if password != password_confirm:
             errors.append('两次密码输入不一致')
-        if role not in ('farmer', 'consumer'):
-            errors.append('请选择用户类型')
+        if role not in ('farmer', 'consumer', 'expert'):
+            errors.append('请选择有效的用户类型')
 
         if not errors:
             if User.query.filter_by(username=username).first():
@@ -103,9 +102,7 @@ def register():
                     errors.append('该手机号已被注册')
 
         if errors:
-            for err in errors:
-                flash(err, 'danger')
-            return render_template('register.html', form=request.form)
+            return jsonify({'success': False, 'message': '; '.join(errors)}), 400
 
         # 创建用户
         user = User(
@@ -120,290 +117,364 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        flash('注册成功！请登录', 'success')
-        return redirect(url_for('login'))
+        return jsonify({'success': True, 'message': '注册成功，请登录'})
 
-    return render_template('register.html', form={})
+    # =============================================
+    # 登录
+    # =============================================
+    @app.route('/api/auth/login', methods=['POST'])
+    def login():
+        data = request.get_json()
+        if not data:
+            return jsonify({'success': False, 'message': '请提供登录信息'}), 400
 
+        username = data.get('username', '').strip()
+        password = data.get('password', '')
 
-# =============================================
-# 登录
-# =============================================
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
-
-    if request.method == 'POST':
-        username = request.form.get('username', '').strip()
-        password = request.form.get('password', '')
-        remember = request.form.get('remember', False)
+        if not username or not password:
+            return jsonify({'success': False, 'message': '请输入用户名和密码'}), 400
 
         user = User.query.filter(
             (User.username == username) | (User.email == username)
         ).first()
 
         if user and user.check_password(password):
-            login_user(user, remember=bool(remember))
+            if not user.is_active:
+                return jsonify({'success': False, 'message': '账号已被禁用'}), 403
+
+            # 更新登录时间
             user.last_login = datetime.now(timezone.utc)
             db.session.commit()
 
-            flash(f'欢迎回来，{user.username}！', 'success')
-            next_page = request.args.get('next')
-            return redirect(next_page or url_for('dashboard'))
-        else:
-            flash('用户名或密码错误', 'danger')
+            # 生成 JWT
+            access_token = create_access_token(
+                identity=user.id,
+                additional_claims={
+                    'username': user.username,
+                    'role': user.role,
+                }
+            )
 
-    return render_template('login.html')
+            return jsonify({
+                'success': True,
+                'message': f'欢迎回来，{user.username}！',
+                'token': access_token,
+                'user': user.to_dict(),
+            })
 
+        return jsonify({'success': False, 'message': '用户名或密码错误'}), 401
 
-# =============================================
-# 退出登录
-# =============================================
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    flash('已退出登录', 'info')
-    return redirect(url_for('login'))
+    # =============================================
+    # 获取当前用户信息
+    # =============================================
+    @app.route('/api/user/me', methods=['GET'])
+    @jwt_required()
+    def get_user_info():
+        user = get_current_user()
+        if not user:
+            return jsonify({'success': False, 'message': '用户不存在'}), 404
+        return jsonify({'success': True, 'user': user.to_dict()})
 
+    # =============================================
+    # 仪表盘
+    # =============================================
+    @app.route('/api/dashboard', methods=['GET'])
+    @jwt_required()
+    def dashboard():
+        user = get_current_user()
+        if not user:
+            return jsonify({'success': False, 'message': '用户不存在'}), 404
 
-# =============================================
-# 养殖户仪表盘
-# =============================================
-@app.route('/dashboard')
-@login_required
-def dashboard():
-    ponds = Pond.query.filter_by(user_id=current_user.id).order_by(Pond.created_at.desc()).all()
+        ponds = Pond.query.filter_by(user_id=user.id)\
+            .order_by(Pond.created_at.desc()).all()
 
-    # 统计概览
-    stats = {
-        'pond_count': len(ponds),
-        'total_area': sum(p.area or 0 for p in ponds),
-        'latest_log': None,
-    }
+        # 统计
+        stats = {
+            'pond_count': len(ponds),
+            'total_area': sum(p.area or 0 for p in ponds),
+            'latest_log': None,
+        }
 
-    # 获取最近的一条日志
-    latest_log = FarmingLog.query.join(Pond).filter(
-        Pond.user_id == current_user.id
-    ).order_by(FarmingLog.log_date.desc()).first()
-    if latest_log:
-        stats['latest_log'] = latest_log.to_dict()
+        latest_log = FarmingLog.query.join(Pond).filter(
+            Pond.user_id == user.id
+        ).order_by(FarmingLog.log_date.desc()).first()
+        if latest_log:
+            stats['latest_log'] = latest_log.to_dict()
 
-    return render_template('dashboard.html', ponds=ponds, stats=stats)
+        return jsonify({
+            'success': True,
+            'ponds': [p.to_dict() for p in ponds],
+            'stats': stats,
+            'user': user.to_dict(),
+        })
 
+    # =============================================
+    # 塘口 CRUD
+    # =============================================
+    @app.route('/api/ponds', methods=['GET'])
+    @jwt_required()
+    def list_ponds():
+        user = get_current_user()
+        if not user:
+            return jsonify({'success': False, 'message': '用户不存在'}), 404
 
-# =============================================
-# 添加塘口
-# =============================================
-@app.route('/pond/add', methods=['GET', 'POST'])
-@login_required
-def add_pond():
-    if request.method == 'POST':
-        name = request.form.get('name', '').strip()
+        ponds = Pond.query.filter_by(user_id=user.id)\
+            .order_by(Pond.created_at.desc()).all()
+        return jsonify({
+            'success': True,
+            'ponds': [p.to_dict() for p in ponds],
+        })
+
+    @app.route('/api/ponds', methods=['POST'])
+    @jwt_required()
+    def create_pond():
+        user = get_current_user()
+        if not user:
+            return jsonify({'success': False, 'message': '用户不存在'}), 404
+
+        data = request.get_json()
+        if not data:
+            return jsonify({'success': False, 'message': '请提供塘口信息'}), 400
+
+        name = data.get('name', '').strip()
         if not name:
-            flash('请输入塘口名称', 'danger')
-            return render_template('pond_form.html', form=request.form)
+            return jsonify({'success': False, 'message': '请输入塘口名称'}), 400
 
         pond = Pond(
-            user_id=current_user.id,
+            user_id=user.id,
             name=name,
-            location=request.form.get('location', '').strip(),
-            area=request.form.get('area', type=float),
-            species=request.form.get('species', '').strip(),
-            stock_density=request.form.get('stock_density', type=int),
-            water_depth=request.form.get('water_depth', type=float),
-            aeration=bool(request.form.get('aeration')),
-            notes=request.form.get('notes', '').strip(),
+            location=data.get('location', '').strip(),
+            area=data.get('area', type=float),
+            species=data.get('species', '').strip(),
+            stock_density=data.get('stock_density', type=int),
+            water_depth=data.get('water_depth', type=float),
+            aeration=bool(data.get('aeration', False)),
+            notes=data.get('notes', '').strip(),
         )
         db.session.add(pond)
         db.session.commit()
-        flash(f'塘口「{name}」添加成功', 'success')
-        return redirect(url_for('dashboard'))
 
-    return render_template('pond_form.html', form={}, pond=None)
+        return jsonify({
+            'success': True,
+            'message': f'塘口「{name}」添加成功',
+            'pond': pond.to_dict(),
+        }), 201
 
+    @app.route('/api/ponds/<int:pond_id>', methods=['GET'])
+    @jwt_required()
+    def get_pond(pond_id):
+        user = get_current_user()
+        if not user:
+            return jsonify({'success': False, 'message': '用户不存在'}), 404
 
-# =============================================
-# 编辑塘口
-# =============================================
-@app.route('/pond/<int:pond_id>/edit', methods=['GET', 'POST'])
-@login_required
-def edit_pond(pond_id):
-    pond = db.session.get(Pond, pond_id)
-    if not pond or pond.user_id != current_user.id:
-        abort(404)
+        pond = pond_belongs_to_user(pond_id, user.id)
+        if not pond:
+            return jsonify({'success': False, 'message': '塘口不存在'}), 404
 
-    if request.method == 'POST':
-        pond.name = request.form.get('name', '').strip()
-        pond.location = request.form.get('location', '').strip()
-        pond.area = request.form.get('area', type=float)
-        pond.species = request.form.get('species', '').strip()
-        pond.stock_density = request.form.get('stock_density', type=int)
-        pond.water_depth = request.form.get('water_depth', type=float)
-        pond.aeration = bool(request.form.get('aeration'))
-        pond.notes = request.form.get('notes', '').strip()
+        # 最新环境数据
+        latest_env = EnvData.query.filter_by(pond_id=pond_id)\
+            .order_by(EnvData.recorded_at.desc()).first()
+
+        # 最近7天环境趋势
+        env_history = EnvData.query.filter_by(pond_id=pond_id)\
+            .order_by(EnvData.recorded_at.desc()).limit(7).all()
+        env_history.reverse()
+
+        # 养殖日志
+        logs = FarmingLog.query.filter_by(pond_id=pond_id)\
+            .order_by(FarmingLog.log_date.desc()).all()
+
+        return jsonify({
+            'success': True,
+            'pond': pond.to_dict(),
+            'latest_env': latest_env.to_dict() if latest_env else None,
+            'env_history': [e.to_dict() for e in env_history],
+            'logs': [l.to_dict() for l in logs],
+        })
+
+    @app.route('/api/ponds/<int:pond_id>', methods=['PUT'])
+    @jwt_required()
+    def update_pond(pond_id):
+        user = get_current_user()
+        if not user:
+            return jsonify({'success': False, 'message': '用户不存在'}), 404
+
+        pond = pond_belongs_to_user(pond_id, user.id)
+        if not pond:
+            return jsonify({'success': False, 'message': '塘口不存在'}), 404
+
+        data = request.get_json()
+        if not data:
+            return jsonify({'success': False, 'message': '请提供塘口信息'}), 400
+
+        name = data.get('name', '').strip()
+        if not name:
+            return jsonify({'success': False, 'message': '请输入塘口名称'}), 400
+
+        pond.name = name
+        pond.location = data.get('location', '').strip()
+        pond.area = data.get('area', type=float)
+        pond.species = data.get('species', '').strip()
+        pond.stock_density = data.get('stock_density', type=int)
+        pond.water_depth = data.get('water_depth', type=float)
+        pond.aeration = bool(data.get('aeration', False))
+        pond.notes = data.get('notes', '').strip()
         db.session.commit()
-        flash(f'塘口「{pond.name}」已更新', 'success')
-        return redirect(url_for('dashboard'))
 
-    return render_template('pond_form.html', form=pond, pond=pond)
+        return jsonify({
+            'success': True,
+            'message': f'塘口「{pond.name}」已更新',
+            'pond': pond.to_dict(),
+        })
 
+    @app.route('/api/ponds/<int:pond_id>', methods=['DELETE'])
+    @jwt_required()
+    def delete_pond(pond_id):
+        user = get_current_user()
+        if not user:
+            return jsonify({'success': False, 'message': '用户不存在'}), 404
 
-# =============================================
-# 删除塘口
-# =============================================
-@app.route('/pond/<int:pond_id>/delete', methods=['POST'])
-@login_required
-def delete_pond(pond_id):
-    pond = db.session.get(Pond, pond_id)
-    if not pond or pond.user_id != current_user.id:
-        abort(404)
+        pond = pond_belongs_to_user(pond_id, user.id)
+        if not pond:
+            return jsonify({'success': False, 'message': '塘口不存在'}), 404
 
-    name = pond.name
-    db.session.delete(pond)
-    db.session.commit()
-    flash(f'塘口「{name}」已删除', 'info')
-    return redirect(url_for('dashboard'))
+        name = pond.name
+        db.session.delete(pond)
+        db.session.commit()
 
+        return jsonify({
+            'success': True,
+            'message': f'塘口「{name}」已删除',
+        })
 
-# =============================================
-# 塘口详情 - 环境监控 + 养殖日志
-# =============================================
-@app.route('/pond/<int:pond_id>')
-@login_required
-def pond_detail(pond_id):
-    pond = db.session.get(Pond, pond_id)
-    if not pond or pond.user_id != current_user.id:
-        abort(404)
+    # =============================================
+    # 环境数据
+    # =============================================
+    @app.route('/api/ponds/<int:pond_id>/env', methods=['GET'])
+    @jwt_required()
+    def get_env_data(pond_id):
+        user = get_current_user()
+        if not user:
+            return jsonify({'success': False, 'message': '用户不存在'}), 404
 
-    # 获取最新环境数据
-    latest_env = EnvData.query.filter_by(pond_id=pond_id)\
-        .order_by(EnvData.recorded_at.desc()).first()
+        pond = pond_belongs_to_user(pond_id, user.id)
+        if not pond:
+            return jsonify({'success': False, 'message': '塘口不存在'}), 404
 
-    # 获取最近7天的环境数据（用于图表）→ 转为 dict 以支持 tojson
-    env_history = EnvData.query.filter_by(pond_id=pond_id)\
-        .order_by(EnvData.recorded_at.desc()).limit(7).all()
-    env_history.reverse()
-    env_history_dicts = [e.to_dict() for e in env_history]
+        days = request.args.get('days', 7, type=int)
+        since = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=days)
+        data = EnvData.query.filter_by(pond_id=pond_id)\
+            .filter(EnvData.recorded_at >= since)\
+            .order_by(EnvData.recorded_at.asc()).all()
 
-    # 获取养殖日志 → 转为 dict
-    logs = FarmingLog.query.filter_by(pond_id=pond_id)\
-        .order_by(FarmingLog.log_date.desc()).all()
-    logs_dicts = [l.to_dict() for l in logs]
+        return jsonify({
+            'success': True,
+            'pond': pond.name,
+            'data': [d.to_dict() for d in data],
+            'count': len(data),
+        })
 
-    return render_template(
-        'pond_detail.html',
-        pond=pond,
-        latest_env=latest_env,
-        env_history=env_history_dicts,
-        logs=logs_dicts,
-    )
+    @app.route('/api/ponds/<int:pond_id>/env', methods=['POST'])
+    @jwt_required()
+    def add_env_data(pond_id):
+        user = get_current_user()
+        if not user:
+            return jsonify({'success': False, 'message': '用户不存在'}), 404
 
+        pond = pond_belongs_to_user(pond_id, user.id)
+        if not pond:
+            return jsonify({'success': False, 'message': '塘口不存在'}), 404
 
-# =============================================
-# 添加环境数据（手动）
-# =============================================
-@app.route('/pond/<int:pond_id>/env/add', methods=['POST'])
-@login_required
-def add_env_data(pond_id):
-    pond = db.session.get(Pond, pond_id)
-    if not pond or pond.user_id != current_user.id:
-        abort(404)
+        data = request.get_json()
+        if not data:
+            return jsonify({'success': False, 'message': '请提供环境数据'}), 400
 
-    data = EnvData(
-        pond_id=pond_id,
-        temperature=request.form.get('temperature', type=float),
-        dissolved_oxygen=request.form.get('dissolved_oxygen', type=float),
-        ph_value=request.form.get('ph_value', type=float),
-        ammonia=request.form.get('ammonia', type=float),
-        salinity=request.form.get('salinity', type=float),
-        turbidity=request.form.get('turbidity', type=float),
-        source='manual',
-    )
-    db.session.add(data)
-    db.session.commit()
-    flash('环境数据已记录', 'success')
-    return redirect(url_for('pond_detail', pond_id=pond_id))
+        env = EnvData(
+            pond_id=pond_id,
+            temperature=data.get('temperature', type=float),
+            dissolved_oxygen=data.get('dissolved_oxygen', type=float),
+            ph_value=data.get('ph_value', type=float),
+            ammonia=data.get('ammonia', type=float),
+            salinity=data.get('salinity', type=float),
+            turbidity=data.get('turbidity', type=float),
+            source='manual',
+        )
+        db.session.add(env)
+        db.session.commit()
 
+        return jsonify({
+            'success': True,
+            'message': '环境数据已记录',
+            'data': env.to_dict(),
+        })
 
-# =============================================
-# 添加养殖日志
-# =============================================
-@app.route('/pond/<int:pond_id>/log/add', methods=['POST'])
-@login_required
-def add_farming_log(pond_id):
-    pond = db.session.get(Pond, pond_id)
-    if not pond or pond.user_id != current_user.id:
-        abort(404)
+    # =============================================
+    # 养殖日志
+    # =============================================
+    @app.route('/api/ponds/<int:pond_id>/logs', methods=['GET'])
+    @jwt_required()
+    def get_farming_logs(pond_id):
+        user = get_current_user()
+        if not user:
+            return jsonify({'success': False, 'message': '用户不存在'}), 404
 
-    log = FarmingLog(
-        pond_id=pond_id,
-        log_date=datetime.now(timezone.utc).date(),
-        feeding_amount=request.form.get('feeding_amount', type=float),
-        feed_protein=request.form.get('feed_protein', type=float),
-        mortality=request.form.get('mortality', type=float),
-        stock_count=request.form.get('stock_count', type=int),
-        molting_status=request.form.get('molting_status', '').strip() or None,
-        water_temperature=request.form.get('water_temperature', type=float),
-        weather=request.form.get('weather', '').strip() or None,
-        medication=request.form.get('medication', '').strip() or None,
-        notes=request.form.get('notes', '').strip() or None,
-    )
-    db.session.add(log)
-    db.session.commit()
-    flash('养殖日志已记录', 'success')
-    return redirect(url_for('pond_detail', pond_id=pond_id))
+        pond = pond_belongs_to_user(pond_id, user.id)
+        if not pond:
+            return jsonify({'success': False, 'message': '塘口不存在'}), 404
 
+        logs = FarmingLog.query.filter_by(pond_id=pond_id)\
+            .order_by(FarmingLog.log_date.desc()).limit(30).all()
 
-# =============================================
-# API: 获取环境数据（图表用）
-# =============================================
-@app.route('/api/pond/<int:pond_id>/env')
-@login_required
-def api_env_data(pond_id):
-    pond = db.session.get(Pond, pond_id)
-    if not pond or pond.user_id != current_user.id:
-        return jsonify({'error': 'unauthorized'}), 403
+        return jsonify({
+            'success': True,
+            'pond': pond.name,
+            'logs': [l.to_dict() for l in logs],
+        })
 
-    days = request.args.get('days', 7, type=int)
-    data = EnvData.query.filter_by(pond_id=pond_id)\
-        .filter(EnvData.recorded_at >= datetime.now(timezone.utc).replace(hour=0, minute=0, second=0) - __import__('datetime').timedelta(days=days))\
-        .order_by(EnvData.recorded_at.asc()).all()
+    @app.route('/api/ponds/<int:pond_id>/logs', methods=['POST'])
+    @jwt_required()
+    def add_farming_log(pond_id):
+        user = get_current_user()
+        if not user:
+            return jsonify({'success': False, 'message': '用户不存在'}), 404
 
-    return jsonify({
-        'pond': pond.name,
-        'data': [d.to_dict() for d in data],
-        'count': len(data),
-    })
+        pond = pond_belongs_to_user(pond_id, user.id)
+        if not pond:
+            return jsonify({'success': False, 'message': '塘口不存在'}), 404
 
+        data = request.get_json()
+        if not data:
+            return jsonify({'success': False, 'message': '请提供养殖日志数据'}), 400
 
-# =============================================
-# API: 获取养殖日志
-# =============================================
-@app.route('/api/pond/<int:pond_id>/logs')
-@login_required
-def api_farming_logs(pond_id):
-    pond = db.session.get(Pond, pond_id)
-    if not pond or pond.user_id != current_user.id:
-        return jsonify({'error': 'unauthorized'}), 403
+        log = FarmingLog(
+            pond_id=pond_id,
+            log_date=datetime.now(timezone.utc).date(),
+            feeding_amount=data.get('feeding_amount', type=float),
+            feed_protein=data.get('feed_protein', type=float),
+            mortality=data.get('mortality', type=float),
+            stock_count=data.get('stock_count', type=int),
+            molting_status=data.get('molting_status', '').strip() or None,
+            water_temperature=data.get('water_temperature', type=float),
+            weather=data.get('weather', '').strip() or None,
+            medication=data.get('medication', '').strip() or None,
+            notes=data.get('notes', '').strip() or None,
+        )
+        db.session.add(log)
+        db.session.commit()
 
-    logs = FarmingLog.query.filter_by(pond_id=pond_id)\
-        .order_by(FarmingLog.log_date.desc()).limit(30).all()
+        return jsonify({
+            'success': True,
+            'message': '养殖日志已记录',
+            'log': log.to_dict(),
+        })
 
-    return jsonify({
-        'pond': pond.name,
-        'logs': [l.to_dict() for l in logs],
-    })
+    return app
 
 
-# =============================================
-# 启动
-# =============================================
+# 开发模式直接运行
 if __name__ == '__main__':
-    print('🦀 肴柒蟹 后端已启动')
+    app = create_app()
+    print('🦀 肴柒蟹 REST API 后端已启动')
     print(f'   📂 数据库: {app.config["SQLALCHEMY_DATABASE_URI"]}')
-    print(f'   🌐 访问地址: http://127.0.0.1:5000')
-    print(f'   📝 注册: http://127.0.0.1:5000/register')
-    print(f'   🔑 登录: http://127.0.0.1:5000/login')
-    app.run(debug=True, host='127.0.0.1', port=5000)
+    print(f'   🌐 API 地址: http://0.0.0.0:5000')
+    app.run(debug=True, host='0.0.0.0', port=5000)

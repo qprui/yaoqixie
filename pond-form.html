@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>肴柒蟹 - 塘口表单</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🦀%3C/text%3E%3C/svg%3E" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-gray-50">
+  <script src="script.js"></script>
+  <script>
+    if (!Auth.requireAuth()) {}
+  </script>
+
+  <div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-2xl mx-auto px-4">
+      <div class="bg-white rounded-2xl shadow-card p-8">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h1 class="text-xl font-bold text-gray-800" id="formTitle">添加养殖塘口</h1>
+            <p class="text-sm text-gray-500 mt-1" id="formSubtitle">填写塘口基本信息</p>
+          </div>
+          <a href="dashboard.html" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">
+            <i class="bi bi-x-lg"></i>
+          </a>
+        </div>
+
+        <div id="errorMsg" class="hidden mb-4 px-4 py-3 bg-red-50 text-red-700 text-sm rounded-xl border border-red-200 flex items-center">
+          <i class="bi bi-exclamation-circle-fill mr-2 flex-shrink-0"></i>
+          <span id="errorText"></span>
+        </div>
+
+        <form id="pondForm" class="space-y-5">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">塘口名称 <span class="text-food-red">*</span></label>
+            <input type="text" id="name" required
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue transition-all"
+              placeholder="如：一号塘、东区虾塘">
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">面积（亩）</label>
+              <input type="number" id="area" step="0.1"
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue transition-all"
+                placeholder="如：10">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">水深（m）</label>
+              <input type="number" id="waterDepth" step="0.1"
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue transition-all"
+                placeholder="如：1.5">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">养殖品种</label>
+              <select id="species"
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue transition-all">
+                <option value="">-- 请选择 --</option>
+                <option value="中华绒螯蟹（大闸蟹）">🦀 中华绒螯蟹（大闸蟹）</option>
+                <option value="克氏原螯虾（小龙虾）">🦞 克氏原螯虾（小龙虾）</option>
+                <option value="锦绣龙虾">🦐 锦绣龙虾</option>
+                <option value="波纹龙虾">🦐 波纹龙虾</option>
+                <option value="青蟹">🦀 青蟹</option>
+                <option value="混合养殖">🔄 混合养殖</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">放养密度（只/亩）</label>
+              <input type="number" id="stockDensity"
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue transition-all"
+                placeholder="如：5000">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">地理位置</label>
+            <input type="text" id="location"
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue transition-all"
+              placeholder="如：湖北省潜江市后湖管理区">
+          </div>
+
+          <div class="flex items-center">
+            <input type="checkbox" id="aeration"
+              class="mr-3 rounded border-gray-300 text-tech-blue focus:ring-tech-blue">
+            <label for="aeration" class="text-sm text-gray-700">已配备增氧机</label>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">备注</label>
+            <textarea id="notes" rows="3"
+              class="w-full px-4 py-3 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-tech-blue transition-all"
+              placeholder="补充信息..."></textarea>
+          </div>
+
+          <div class="flex space-x-3">
+            <button type="submit"
+              class="flex-1 py-3 bg-tech-blue text-white rounded-xl font-medium hover:bg-tech-blue-dark transition-all">
+              <i class="bi bi-check-lg mr-1.5"></i> <span id="submitText">添加塘口</span>
+            </button>
+            <a href="dashboard.html"
+              class="px-6 py-3 bg-gray-100 text-gray-600 rounded-xl font-medium hover:bg-gray-200 transition-all text-center">
+              取消
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const pondId = new URLSearchParams(window.location.search).get('id');
+    const isEdit = !!pondId;
+
+    if (isEdit) {
+      document.getElementById('formTitle').textContent = '编辑养殖塘口';
+      document.getElementById('formSubtitle').textContent = '修改塘口信息';
+      document.getElementById('submitText').textContent = '保存修改';
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 编辑模式加载塘口数据
+      if (isEdit) {
+        const result = await Api.getPond(pondId);
+        if (result.success) {
+          const p = result.pond;
+          document.getElementById('name').value = p.name || '';
+          document.getElementById('area').value = p.area || '';
+          document.getElementById('waterDepth').value = p.water_depth || '';
+          document.getElementById('species').value = p.species || '';
+          document.getElementById('stockDensity').value = p.stock_density || '';
+          document.getElementById('location').value = p.location || '';
+          document.getElementById('aeration').checked = p.aeration || false;
+          document.getElementById('notes').value = p.notes || '';
+        }
+      }
+
+      // 提交表单
+      document.getElementById('pondForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const data = {
+          name: document.getElementById('name').value.trim(),
+          area: parseFloat(document.getElementById('area').value) || null,
+          water_depth: parseFloat(document.getElementById('waterDepth').value) || null,
+          species: document.getElementById('species').value,
+          stock_density: parseInt(document.getElementById('stockDensity').value) || null,
+          location: document.getElementById('location').value.trim(),
+          aeration: document.getElementById('aeration').checked,
+          notes: document.getElementById('notes').value.trim(),
+        };
+
+        if (!data.name) {
+          showError('请输入塘口名称');
+          return;
+        }
+
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="bi bi-arrow-repeat mr-2 animate-spin"></i> 保存中...';
+
+        let result;
+        if (isEdit) {
+          result = await Api.updatePond(pondId, data);
+        } else {
+          result = await Api.createPond(data);
+        }
+
+        if (result.success) {
+          window.location.href = 'dashboard.html';
+        } else {
+          showError(result.message || '保存失败');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<i class="bi bi-check-lg mr-1.5"></i> ' + (isEdit ? '保存修改' : '添加塘口');
+        }
+      });
+    });
+
+    function showError(msg) {
+      const errorMsg = document.getElementById('errorMsg');
+      errorMsg.classList.remove('hidden');
+      document.getElementById('errorText').textContent = msg;
+    }
+  </script>
+</body>
+</html>

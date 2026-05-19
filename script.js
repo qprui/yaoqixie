@@ -1,6 +1,165 @@
 /* ===== 肴柒蟹 - 交互脚本 ===== */
 
+// =============================================
+// API 配置与认证工具
+// =============================================
+// 使用阿里云服务器 IP（部署后修改此处）
+const API_BASE_URL = 'http://182.92.240.192:8000';
+
+const Api = {
+  async request(endpoint, options = {}) {
+    const token = localStorage.getItem('token');
+    const headers = {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    };
+    if (token) {
+      headers['Authorization'] = 'Bearer ' + token;
+    }
+
+    try {
+      const res = await fetch(`${API_BASE_URL}${endpoint}`, {
+        ...options,
+        headers,
+      });
+      const data = await res.json();
+      return data;
+    } catch (err) {
+      console.error('API 请求失败:', err);
+      return { success: false, message: '网络错误，无法连接到服务器' };
+    }
+  },
+
+  // 认证相关
+  login(username, password) {
+    return this.request('/api/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ username, password }),
+    });
+  },
+
+  register(data) {
+    return this.request('/api/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
+  getMe() {
+    return this.request('/api/user/me');
+  },
+
+  // 仪表盘
+  getDashboard() {
+    return this.request('/api/dashboard');
+  },
+
+  // 塘口
+  getPonds() {
+    return this.request('/api/ponds');
+  },
+
+  getPond(pondId) {
+    return this.request(`/api/ponds/${pondId}`);
+  },
+
+  createPond(data) {
+    return this.request('/api/ponds', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
+  updatePond(pondId, data) {
+    return this.request(`/api/ponds/${pondId}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  },
+
+  deletePond(pondId) {
+    return this.request(`/api/ponds/${pondId}`, {
+      method: 'DELETE',
+    });
+  },
+
+  // 环境数据
+  addEnvData(pondId, data) {
+    return this.request(`/api/ponds/${pondId}/env`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
+  // 养殖日志
+  addFarmingLog(pondId, data) {
+    return this.request(`/api/ponds/${pondId}/logs`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+};
+
+// 认证状态管理
+const Auth = {
+  isLoggedIn() {
+    return !!localStorage.getItem('token');
+  },
+
+  getToken() {
+    return localStorage.getItem('token');
+  },
+
+  getUser() {
+    const raw = localStorage.getItem('user');
+    if (!raw) return null;
+    try { return JSON.parse(raw); } catch { return null; }
+  },
+
+  login(token, user) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+  },
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = 'index.html';
+  },
+
+  // 检查登录状态，未登录则跳转
+  requireAuth() {
+    if (!this.isLoggedIn()) {
+      window.location.href = 'login.html?redirect=' + encodeURIComponent(window.location.pathname);
+      return false;
+    }
+    return true;
+  },
+
+  // 更新导航栏登录状态
+  updateNavbar() {
+    const loginLink = document.getElementById('loginLink');
+    const registerBtn = document.getElementById('registerBtn');
+    const userInfo = document.getElementById('userInfo');
+    const userName = document.getElementById('userName');
+
+    if (this.isLoggedIn() && userInfo && userName) {
+      const user = this.getUser();
+      userInfo.classList.remove('hidden');
+      userName.textContent = user?.username || '用户';
+      if (loginLink) loginLink.classList.add('hidden');
+      if (registerBtn) registerBtn.classList.add('hidden');
+    } else {
+      if (userInfo) userInfo.classList.add('hidden');
+      if (loginLink) loginLink.classList.remove('hidden');
+      if (registerBtn) registerBtn.classList.remove('hidden');
+    }
+  },
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+  // 更新导航栏登录状态
+  Auth.updateNavbar();
 
   // =============================================
   // 1. 导航栏滚动效果
